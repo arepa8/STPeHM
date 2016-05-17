@@ -25,14 +25,20 @@ app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 db = SQLAlchemy(app)
 
 # Model
-class Blog(db.Model):
-    __tablename__ = 'Blog'
-    __mapper_args__ = dict(order_by="date desc")
+class User(db.Model):
+    __tablename__ = 'User'
 
-    id = db.Column(db.Integer, primary_key=True)
-    subject = db.Column(db.Unicode(255))
-    author = db.Column(db.Unicode(255))
-    date = db.Column(db.DateTime())
-    content = db.Column(db.Text())
+    ci = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255),nullable=False)
+    last_name = db.Column(db.String(255),nullable=False)
+    email = db.Column(db.String(255),nullable=False)
+    #birthday = db.Column(db.DATE,nullable=False)
+
+    def __init__(self,ci,name,last_name,email):
+        self.ci = ci
+        self.name = name
+        self.last_name = last_name
+        self.email = email
+        #self.birthday = birthday
 
 db.create_all()  # Creamos la base de datos
