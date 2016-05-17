@@ -14,16 +14,28 @@ from app.models import User, db
 
 
 #db = SQLAlchemy(app)
-@app.route('/')
+@app.route('/',methods=['GET', 'POST'])
+def index():
+	if request.method == 'GET':
+		usuarios = User.query.all()
+		for user in usuarios:
+			print(user.name)
+		return render_template('index.html')
+
 @app.route('/index',methods=['GET', 'POST'])
 def contact():
 	form = ContactForm(request.form)
 	if request.method == 'POST':
 		new_user = User(form.ci.data,form.name.data,form.last_name.data,form.email.data)
-		print(form.ci.data)
 		db.session.add(new_user)
 		db.session.commit()
 		return 'Form posted.'
 
 	elif request.method == 'GET':
 		return render_template('contact.html', form=form)
+
+@app.route('/users',methods=['GET', 'POST'])
+def show_users():
+	if request.method == 'GET':
+		users = User.query.all()
+		return render_template('show_users.html', users=users)

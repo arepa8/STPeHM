@@ -1,23 +1,30 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" 
-      xml:lang="{{ conf['LANG'] }}" lang="{{ conf['LANG'] }}" 
-      dir="{{ conf['LANG_DIRECTION'] }}">
+<html>
 <head>
-    <title>{% block title %}{% endblock %} [{{ conf['TITLE'] }}]</title>
+    <title>{% block title %}{% endblock %} STPeHM</title>
 </head>
 
 <body>
   <div id="header">
-    <h1>{{ conf['TITLE'] }}</h1>
+    <h1>STPeHM</h1>
   </div>
 
   <div id="content">
-    Contenido
+
+      <p>¿Qué desea hacer?</p>
+      <form action="{{ url_for('contact') }}" method="get">
+        <button name="subject" type="submit" value="fav_HTML">Agregar Usuario</button>
+      </form>
+      <br>
+      <form action="{{ url_for('show_users') }}" method="get">
+        <button name="subject" type="submit" value="fav_HTML">Ver usuarios</button>
+      </form>
+
   </div>
 
     <div id="footer">
-        <p>{{ conf['TITLE'] }} - 2016</p>
+        <p>STPeHM - 2016</p>
     </div>
 
 </body>
