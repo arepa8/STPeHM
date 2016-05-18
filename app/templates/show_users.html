@@ -1,24 +1,26 @@
-<head>
-    <title>{% block title %}{% endblock %}</title>
-</head>
-  <h2>Datos de los usuarios</h2>
-    <table border="1" style="width:100%">
-      <tr>
-        <th>Cédula de Identidad</th>
-        <th>Nombre</th> 
-        <th>Apellido</th>
-        <th>Correo electrónico</th>
-      </tr>
-      {% for user in users %}
+{% extends "layout.html" %}
+{% block content %}
+  <div class="container">
+    <div id="cuerpoHeredado">
+      <center><h2>Datos de los usuarios</h2></center>
+      <table border="1" style="width:100%">
         <tr>
-          <td>{{user.ci}}</td>
-          <td>{{user.name}}</td>
-          <td>{{user.last_name}}</td> 
-          <td>{{user.email}}</td> 
+          <th>Cédula de Identidad</th>
+          <th>Nombre</th> 
+          <th>Apellido</th>
+          <th>Correo electrónico</th>
         </tr>
-      {% endfor%}
-    </table>
-
+        {% for user in users %}
+          <tr>
+            <td>{{user.ci}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.last_name}}</td> 
+            <td>{{user.email}}</td> 
+          </tr>
+        {% endfor%}
+      </table>
+    </div>
+  </div>
 <style type="text/css">
   table, th, td {
     border: 1px solid black;
@@ -28,3 +30,4 @@ th, td {
     padding: 15px;
 }
 </style>
+{% endblock %}
