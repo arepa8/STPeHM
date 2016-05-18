@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+  <head>
+    {% block head %}
+      <!-- Bootstrap -->
+      <link href="assets/css/bootstrap.css" rel="stylesheet">
+      <link href="assets/css/bootstrap-theme.css" rel="stylesheet">
+      <!-- siimple style -->
+      <link href="assets/css/style.css" rel="stylesheet">
+
+      <title>{% block title %} STPeHM {% endblock %} </title>
+    {% endblock %}
+  </head>
+
+  <body>
+  <!-- Fixed navbar -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="index.html">STPeHM</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#">Sign up</a></li>
+            <li><a href="#">Sign in</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+    <div>
+      {% block content %}
+      {% endblock %}
+    </div>  
+   
+    <div id="footer">
+      {% block footer %}
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-6 col-lg-offset-3">
+              <p class="copyright">Copyright &copy; 2016 - Papagayo</p>
+            </div>
+          </div>    
+        </div> 
+      {% endblock %}   
+    </div>
+  </body>
+</html>
