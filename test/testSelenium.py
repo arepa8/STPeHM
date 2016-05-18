@@ -33,7 +33,8 @@ class testSelenium(unittest.TestCase):
         self.wait()
         
 		# MOSTRAR USUARIOS #
-        driver.back()
+        driver.get("http://127.0.0.1:5000")
+        self.wait()
         driver.get("http://127.0.0.1:5000/users")
         self.wait()
 
