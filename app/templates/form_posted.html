@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="container">
+    <div id="cuerpoHeredado">
+      <center><h2>Datos almacenados.</h2></center>
+      <table border="1" style="width:100%">
+        {% for user in users %}
+          <tr>
+            <td>{{user.ci}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.last_name}}</td> 
+            <td>{{user.email}}</td> 
+          </tr>
+        {% endfor%}
+      </table>
+    </div>
+  </div>
+<style type="text/css">
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 15px;
+}
+</style>
+{% endblock %}
