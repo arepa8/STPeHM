@@ -39,3 +39,4 @@ def show_users():
 	if request.method == 'GET':
 		users = User.query.all()
 		return render_template('show_users.html', users=users)
+
