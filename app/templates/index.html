@@ -3,15 +3,29 @@
   <div id="header">
     <div class="container">
       <center>
-        <h1>STPeHM</h1>
-        <div id="content">
-          <form action="{{ url_for('contact')}}" method="get">
-            <button id="buttonC" name="subject" type="submit" value="fav_HTML"><h4>Agregar Usuario</h4> </button>
-          </form>
-          <br>
-          <form action="{{ url_for('show_users') }}" method="get">
-            <button id="buttonC" name="subject" type="submit" value="fav_HTML"><h4>Revisar Usuarios</h4></button>
-          </form>
+        <div class="login">
+          <div class="login-screen">
+            <div class="app-title">
+              <h1>STPeHM</h1>
+            </div>
+
+            <div class="login-form">
+              <div class="control-group">
+              <input type="text" class="login-field" value="" placeholder="username" id="login-name">
+              <label class="login-field-icon fui-user" for="login-name"></label>
+              </div>
+
+              <div class="control-group">
+              <input type="password" class="login-field" value="" placeholder="password" id="login-pass">
+              <label class="login-field-icon fui-lock" for="login-pass"></label>
+              </div>
+
+              <form action="{{ url_for('show_users') }}" method="get">
+                <button id="buttonA" name="subject" type="submit" value="" e="fav_HTML">Log in</button>
+              </form>
+                <a href="{{ url_for('contact')}}">Registrarse</a>
+            </div>
+          </div>
         </div>
       </center> 
     </div>

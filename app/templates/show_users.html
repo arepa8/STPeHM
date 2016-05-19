@@ -3,31 +3,32 @@
   <div class="container">
     <div id="cuerpoHeredado">
       <center><h2>Datos de los usuarios</h2></center>
-      <table border="1" style="width:100%">
+      <table>
         <tr>
           <th>Cédula de Identidad</th>
+          <th>Username</th>
           <th>Nombre</th> 
           <th>Apellido</th>
           <th>Correo electrónico</th>
+          <th></th>
+          <th></th>
         </tr>
         {% for user in users %}
           <tr>
             <td>{{user.ci}}</td>
+            <td>{{user.username}}</td>
             <td>{{user.name}}</td>
             <td>{{user.last_name}}</td> 
-            <td>{{user.email}}</td> 
+            <td>{{user.email}}</td>
+            <td>
+              <a href=""><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+            </td>
+            <td>
+              <a href=""><i class="fa fa-trash" style="font-size:16px;color:black"></i></a>
+            </td>
           </tr>
         {% endfor%}
       </table>
     </div>
   </div>
-<style type="text/css">
-  table, th, td {
-    border: 1px solid black;
-    border-collapse: collapse;
-}
-th, td {
-    padding: 15px;
-}
-</style>
 {% endblock %}

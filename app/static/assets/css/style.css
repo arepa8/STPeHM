@@ -133,10 +133,7 @@ a.navbar-brand:hover {
     background-size: cover;
 }
 
-
-
 #header h1 {
-	margin-top: 60px;
 	margin-bottom: 15px;
 	color: #fff;
 	font-size: 45px;
@@ -231,9 +228,104 @@ form input#submit:hover{
   background-image: linear-gradient(top, #dbdbdb, #cccccc);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#dbdbdb, endColorstr=#cccccc);
 }
 
+/* Button */
 #buttonC{
   width:250px;
   height:50px;
 
 }
 
+#buttonA {
+  border: 2px solid transparent;
+  background: #3498DB;
+  color: #ffffff;
+  font-size: 16px;
+  line-height: 25px;
+  padding: 10px 0;
+  text-decoration: none;
+  text-shadow: none;
+  border-radius: 3px;
+  box-shadow: none;
+  transition: 0.25s;
+  display: block;
+  width: 250px;
+  margin: 0 auto;
+}
+
+#buttonA:hover {
+  background-color: #2980B9;
+}
+
+/* Tables */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  height: 50px;
+  padding: 15px;
+  vertical-align: middle;
+  background-color: #4CAF50;
+  color: white;
+  border-bottom: 1px solid #ddd;
+}
+
+td {
+  padding: 15px;
+  height: 50px;
+  vertical-align: middle;
+  border-bottom: 1px solid #ddd;
+}
+
+tr:nth-child(even){background-color: rgba(219, 219, 219, 0.31)}
+tr:hover {background-color:rgba(76, 175, 80, 0.24)}
+
+/*Login Panel*/
+
+.login {
+margin: 20px auto;
+width: 300px;
+}
+.login-screen {
+background-color: rgba(255, 255, 255, 0.25);
+padding: 20px;
+border-radius: 5px
+}
+
+.app-title {
+text-align: center;
+color: #777;
+}
+
+.login-form {
+text-align: center;
+}
+.control-group {
+margin-bottom: 10px;
+}
+
+input {
+text-align: center;
+background-color: rgba(255, 255, 255, 0.88);
+border: 1px solid rgb(66, 139, 202);
+border-radius: 3px;
+font-size: 16px;
+font-weight: 200;
+padding: 10px 0;
+width: 250px;
+transition: border .5s;
+}
+
+input:focus {
+border: 2px solid #3498DB;
+box-shadow: none;
+}
+
+
+.login-link {
+  font-size: 12px;
+  color: #444;
+  display: block;
+  margin-top: 12px;
+}
