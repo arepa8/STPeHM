@@ -4,12 +4,13 @@
     <div id="cuerpoHeredado">
       <h2>Agregar datos de Usuario</h2>
       <form action="{{ url_for('contact') }}" method=POST>
+     
+        {{ form.ci.label }}
+        {{ form.ci }}
         {{ form.name.label }}
         {{ form.name }}
         {{ form.last_name.label }}
         {{ form.last_name }}
-        {{ form.ci.label }}
-        {{ form.ci }}
         {{ form.email.label }}
         {{ form.email }}
         {{ form.submit }}

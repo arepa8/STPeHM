@@ -31,7 +31,7 @@ class User(db.Model):
     ci = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255),nullable=False)
     last_name = db.Column(db.String(255),nullable=False)
-    email = db.Column(db.String(255),nullable=False)
+    email = db.Column(db.String(255),nullable=False, unique=True)
     #birthday = db.Column(db.DATE,nullable=False)
 
     def __init__(self,ci,name,last_name,email):

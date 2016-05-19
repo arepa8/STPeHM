@@ -43,7 +43,7 @@ def show_users():
 @app.route('/modify_user/<ci>', methods=['GET', 'POST'])
 def modify_user(ci):
 	form = ContactForm(request.form)
-	if request.method == 'POST':
+	if request.method == 'POST' :#and form.validate():
 		user = User.query.filter_by(ci = ci).first()
 		if user == None:
 			flash('No se encontró el usuario %s.' % ci)
@@ -53,10 +53,16 @@ def modify_user(ci):
 		user.email = form.email.data
 		db.session.commit()
 
-		users = User.query.all()
 		return redirect('users')
 
 	elif request.method == 'GET':
 		user = User.query.filter_by(ci = ci).first()
 		form = ContactForm(request.form, name=user.name, last_name=user.last_name, email=user.email)
 		return render_template('modify_user.html', form=form, ci=ci)
+
+@app.route('/delete_user/<ci>', methods=['GET', 'POST'])
+def delete_user(ci):
+	user = User.query.filter_by(ci = ci).first()
+	db.session.delete(user)
+	db.session.commit()
+	return redirect ('users')
