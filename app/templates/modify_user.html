@@ -3,10 +3,10 @@
   <div class="container">
     <div id="cuerpoHeredado">
       <h2>Modificar datos de Usuario</h2>
-      <form action="{{ url_for('modify_user', ci=user.ci) }}" method=POST>
+      <form action="{{ url_for('modify_user', ci=ci) }}" method=POST>
      
         {{ form.ci.label }}
-        {{ user.ci }}
+        {{ ci }}
         {{ form.name.label }}
         {{ form.name }}
         {{ form.last_name.label }}
