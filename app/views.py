@@ -29,7 +29,8 @@ def contact():
 		new_user = User(form.ci.data,form.name.data,form.last_name.data,form.email.data)
 		db.session.add(new_user)
 		db.session.commit()
-		return render_template('form_posted.html')
+		return redirect ('users')
+		
 
 	elif request.method == 'GET':
 		return render_template('contact.html', form=form)
