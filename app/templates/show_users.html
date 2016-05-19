@@ -21,7 +21,7 @@
             <td>{{user.last_name}}</td> 
             <td>{{user.email}}</td>
             <td>
-              <a href=""><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+              <a href="{{ url_for('modify_user', ci=user.ci) }}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
             </td>
             <td>
               <a href=""><i class="fa fa-trash" style="font-size:16px;color:black"></i></a>

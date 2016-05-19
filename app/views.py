@@ -57,5 +57,6 @@ def modify_user(ci):
 		return render_template('show_users.html', users=users)
 
 	elif request.method == 'GET':
-		users = User.query.all()
-		return render_template('modify_user.html', form=form)
+		user = User.query.filter_by(ci = ci).first()
+		form = ContactForm(request.form, name=user.name, last_name=user.last_name, email=user.email)
+		return render_template('modify_user.html', form=form, user=user)
