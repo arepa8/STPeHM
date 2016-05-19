@@ -9,5 +9,5 @@ class ContactForm(Form):
   last_name = TextField("Apellido")
   email = TextField("Correo electrónico")
   #birthday = DateField('DatePicker', format='%Y-%m-%d')
-  submit = SubmitField("Agregar usuario")
+  submit = SubmitField("Aceptar")
 

@@ -40,3 +40,19 @@ def show_users():
 		users = User.query.all()
 		return render_template('show_users.html', users=users)
 
+@app.route('/modify_user', methods=['GET', 'POST'])
+def modify_user():
+	form = ContactForm(request.form)
+	if request.method == 'POST':
+		user = User.query.filter_by(ci = form.ci).first()
+		user.name = form.name.data
+		user.last_name = form.last_name.data
+		user.email = form.email.data
+		db.session.commit()
+
+		users = User.query.all()
+		return render_template('show_users.html', users=users)
+
+	elif request.method == 'GET':
+		users = User.query.all()
+		return render_template('modify_user.html', form=form)
