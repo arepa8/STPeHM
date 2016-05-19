@@ -40,11 +40,14 @@ def show_users():
 		users = User.query.all()
 		return render_template('show_users.html', users=users)
 
-@app.route('/modify_user', methods=['GET', 'POST'])
-def modify_user():
+@app.route('/modify_user/<ci>', methods=['GET', 'POST'])
+def modify_user(ci):
 	form = ContactForm(request.form)
 	if request.method == 'POST':
-		user = User.query.filter_by(ci = form.ci).first()
+		user = User.query.filter_by(ci = ci).first()
+		if user == None:
+			flash('No se encontró el usuario %s.' % ci)
+			#return
 		user.name = form.name.data
 		user.last_name = form.last_name.data
 		user.email = form.email.data
