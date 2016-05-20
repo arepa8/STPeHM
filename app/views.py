@@ -86,6 +86,7 @@ def modify_user(ci):
 		if user == None:
 			flash('No se encontró el usuario %s.' % ci)
 			#return
+		user.password = form.password.data
 		user.name = form.name.data
 		user.last_name = form.last_name.data
 		user.email = form.email.data
@@ -95,8 +96,9 @@ def modify_user(ci):
 
 	elif request.method == 'GET':
 		user = User.query.filter_by(ci = ci).first()
-		form = ContactForm(request.form, name=user.name, last_name=user.last_name, email=user.email)
-		return render_template('modify_user.html', form=form, ci=ci)
+		form = ContactForm(request.form, password=user.password, name=user.name, last_name=user.last_name, email=user.email)
+		
+		return render_template('modify_user.html', form=form, ci=ci, username=user.username, password=user.password)
 
 @app.route('/delete_user', methods=['POST'])
 def delete_user():
