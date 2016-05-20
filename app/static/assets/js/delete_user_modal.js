@@ -4,7 +4,7 @@ $(function(){
     $("#deleteButton").click(function(){
         $("#myModal").hide();
 
-        var ci = $("#delete_user").val();
+        var ci = $("#deleteButton").val();
         console.log(ci);
         
         $.ajax({
@@ -35,10 +35,6 @@ var cancel = document.getElementById("cancel_delete");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
-// When the user clicks on the button, open the modal 
-btn.onclick = function() {
-    modal.style.display = "block";
-}
 // When the user clicks on the button, close the modal 
 cancel.onclick = function() {
     modal.style.display = "none";
@@ -52,4 +48,10 @@ window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
     }
+}
+// When the user clicks on the button, open the modal 
+function openModal(ci) {
+    console.log(ci);
+    modal.style.display = "block";
+    document.getElementById('deleteButton').value =  ci;
 }
