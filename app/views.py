@@ -5,6 +5,7 @@ from sqlalchemy import *
 from app import app
 from app.forms import ContactForm
 from app.models import User, db
+import json
 
 #@app.route('/')
 #@app.route('/index')
@@ -60,9 +61,12 @@ def modify_user(ci):
 		form = ContactForm(request.form, name=user.name, last_name=user.last_name, email=user.email)
 		return render_template('modify_user.html', form=form, ci=ci)
 
-@app.route('/delete_user/<ci>', methods=['GET', 'POST'])
-def delete_user(ci):
+@app.route('/delete_user', methods=['POST'])
+def delete_user():
+	ci =  request.json
+	print(ci)
 	user = User.query.filter_by(ci = ci).first()
 	db.session.delete(user)
 	db.session.commit()
-	return redirect ('users')
+	#return redirect ('users')
+	return json.dumps({'status':'OK','ci':ci})
