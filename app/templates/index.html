@@ -8,22 +8,24 @@
             <div class="app-title">
               <h1>STPeHM</h1>
             </div>
-
             <div class="login-form">
-              <div class="control-group">
-              <input type="text" class="login-field" value="" placeholder="username" id="login-name">
-              <label class="login-field-icon fui-user" for="login-name"></label>
-              </div>
-
-              <div class="control-group">
-              <input type="password" class="login-field" value="" placeholder="password" id="login-pass">
-              <label class="login-field-icon fui-lock" for="login-pass"></label>
-              </div>
-
-              <form action="{{ url_for('show_users') }}" method="get">
-                <button id="buttonA" name="subject" type="submit" value="" e="fav_HTML">Log in</button>
+              <form action="" method="post">
+                <div class="control-group">
+                  <input type="text" class="login-field" placeholder="Username" name="username" value="{{
+                  request.form.username }}">
+                  <label class="login-field-icon fui-user" for="login-name"></label>
+                </div>
+                <div class="control-group">
+                  <input type="password" class="login-field" placeholder="Password" name="password" value="{{
+                  request.form.password }}">
+                  <label class="login-field-icon fui-lock" for="login-pass"></label>
+                </div>
+                <input class="btn btn-default" type="submit" value="Login">
               </form>
-                <a href="{{ url_for('contact')}}">Registrarse</a>
+              {% if error %}
+                <p class="error"><strong>Error:</strong> {{ error }}
+              {% endif %}
+              <a href="{{ url_for('contact')}}"><b>Registrarse</b></a>
             </div>
           </div>
         </div>
