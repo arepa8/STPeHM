@@ -5,9 +5,13 @@ from sqlalchemy import *
 from app import app, lm
 from app.forms import ContactForm
 from app.models import User, db
+<<<<<<< HEAD
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
+=======
+import json
+>>>>>>> user
 
 #@app.route('/')
 #@app.route('/index')
@@ -32,7 +36,8 @@ def contact():
 		new_user = User(form.ci.data,form.username.data,form.password.data,form.name.data,form.last_name.data,form.email.data)
 		db.session.add(new_user)
 		db.session.commit()
-		return render_template('form_posted.html')
+		return redirect ('users')
+		
 
 	elif request.method == 'GET':
 		return render_template('contact.html', form=form)
@@ -69,8 +74,39 @@ def login():
 	    return render_template('index.html', error=error)
     return redirect(url_for('show_users'))
 
+
 @app.route('/logout')
 def logout():
 	session.pop('user',None)
 	session.pop('logged_in',None)
 	return redirect(url_for('login'))
+
+@app.route('/modify_user/<ci>', methods=['GET', 'POST'])
+def modify_user(ci):
+	form = ContactForm(request.form)
+	if request.method == 'POST' :#and form.validate():
+		user = User.query.filter_by(ci = ci).first()
+		if user == None:
+			flash('No se encontró el usuario %s.' % ci)
+			#return
+		user.name = form.name.data
+		user.last_name = form.last_name.data
+		user.email = form.email.data
+		db.session.commit()
+
+		return redirect('users')
+
+	elif request.method == 'GET':
+		user = User.query.filter_by(ci = ci).first()
+		form = ContactForm(request.form, name=user.name, last_name=user.last_name, email=user.email)
+		return render_template('modify_user.html', form=form, ci=ci)
+
+@app.route('/delete_user', methods=['POST'])
+def delete_user():
+	ci =  request.json
+	print(ci)
+	user = User.query.filter_by(ci = ci).first()
+	db.session.delete(user)
+	db.session.commit()
+	#return redirect ('users')
+	return json.dumps({'status':'OK','ci':ci})

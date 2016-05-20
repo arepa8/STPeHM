@@ -2,19 +2,15 @@
 {% block content %}
   <div class="container">
     <div id="cuerpoHeredado">
-      <h2>Agregar datos de Usuario</h2>
-      <form action="{{ url_for('contact') }}" method=POST>
+      <h2>Modificar datos de Usuario</h2>
+      <form action="{{ url_for('modify_user', ci=ci) }}" method=POST>
      
         {{ form.ci.label }}
-        {{ form.ci }}
+        {{ ci }}
         {{ form.name.label }}
         {{ form.name }}
         {{ form.last_name.label }}
         {{ form.last_name }}
-	      {{ form.username.label}}
-	      {{ form.username }}
-	      {{ form.password.label }}
-	      {{ form.password }}
         {{ form.email.label }}
         {{ form.email }}
         {{ form.submit }}

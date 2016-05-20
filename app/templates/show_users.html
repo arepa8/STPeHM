@@ -15,21 +15,39 @@
           <th></th>
         </tr>
         {% for user in users %}
-          <tr>
+          <tr id="{{user.ci}}">
             <td>{{user.ci}}</td>
             <td>{{user.username}}</td>
             <td>{{user.name}}</td>
             <td>{{user.last_name}}</td> 
             <td>{{user.email}}</td>
             <td>
-              <a href=""><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+              <a href="{{ url_for('modify_user', ci=user.ci) }}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
             </td>
             <td>
-              <a href=""><i class="fa fa-trash" style="font-size:16px;color:black"></i></a>
+              <button id="delete_user" value= "{{user.ci}}" name="ci"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
+
             </td>
           </tr>
         {% endfor%}
       </table>
     </div>
   </div>
+
+<!-- Modal content -->
+<div id="myModal" class="modal-content">
+  <div class="modal-header">
+    <span class="close">×</span>
+    <h2></h2>
+  </div>
+  <div class="modal-body">
+    <p>¿Está seguro de que desea eliminar el usuario?</p>
+    <button id="deleteButton">Eliminar</button>
+    <button id="cancel_delete">Cancelar</button>
+  </div>
+  <div class="modal-footer">
+    <h3></h3>
+  </div>
+</div>
+
 {% endblock %}

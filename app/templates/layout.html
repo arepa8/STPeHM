@@ -3,11 +3,16 @@
   <head>
     {% block head %}
       <!-- Bootstrap -->
-      <link href="assets/css/bootstrap.css" rel="stylesheet">
-      <link href="assets/css/bootstrap-theme.css" rel="stylesheet">
-      <!-- siimple style -->
-      <link href="assets/css/style.css" rel="stylesheet">      
+
+
+      <link href="{{ url_for('static', filename= 'assets/css/bootstrap.css')}}" rel="stylesheet">
+      <link href="{{ url_for('static', filename= 'assets/css/bootstrap-theme.css')}}" rel="stylesheet">
+      <link href="{{ url_for('static', filename= 'assets/css/style.css')}}" rel="stylesheet">     
+      <link href="{{ url_for('static', filename= 'assets/css/modal.css')}}" rel="stylesheet">     
       <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+      <script type="text/javascript" src="{{ url_for('static', filename= 'assets/js/modal.js')}}" defer></script>
 
       <title>{% block title %} STPeHM {% endblock %} </title>
     {% endblock %}
