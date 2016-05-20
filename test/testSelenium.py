@@ -48,10 +48,15 @@ class testSelenium(unittest.TestCase):
         self.wait()
 
         # ELIMINAR USUARIO#
-        delete_user = driver.find_element_by_xpath('//a[@href="/delete_user/12345678"]')#Usuario previamente modificado
+        delete_user = driver.find_element_by_xpath('//button[@id="delete_user"]')#Usuario previamente modificado
+        delete_user.click()
+        self.wait()
+        delete_user = driver.find_element_by_id("deleteButton")
         delete_user.click()
         self.wait()
 
+       # /html/body/div[2]/div[@class='container']/div[@id='cuerpoHeredado']/table/tbody/tr[@id='12345678']/td[7]/button[@id='delete_user']/i[@class='fa fa-trash']
+       #/html/body/div[2]/div[@class='container']/div[@id='cuerpoHeredado']/table/tbody/tr[@id='12345678']/td[7]/button[@id='delete_user']/i[@class='fa fa-trash']
 
 		# MOSTRAR USUARIOS #
         driver.get("http://127.0.0.1:5000")
