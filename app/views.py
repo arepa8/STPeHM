@@ -15,13 +15,13 @@ from flask.ext.login import login_user, logout_user, current_user, login_require
 
 
 #db = SQLAlchemy(app)
-@app.route('/',methods=['GET', 'POST'])
-def index():
-	if request.method == 'GET':
-		usuarios = User.query.all()
-		for user in usuarios:
-			print(user.name)
-		return render_template('index.html')
+# @app.route('/',methods=['GET', 'POST'])
+# def index():
+# 	if request.method == 'GET':
+# 		usuarios = User.query.all()
+# 		for user in usuarios:
+# 			print(user.name)
+# 		return render_template('index.html')
 
 @app.route('/index',methods=['GET', 'POST'])
 def contact():
@@ -47,12 +47,12 @@ def load_user(user_id):
     return User.get(user_id)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/', methods=['GET', 'POST'])
 def login():
     # Here we use a class of some kind to represent and validate our
     # client-side form data. For example, WTForms is a library that will
     # handle this for us, and we use a custom LoginForm to validate.
-    form = ContactForm()
+    form = LoginForm()
     if form.validate_on_submit():
         # Login and validate the user.
         # user should be an instance of your `User` class
@@ -67,4 +67,4 @@ def login():
             return flask.abort(400)
 
         return flask.redirect(next or flask.url_for('index'))
-    return flask.render_template('login.html', form=form)
+    return flask.render_template('contact.html', form=form)
