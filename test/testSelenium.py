@@ -75,6 +75,7 @@ class testSelenium(unittest.TestCase):
         driver.get("http://127.0.0.1:5000/users")
         self.wait()
 
+        # SALIR #
         exit = driver.find_element_by_link_text("Salir")
         exit.click()
         self.wait()
