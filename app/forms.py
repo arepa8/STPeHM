@@ -5,6 +5,8 @@ from wtforms.validators import Required
 
 class ContactForm(Form):
   ci = IntegerField("Cédula de identidad")
+  username = TextField("Nombre de Usuario")
+  password = TextField("Contraseña")
   name = TextField("Nombre")
   last_name = TextField("Apellido")
   email = TextField("Correo electrónico")

@@ -2,12 +2,18 @@ import os
 from flask import Flask, render_template, request, redirect
 from app.models import db
 from werkzeug.routing import Rule
+from flask.ext.login import LoginManager
 
 # Flask application and config
 app = Flask(__name__, static_url_path='')
 app.secret_key = 'development key'
 app.config.from_object('config')
 db.init_app(app)
+
+
+# Flask User Authentication
+lm = LoginManager()
+lm.init_app(app)
 
 
 #Middleware to serve the static files
