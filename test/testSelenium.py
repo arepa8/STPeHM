@@ -9,7 +9,7 @@ class testSelenium(unittest.TestCase):
         self.driver = webdriver.Firefox()
 
     def wait(self):
-    	time.sleep(2)
+        time.sleep(2)
 
     def test_search_in_python_org(self):
         driver = self.driver
@@ -19,9 +19,13 @@ class testSelenium(unittest.TestCase):
         add_user.click()    
         self.wait()
 
-		# AGREGAR USUARIO #
+        # AGREGAR USUARIO #
         ci = driver.find_element_by_id("ci")
         ci.send_keys("12345678")
+        user_name = driver.find_element_by_id("username")
+        user_name.send_keys("pperez")
+        password = driver.find_element_by_id("password")
+        password.send_keys("1234")
         name = driver.find_element_by_id("name")
         name.send_keys("Pedro")
         last_name = driver.find_element_by_id("last_name")
@@ -31,6 +35,13 @@ class testSelenium(unittest.TestCase):
         self.wait()
         email.submit()
         self.wait()
+
+        # LOGIN #
+        login = driver.find_element_by_name("username")
+        login.send_keys("pperez")
+        passw = driver.find_element_by_name("password")
+        passw.send_keys("1234")
+        passw.submit()
 
         # MODIFICAR USUARIO #
         modify_user = driver.find_element_by_xpath('//a[@href="/modify_user/12345678"]')#Usuario recientemente anadido
@@ -58,10 +69,14 @@ class testSelenium(unittest.TestCase):
        # /html/body/div[2]/div[@class='container']/div[@id='cuerpoHeredado']/table/tbody/tr[@id='12345678']/td[7]/button[@id='delete_user']/i[@class='fa fa-trash']
        #/html/body/div[2]/div[@class='container']/div[@id='cuerpoHeredado']/table/tbody/tr[@id='12345678']/td[7]/button[@id='delete_user']/i[@class='fa fa-trash']
 
-		# MOSTRAR USUARIOS #
+        # MOSTRAR USUARIOS #
         driver.get("http://127.0.0.1:5000")
         self.wait()
         driver.get("http://127.0.0.1:5000/users")
+        self.wait()
+
+        exit = driver.find_element_by_link_text("Salir")
+        exit.click()
         self.wait()
 
     def tearDown(self):
