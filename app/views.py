@@ -5,13 +5,10 @@ from sqlalchemy import *
 from app import app, lm
 from app.forms import ContactForm
 from app.models import User, db
-<<<<<<< HEAD
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
-=======
 import json
->>>>>>> user
 
 #@app.route('/')
 #@app.route('/index')
@@ -36,7 +33,7 @@ def contact():
 		new_user = User(form.ci.data,form.username.data,form.password.data,form.name.data,form.last_name.data,form.email.data)
 		db.session.add(new_user)
 		db.session.commit()
-		return redirect ('users')
+		return redirect ('/')
 		
 
 	elif request.method == 'GET':
