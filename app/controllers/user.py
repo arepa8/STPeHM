@@ -19,8 +19,8 @@ class user():
 		check_username	= type(username) == str
 		check_password	= type(password) == str 
 		check_name 		= type(name) == str
-		check_last_name 	= type(last_name) == str
-		check_email 		= type(email) == str 
+		check_last_name = type(last_name) == str
+		check_email 	= type(email) == str 
 
 		if (check_ci and check_username and check_password and check_name and check_last_name and check_email):
 
@@ -43,11 +43,36 @@ class user():
 					return True
 		return False
 
-	def getUser():
-		pass
+	def getUser(self, username):
+		
+		check_if_exist = self.existUser(username)
 
-	def deleteUser():
-		pass
+		if (check_if_exist):
+			result = User.query.filter_by(username=username).first()
+			return result
+		return []
 
-	def updateUser():
+	def deleteUser(self, username):
+		
+		check_username = (type(username) == str) and (CONST_MIN <= len(username) <= CONST_MAX_USERNAME)
+
+		if check_username:
+			check_if_exist = self.existUser(username)
+			if check_if_exist:
+				user = User.query.filter_by(username=username).first()
+				db.session.delete(user)
+				db.session.commit()
+				return True
+		return False
+
+	def existUser(self, username):
+		check_username	= type(username) == str
+		check_long_username = CONST_MIN <= len(username) <= CONST_MAX_USERNAME
+
+		if (check_username and check_long_username):
+			check_if_exist = User.query.filter_by(username=username).first()
+
+		return check_if_exist != []
+
+	def updateUser(self, ci, username, password, name, last_name, email):
 		pass
