@@ -36,14 +36,18 @@
       <button id="show-add-role">Agregar rol</button>
       <button id="show-view-role">Ver roles</button>
       <br>
+      <br>
       <div class="col-xs-12 show-add-role" style="display:none;">
         <form action="{{ url_for('add_role') }}" method=POST>
-        <input id="role" name="role" type="role">
-        <button id = "add-role">Agregar rol</button>
+        <span>Agregar nuevo rol: </span><input id="role" name="role" type="role">
+        <button id = "add-role">Agregar</button>
       </div>
+      <br>
+      <br>
       <div class="col-xs-12 show-view-role" style="display:none;">
+      <h3> Roles agregados </h3>
       {% for role in roles %}
-        {{ role.role_name }}
+        <p>{{ role.role_name }}</p>
       {% endfor %}
       </div>
     </div>
