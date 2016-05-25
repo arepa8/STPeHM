@@ -24,7 +24,7 @@ class user():
 
 		if (check_ci and check_username and check_password and check_name and check_last_name and check_email):
 
-			check_long_ci 		= CONST_MIN <= len(ci) <= CONST_MAX_CI
+			check_long_ci 		= CONST_MIN <= ci <= CONST_MAX_CI
 			check_long_username = CONST_MIN <= len(username) <= CONST_MAX_USERNAME
 			check_long_password = CONST_MIN <= len(password) <= CONST_MAX_PASSWORD
 			check_long_name 	= CONST_MIN <= len(name) <= CONST_MAX_NAME_MAIL
@@ -84,7 +84,7 @@ class user():
 
 		if (check_ci and check_username and check_password and check_name and check_last_name and check_email):
 
-			check_long_ci 		= CONST_MIN <= len(ci) <= CONST_MAX_CI
+			check_long_ci 		= CONST_MIN <= ci <= CONST_MAX_CI
 			check_long_username = CONST_MIN <= len(username) <= CONST_MAX_USERNAME
 			check_long_password = CONST_MIN <= len(password) <= CONST_MAX_PASSWORD
 			check_long_name 	= CONST_MIN <= len(name) <= CONST_MAX_NAME_MAIL
