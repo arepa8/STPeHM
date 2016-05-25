@@ -41,6 +41,7 @@ class User(db.Model):
     name = db.Column(db.String(255),nullable=False)
     last_name = db.Column(db.String(255),nullable=False)
     email = db.Column(db.String(255),nullable=False, unique=True)
+    role    = db.Column(db.String(255), db.ForeignKey('Role.id'))
     #birthday = db.Column(db.DATE,nullable=False)
 
     def __init__(self,ci,username,password,name,last_name,email):
@@ -72,6 +73,20 @@ class User(db.Model):
 
     def __repr__(self):
         return '<User %r>' % (self.username)
+
+
+class Role(db.Model):
+    __tablename__ = 'Role'
+
+    id = db.Column(db.Integer, primary_key=True)
+    role_name = db.Column(db.String(255),nullable=False)
+
+    def __init__(self,role_name):
+        self.role_name = role_name
+    
+    def __repr__(self):
+        return '<Role %r>' % (self.role_name)
+
 
 if __name__ == '__main__':
 	manager.run()
