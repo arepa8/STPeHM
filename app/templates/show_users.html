@@ -31,6 +31,21 @@
           </tr>
         {% endfor%}
       </table>
+      <center><h2>Gestión de roles</h2></center>
+      <br>
+      <button id="show-add-role">Agregar rol</button>
+      <button id="show-view-role">Ver roles</button>
+      <br>
+      <div class="col-xs-12 show-add-role" style="display:none;">
+        <form action="{{ url_for('add_role') }}" method=POST>
+        <input id="role" name="role" type="role">
+        <button id = "add-role">Agregar rol</button>
+      </div>
+      <div class="col-xs-12 show-view-role" style="display:none;">
+      {% for role in roles %}
+        {{ role.role_name }}
+      {% endfor %}
+      </div>
     </div>
   </div>
 

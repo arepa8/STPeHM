@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from app import app, lm
 from app.forms import ContactForm
-from app.models import User, db
+from app.models import User, Role, db
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
@@ -45,7 +45,8 @@ def show_users():
 		users = User.query.all()
 		print(session)
 		active_user = session['user']
-		return render_template('show_users.html', users=users, active_user=active_user)
+		roles = Role.query.all()
+		return render_template('show_users.html', users=users, active_user=active_user, roles=roles)
 
 
 # route for handling the login page logic
@@ -109,3 +110,17 @@ def delete_user():
 	db.session.commit()
 	#return redirect ('users')
 	return json.dumps({'status':'OK','ci':ci})
+
+@app.route('/add_role',methods=['POST'])
+def add_role():
+	role = request.json
+	print(role)
+	new_role = Role (role_name=role)
+	db.session.add(new_role)
+	db.session.commit()
+	return json.dumps({'status':'OK','role':role})
+
+@app.route('/view_role',methods=['POST'])
+def view_role():
+	roles = Role.query.all()
+	return render_template('show_users.html', roles=roles)
