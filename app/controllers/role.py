@@ -4,6 +4,8 @@ sys.path.append('app/')
 from models import *
 
 # Constantes
+CONST_MIN_ID = 1
+CONST_MAX_ID = sys.maxsize
 CONST_MIN_ROLE_NAME = 0
 CONST_MAX_ROLE_NAME	= 255
 
@@ -38,5 +40,11 @@ class role():
 	def deleteRole():
 		pass
 
-	def getRole():
-		pass
+	def getRole(self, target_id):
+		check_target_id = type(check_target_id) == int
+		check_long_target_id = CONST_MIN_ID <= target_id <= CONST_MAX_ID
+
+		if (check_target_id and check_long_target_id):
+			role = Role.query.filter_by(id=target_id).first()
+			return role 
+
