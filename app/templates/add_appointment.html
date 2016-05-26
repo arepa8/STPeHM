@@ -3,8 +3,12 @@
   <div class="container">
     <div id="cuerpoHeredado">
       <br>
-      <h2>Agregar Cita</h2>
+      <h2>{{title}} Cita</h2>
+      {% if title == "Agregar" %}
       <form action="{{ url_for('add_appointment') }}" method=POST>
+      {% else %}
+      <form action="{{ url_for('modify_appointment', id=id) }}" method=POST>
+      {% endif %}
      
         {{ form.date.label }}
         {{ form.date }}

@@ -140,14 +140,30 @@ def add_appointment():
 	form = AppointmentForm(request.form)
 	if request.method == 'POST':
 		active_user = session['user']
-		print("******%s", form.date.data)
 		new_a = Appointment(active_user['ci'],form.date.data,form.description.data)
 		db.session.add(new_a)
 		db.session.commit()
 		return redirect(url_for('show_appointments'))
 
 	else:
-		return render_template('add_appointment.html', form = form)
+		title = "Agregar"
+		return render_template('add_appointment.html', form = form, title= title)
+
+@app.route('/modify_appointment/<id>',methods=['GET', 'POST'])
+def modify_appointment(id):
+	form = AppointmentForm(request.form)
+	if request.method == 'POST':
+		a = Appointment.query.filter_by(id = id).first()
+		a.date = form.date.data
+		a.description = form.description.data
+		db.session.commit()
+		return redirect(url_for('show_appointments'))
+
+	else:
+		title = "Modificar"
+		a = Appointment.query.filter_by(id = id).first()
+		form = AppointmentForm(request.form, date=a.date, description = a.description)
+		return render_template('add_appointment.html', form = form, title = title, id = id)
 
 @app.route('/delete_appointment', methods=['POST'])
 def delete_appointment():
