@@ -97,13 +97,13 @@ class user():
 
 				if (check_if_exist):
 
-					user = self.getUser(username)
-					user.ci 		= ci
-					user.usename 	= username
-					user.password 	= password
-					user.name 		= name
-					user.last_name 	= last_name
-					user.email 		= user.email
+					user = User.query.filter_by(username=username).first()
+					user[0].ci 		 = ci
+					user[0].usename  = username
+					user[0].password = password
+					user[0].name 	 = name
+					user[0].last_name= last_name
+					user[0].email 	 = user.email
 					db.session.commit()
 					return True
 		return False
