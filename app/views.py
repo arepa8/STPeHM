@@ -148,3 +148,13 @@ def add_appointment():
 
 	else:
 		return render_template('add_appointment.html', form = form)
+
+@app.route('/delete_appointment', methods=['POST'])
+def delete_appointment():
+	id =  request.json
+	print(id)
+	appointment = Appointment.query.filter_by(id = id).first()
+	db.session.delete(appointment)
+	db.session.commit()
+	#return redirect ('users')
+	return json.dumps({'status':'OK','id':id})

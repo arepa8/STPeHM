@@ -93,8 +93,9 @@ class Role(db.Model):
 class Appointment(db.Model):
     __tablename__ = 'Appointment'
 
-    user = db.Column(db.Integer, db.ForeignKey('User.ci'), primary_key = True)
-    date = db.Column(db.Date, primary_key = True)
+    id = db.Column(db.Integer,primary_key = True)
+    user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    date = db.Column(db.Date,nullable=False)
     description = db.Column(db.String(500),nullable=False)
 
     def __init__(self,user,date,description):
