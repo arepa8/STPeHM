@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="container">
+    <div id="cuerpoHeredado">
+      <br>
+      <h2>Agregar Cita</h2>
+      <form action="{{ url_for('add_appointment') }}" method=POST>
+     
+        {{ form.date.label }}
+        {{ form.date }}
+        {{ form.description.label }}
+        {{ form.description }}
+        {{ form.submit }}
+      </form>
+    </div>
+  </div> 
+{% endblock %}

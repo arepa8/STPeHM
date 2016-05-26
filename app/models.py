@@ -7,6 +7,7 @@ from flask                 import Flask
 from flask.ext.script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 from sqlalchemy import *
 
@@ -20,7 +21,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] =\
     'sqlite:///' + os.path.join(basedir, 'data.sqlite')
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = True
 app.config['SQLALCHEMY_COMMIT_ON_TEARDOWN'] = True
 
 # Instancia de la base de datos.
@@ -43,6 +44,8 @@ class User(db.Model):
     email = db.Column(db.String(255),nullable=False, unique=True)
     role    = db.Column(db.String(255), db.ForeignKey('Role.id'))
     #birthday = db.Column(db.DATE,nullable=False)
+    #appointments = db.relationship('Appointment', backref='user', lazy='dynamic')
+
 
     def __init__(self,ci,username,password,name,last_name,email):
         self.ci = ci
@@ -50,7 +53,7 @@ class User(db.Model):
         self.password = password
         self.name = name
         self.last_name = last_name
-        self.email = email
+        self.email = email  
         #self.birthday = birthday
 	
     @property
@@ -86,6 +89,21 @@ class Role(db.Model):
     
     def __repr__(self):
         return '<Role %r>' % (self.role_name)
+
+class Appointment(db.Model):
+    __tablename__ = 'Appointment'
+
+    user = db.Column(db.Integer, db.ForeignKey('User.ci'), primary_key = True)
+    date = db.Column(db.Date, primary_key = True)
+    description = db.Column(db.String(500),nullable=False)
+
+    def __init__(self,user,date,description):
+        self.user = user
+        self.date = date
+        self.description = description
+
+    def __repr__(self):
+        return '<Appointment %r, %r>' % (self.user, self.date)
 
 
 if __name__ == '__main__':

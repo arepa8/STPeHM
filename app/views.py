@@ -3,12 +3,15 @@ from flask_sqlalchemy import SQLAlchemy
 
 from sqlalchemy import *
 from app import app, lm
-from app.forms import ContactForm
-from app.models import User, Role, db
+from app.forms import ContactForm, AppointmentForm
+from app.models import User,Role,db,Appointment
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
+import datetime
 import json
+
+
 
 #@app.route('/')
 #@app.route('/index')
@@ -35,7 +38,6 @@ def contact():
 		db.session.commit()
 		return redirect ('/')
 		
-
 	elif request.method == 'GET':
 		return render_template('contact.html', form=form)
 
@@ -47,7 +49,6 @@ def show_users():
 		active_user = session['user']
 		roles = Role.query.all()
 		return render_template('show_users.html', users=users, active_user=active_user, roles=roles)
-
 
 # route for handling the login page logic
 @app.route('/', methods=['GET', 'POST'])
@@ -64,7 +65,7 @@ def login():
 	        if user:
 	            if user.password == userPassword:
 	                # Mostramos el nombre en la aplicación
-	                session['user'] = {'name': user.name+' '+user.last_name,'username': user.username}
+	                session['user'] = {'name': user.name+' '+user.last_name,'username': user.username, 'ci': user.ci}
 	                session['logged_in'] = True
 	                flash('You were logged in')
 	                return redirect(url_for('show_users'))
@@ -124,3 +125,26 @@ def add_role():
 def view_role():
 	roles = Role.query.all()
 	return render_template('show_users.html', roles=roles)
+
+
+@app.route('/appointments',methods=['GET', 'POST'])
+def show_appointments():
+	if request.method == 'GET':
+		active_user = session['user']
+		appointments = Appointment.query.filter_by(user= active_user['ci']).all()
+		return render_template('appointments.html', appointments=appointments, active_user=active_user)
+
+@app.route('/add_appointment',methods=['GET', 'POST'])
+def add_appointment():
+
+	form = AppointmentForm(request.form)
+	if request.method == 'POST':
+		active_user = session['user']
+		print("******%s", form.date.data)
+		new_a = Appointment(active_user['ci'],form.date.data,form.description.data)
+		db.session.add(new_a)
+		db.session.commit()
+		return redirect(url_for('show_appointments'))
+
+	else:
+		return render_template('add_appointment.html', form = form)

@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div class="container">
+    <div id="cuerpoHeredado">
+  <!--h1> Bienvenido {{active_user.name}}</h1-->
+      <br>
+      <center><h2>Citas</h2></center>
+      <table>
+        <tr>
+          <th>Fecha</th>
+          <th>Descripción</th>
+          <th></th>
+          <th></th>
+        </tr>
+        {% for a in appointments %}
+          <tr>
+            <td>{{a.date}}</td>
+            <td>{{a.description}}</td>
+            <td>
+              <a href=""><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+            </td>
+            <td>
+              <button id="delete_user"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
+
+            </td>
+          </tr>
+        {% endfor%}
+      </table>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}
