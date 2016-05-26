@@ -8,6 +8,7 @@ from app.models import User,Role,db,Appointment
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
+from app.controllers import appointment
 import datetime
 import json
 
@@ -131,7 +132,8 @@ def view_role():
 def show_appointments():
 	if request.method == 'GET':
 		active_user = session['user']
-		appointments = Appointment.query.filter_by(user= active_user['ci']).all()
+		a = appointment.appointment()
+		appointments= a.getAppointments(active_user['ci'])
 		return render_template('appointments.html', appointments=appointments, active_user=active_user)
 
 @app.route('/add_appointment',methods=['GET', 'POST'])
@@ -140,37 +142,35 @@ def add_appointment():
 	form = AppointmentForm(request.form)
 	if request.method == 'POST':
 		active_user = session['user']
-		new_a = Appointment(active_user['ci'],form.date.data,form.description.data)
-		db.session.add(new_a)
-		db.session.commit()
-		return redirect(url_for('show_appointments'))
-
-	else:
-		title = "Agregar"
-		return render_template('add_appointment.html', form = form, title= title)
+		new_a = appointment.appointment()
+		if new_a.insertAppointment(active_user['ci'],form.date.data,form.description.data):
+			return redirect(url_for('show_appointments'))
+		#else
+		# MENSAJE DE ERROR
+	title = "Agregar"
+	return render_template('add_appointment.html', form = form, title= title)
 
 @app.route('/modify_appointment/<id>',methods=['GET', 'POST'])
 def modify_appointment(id):
 	form = AppointmentForm(request.form)
 	if request.method == 'POST':
-		a = Appointment.query.filter_by(id = id).first()
-		a.date = form.date.data
-		a.description = form.description.data
-		db.session.commit()
-		return redirect(url_for('show_appointments'))
-
-	else:
-		title = "Modificar"
-		a = Appointment.query.filter_by(id = id).first()
-		form = AppointmentForm(request.form, date=a.date, description = a.description)
-		return render_template('add_appointment.html', form = form, title = title, id = id)
+		a = appointment.appointment()
+		modified = a.modifyAppointment(id, form.date.data, form.description.data)
+		if modified:
+			return redirect(url_for('show_appointments'))
+		#else:
+			#MENSAJE DE ERROR
+	title = "Modificar"
+	a = Appointment.query.filter_by(id = id).first()
+	form = AppointmentForm(request.form, date=a.date, description = a.description)
+	return render_template('add_appointment.html', form = form, title = title, id = id)
 
 @app.route('/delete_appointment', methods=['POST'])
 def delete_appointment():
 	id =  request.json
-	print(id)
-	appointment = Appointment.query.filter_by(id = id).first()
-	db.session.delete(appointment)
-	db.session.commit()
-	#return redirect ('users')
-	return json.dumps({'status':'OK','id':id})
+	a = appointment.appointment()
+	deleted = a.deleteAppointment(id)
+	if deleted:
+		return json.dumps({'status':'OK','id':id})
+	else: 
+		return json.dumps({'status':'ERROR','id':id})

@@ -1,10 +1,10 @@
 //JQuery para pasar la informacion al views de eliminar usuario
 
 $(function(){
-    $("#deleteButton").click(function(){
+    $("#deleteButton_appointment").click(function(){
         $("#myModal").hide();
 
-        var id = $("#deleteButton").val();
+        var id = $("#deleteButton_appointment").val();
         console.log(id);
         
         $.ajax({
@@ -27,9 +27,9 @@ $(function(){
 
 // Funciones para controlar la aparicion del modal
 // Get the modal
-var modal = document.getElementById('myModal');
+var modal = document.getElementById('myModal_appointment');
 // Get the button that closes the modal
-var cancel = document.getElementById("cancel_delete");
+var cancel = document.getElementById("cancel_delete_appointment");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
@@ -51,5 +51,5 @@ window.onclick = function(event) {
 function openModal(id) {
     console.log(id);
     modal.style.display = "block";
-    document.getElementById('deleteButton').value =  id;
+    document.getElementById('deleteButton_appointment').value =  id;
 }
