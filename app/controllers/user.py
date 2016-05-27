@@ -23,7 +23,7 @@ class user():
 		check_email 	= (email !=None) and (type(email) == str) 
 
 		if not(check_ci):
-				return {'result':False, 'message':'Error en la cedula: Debe ser un numero entre 1 y 999999999' }
+				return {'result':False, 'message':'Error en la cedula: Debe introducir un valor numerico' }
 
 		if (check_ci and check_username and check_password and check_name and check_last_name and check_email):
 
