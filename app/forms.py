@@ -14,7 +14,14 @@ class ContactForm(Form):
 	role = SelectField("Rol", [validators.Required()], coerce=int)
 	submit = SubmitField("Aceptar", [validators.Required()])
 
-class AppointmentForm(Form):
+class PatientAppointmentForm(Form):
+	doctor = IntegerField("Cédula de indentidad del doctor", [validators.Required()])
+	date = DateField("Fecha", [validators.Required()])
+	description = TextField("Descripción", [validators.Required(), validators.length(max=500)])
+	submit = SubmitField("Aceptar",[validators.Required()])
+
+class DoctorAppointmentForm(Form):
+	patient = IntegerField("Cédula de indentidad del paciente", [validators.Required()])
 	date = DateField("Fecha", [validators.Required()])
 	description = TextField("Descripción", [validators.Required(), validators.length(max=500)])
 	submit = SubmitField("Aceptar",[validators.Required()])

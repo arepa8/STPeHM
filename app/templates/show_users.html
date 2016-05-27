@@ -4,11 +4,9 @@
   <div class = "leftPanel">
     <ul>
       <li><a class="active" href="#home">Home</a></li>
-      <li><a ng-show="userRole =='Medico' || false" href="{{ url_for('show_appointments') }}">
       {% if not active_user.role == 'Administrador' %}
-      Mis citas
+      <li><a ng-show="userRole =='Medico' || false" href="{{ url_for('show_appointments') }}">Mis citas</a></li>
       {% endif %}
-      </a></li>
     </ul>
     <div style="margin-left:10%;padding:1px 16px;height:1000px;">
       <h1> Bienvenido, {{active_user.role}} {{active_user.name}}.</h1>

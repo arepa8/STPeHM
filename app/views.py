@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from sqlalchemy import *
 from app import app, lm
-from app.forms import ContactForm, AppointmentForm
+from app.forms import ContactForm, PatientAppointmentForm, DoctorAppointmentForm
 from app.models import User,Role,db,Appointment
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
@@ -129,37 +129,65 @@ def show_appointments():
 	if request.method == 'GET':
 		active_user = session['user']
 		a = appointment.appointment()
-		appointments= a.getAppointments(active_user['ci'])
+		if active_user['role'] == 'Paciente':
+			appointments = a.getAppointmentsByPatient(active_user['ci'])
+		else:
+			appointments = a.getAppointmentsByDoctor(active_user['ci'])
 		return render_template('appointments.html', appointments=appointments, active_user=active_user)
 
 @app.route('/add_appointment',methods=['GET', 'POST'])
 def add_appointment():
-
-	form = AppointmentForm(request.form)
-	if request.method == 'POST':
-		active_user = session['user']
-		new_a = appointment.appointment()
-		if new_a.insertAppointment(active_user['ci'],form.date.data,form.description.data):
-			return redirect(url_for('show_appointments'))
-		#else
-		# MENSAJE DE ERROR
-	title = "Agregar"
-	return render_template('add_appointment.html', form = form, title= title)
+	active_user = session['user']
+	if active_user['role'] == 'Paciente':
+		form = PatientAppointmentForm(request.form)
+		if request.method == 'POST':
+			new_a = appointment.appointment()
+			if new_a.insertAppointment(active_user['ci'],form.doctor.data,form.date.data,form.description.data):
+				return redirect(url_for('show_appointments'))
+			else:
+				print('Error')
+		title = "Agregar"
+		return render_template('add_appointment.html', form = form, title= title)
+	else:
+		form = DoctorAppointmentForm(request.form)
+		if request.method == 'POST':
+			new_a = appointment.appointment()
+			if new_a.insertAppointment(form.patient.data,active_user['ci'],form.date.data,form.description.data):
+				return redirect(url_for('show_appointments'))
+			else:
+				print('Error')
+		title = "Agregar"
+		return render_template('add_appointment.html', form = form, title= title)
 
 @app.route('/modify_appointment/<id>',methods=['GET', 'POST'])
 def modify_appointment(id):
-	form = AppointmentForm(request.form)
-	if request.method == 'POST':
-		a = appointment.appointment()
-		modified = a.modifyAppointment(id, form.date.data, form.description.data)
-		if modified:
-			return redirect(url_for('show_appointments'))
-		#else:
-			#MENSAJE DE ERROR
-	title = "Modificar"
-	a = Appointment.query.filter_by(id = id).first()
-	form = AppointmentForm(request.form, date=a.date, description = a.description)
-	return render_template('add_appointment.html', form = form, title = title, id = id)
+	active_user = session['user']
+	if active_user['role'] == 'Paciente':
+		form = PatientAppointmentForm(request.form)
+		if request.method == 'POST':
+			a = appointment.appointment()
+			modified = a.modifyAppointment(id, form.date.data, form.description.data)
+			if modified:
+				return redirect(url_for('show_appointments'))
+			#else:
+				#MENSAJE DE ERROR
+		title = "Modificar"
+		a = Appointment.query.filter_by(id = id).first()
+		form = PatientAppointmentForm(request.form,doctor=a.doctor, date=a.date, description = a.description)
+		return render_template('add_appointment.html', form = form, title = title, id = id)
+	else:
+		form = DoctorAppointmentForm(request.form)
+		if request.method == 'POST':
+			a = appointment.appointment()
+			modified = a.modifyAppointment(id, form.date.data, form.description.data)
+			if modified:
+				return redirect(url_for('show_appointments'))
+			#else:
+				#MENSAJE DE ERROR
+		title = "Modificar"
+		a = Appointment.query.filter_by(id = id).first()
+		form = DoctorAppointmentForm(request.form,patient=a.patient, date=a.date, description = a.description)
+		return render_template('add_appointment.html', form = form, title = title, id = id)
 
 @app.route('/delete_appointment', methods=['POST'])
 def delete_appointment():

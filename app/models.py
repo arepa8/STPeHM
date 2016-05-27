@@ -95,17 +95,19 @@ class Appointment(db.Model):
     __tablename__ = 'Appointment'
 
     id = db.Column(db.Integer,primary_key = True)
-    user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    patient = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    doctor = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
     date = db.Column(db.Date,nullable=False)
     description = db.Column(db.String(500),nullable=False)
 
-    def __init__(self,user,date,description):
-        self.user = user
+    def __init__(self,patient,doctor,date,description):
+        self.patient = patient
+        self.doctor = doctor
         self.date = date
         self.description = description
 
     def __repr__(self):
-        return '<Appointment %r, %r>' % (self.user, self.date)
+        return '<Appointment patient: %r, doctor: %r, date: %r>' % (self.patient, self.doctor, self.date)
 
 
 if __name__ == '__main__':
