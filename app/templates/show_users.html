@@ -4,11 +4,16 @@
   <div class = "leftPanel">
     <ul>
       <li><a class="active" href="#home">Home</a></li>
-      <li><a ng-show="userRole =='Medico' || false" href="{{ url_for('show_appointments') }}">Mis Citas</a></li>
+      <li><a ng-show="userRole =='Medico' || false" href="{{ url_for('show_appointments') }}">
+      {% if not active_user.role == 'Administrador' %}
+      Mis citas
+      {% endif %}
+      </a></li>
     </ul>
     <div style="margin-left:10%;padding:1px 16px;height:1000px;">
-      <h1> Bienvenido {{active_user.role}} {{active_user.name}}</h1>
+      <h1> Bienvenido, {{active_user.role}} {{active_user.name}}.</h1>
           <!-- Modal content -->
+        {% if active_user.role == 'Administrador' %}
         <div id="myModal" class="modal-content">
           <div class="modal-header">
             <span class="close">×</span>
@@ -79,8 +84,9 @@
           <td>{{ role.role_descripcion }}</td>
           <td></td>
         </tr>
-        {% endfor%}
+        {% endfor %}
       </table>
+    {% endif %}
     </div>  
   </div>
 </div>

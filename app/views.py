@@ -36,7 +36,7 @@ def show_users():
 		print(session)
 		active_user = session['user']
 		roles = Role.query.all()
-		return render_template('show_users.html', users=users, active_user=active_user, roles=roles,userRole=active_user['role'])
+		return render_template('show_users.html', users=users, active_user=active_user, roles=roles)
 
 # route for handling the login page logic
 @app.route('/', methods=['GET', 'POST'])
