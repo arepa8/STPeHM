@@ -1,5 +1,5 @@
 from wtforms.fields.html5 import DateField
-from wtforms import TextField, BooleanField,Form, TextAreaField, SubmitField, IntegerField, PasswordField, DateTimeField, validators
+from wtforms import TextField, BooleanField,Form, TextAreaField, SubmitField, IntegerField, PasswordField, DateTimeField, validators, SelectField
 from wtforms.validators import Required, ValidationError
 #from wtforms.validators import DataRequired
 
@@ -11,6 +11,7 @@ class ContactForm(Form):
 	last_name = TextField("Apellido", [validators.Required()])
 	email = TextField("Correo electrónico", [validators.Required()])
 	#birthday = DateField('DatePicker', format='%Y-%m-%d')
+	role = SelectField("Rol", [validators.Required()], coerce=int)
 	submit = SubmitField("Aceptar", [validators.Required()])
 
 class AppointmentForm(Form):

@@ -13,7 +13,7 @@ CONST_MIN			= 1
 class user():
 	""" Controlador de User """
 
-	def insertUser(self, ci, username, password, name, last_name, email):
+	def insertUser(self, ci, username, password, name, last_name, email,role):
 		
 		check_ci 		= (ci !=None) and (type(ci) == int)
 		check_username	= (username !=None) and (type(username) == str)
@@ -67,7 +67,7 @@ class user():
 
 			else:
 				
-				new_user = User(ci,username,password,name,last_name,email)
+				new_user = User(ci,username,password,name,last_name,email,role)
 				db.session.add(new_user)
 				db.session.commit()
 				return {'result':True, 'message':'Usted ha sido registrado exitosamente'}
@@ -109,7 +109,7 @@ class user():
 
 		return check_if_exist != []
 
-	def updateUser(self,username, password, name, last_name, email):
+	def updateUser(self,username, password, name, last_name, email, role):
 		
 		check_password	= (type(password) == str) 
 		check_name 		= (name !=None) and (type(name) == str)
@@ -145,6 +145,7 @@ class user():
 				user[0].name 	 = name
 				user[0].last_name= last_name
 				user[0].email 	 = user.email
+				user[0].role	 = role
 				db.session.commit()
 				return {'result':True, 'message':'Usuario actualizado exitosamente'}
 

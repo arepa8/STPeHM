@@ -47,13 +47,14 @@ class User(db.Model):
     #appointments = db.relationship('Appointment', backref='user', lazy='dynamic')
 
 
-    def __init__(self,ci,username,password,name,last_name,email):
+    def __init__(self,ci,username,password,name,last_name,email,role):
         self.ci = ci
         self.username = username
         self.password = password
         self.name = name
         self.last_name = last_name
         self.email = email  
+        self.role = role  
         #self.birthday = birthday
 	
     @property

@@ -15,9 +15,11 @@ import json
 @app.route('/index',methods=['GET', 'POST'])
 def contact():
 	form = ContactForm(request.form)
+	form.role.choices = [(r.id,r.role_name) for r in Role.query.order_by('role_name')]
 	if request.method == 'POST':
 		new_user = user.user()
-		result = new_user.insertUser(form.ci.data,form.username.data,form.password.data,form.name.data,form.last_name.data,form.email.data)
+		print(form.role.data)
+		result = new_user.insertUser(form.ci.data,form.username.data,form.password.data,form.name.data,form.last_name.data,form.email.data,form.role.data)
 		
 		if result['result']:
 			return redirect(url_for('login'))
@@ -34,7 +36,7 @@ def show_users():
 		print(session)
 		active_user = session['user']
 		roles = Role.query.all()
-		return render_template('show_users.html', users=users, active_user=active_user, roles=roles)
+		return render_template('show_users.html', users=users, active_user=active_user, roles=roles,userRole=active_user['role'])
 
 # route for handling the login page logic
 @app.route('/', methods=['GET', 'POST'])
@@ -50,8 +52,14 @@ def login():
 
 	        if user:
 	            if user.password == userPassword:
-	                # Mostramos el nombre en la aplicación
-	                session['user'] = {'name': user.name+' '+user.last_name,'username': user.username, 'ci': user.ci}
+
+	                # Mostramos y asignamos el nombre del rol.
+	                role = None
+	                if user.role == '1': role = 'Medico'
+                	if user.role == '2': role = 'Paciente'
+                	if user.role == '3': role = 'Administrador'
+
+	                session['user'] = {'name': user.name+' '+user.last_name,'username': user.username, 'ci': user.ci, 'role': role}
 	                session['logged_in'] = True
 	                flash('You were logged in')
 	                return redirect(url_for('show_users'))
@@ -69,6 +77,7 @@ def logout():
 @app.route('/modify_user/<ci>', methods=['GET', 'POST'])
 def modify_user(ci):
 	form = ContactForm(request.form)
+	form.role.choices = [(r.id,r.role_name) for r in Role.query.order_by('role_name')]
 	if request.method == 'POST' :#and form.validate():
 		user = User.query.filter_by(ci = ci).first()
 		if user == None:
@@ -78,6 +87,7 @@ def modify_user(ci):
 		user.name = form.name.data
 		user.last_name = form.last_name.data
 		user.email = form.email.data
+		user.role = form.role.data
 		db.session.commit()
 
 		return redirect('users')
@@ -85,7 +95,8 @@ def modify_user(ci):
 	elif request.method == 'GET':
 		user = User.query.filter_by(ci = ci).first()
 		form = ContactForm(request.form, password=user.password, name=user.name, last_name=user.last_name, email=user.email)
-		
+		form.role.choices = [(r.id,r.role_name) for r in Role.query.order_by('role_name')]
+
 		return render_template('modify_user.html', form=form, ci=ci, username=user.username, password=user.password)
 
 @app.route('/delete_user', methods=['POST'])

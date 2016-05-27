@@ -4,10 +4,10 @@
   <div class = "leftPanel">
     <ul>
       <li><a class="active" href="#home">Home</a></li>
-      <li><a href="{{ url_for('show_appointments') }}">Mis Citas</a></li>
+      <li><a ng-show="userRole =='Medico' || false" href="{{ url_for('show_appointments') }}">Mis Citas</a></li>
     </ul>
     <div style="margin-left:10%;padding:1px 16px;height:1000px;">
-      <h1> Bienvenido {{active_user.name}}</h1>
+      <h1> Bienvenido {{active_user.role}} {{active_user.name}}</h1>
           <!-- Modal content -->
         <div id="myModal" class="modal-content">
           <div class="modal-header">
@@ -31,6 +31,7 @@
             <th>Nombre</th> 
             <th>Apellido</th>
             <th>Correo electrónico</th>
+            <th> Rol </th>
             <th></th>
           </tr>
           {% for user in users %}
@@ -40,6 +41,7 @@
               <td>{{user.name}}</td>
               <td>{{user.last_name}}</td> 
               <td>{{user.email}}</td>
+              <td>{{user.role}}</td>
               <td>
                 <a href="{{ url_for('modify_user', ci=user.ci) }}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
                 <button id="deleteButton" value= "{{user.ci}}" onclick="openModal({{user.ci}})" name="ci"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
