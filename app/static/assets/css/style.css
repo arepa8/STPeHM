@@ -229,6 +229,25 @@ form input#submit:hover{
 }
 
 /* Button */
+
+#delete_appointment{
+  background: transparent;
+  border: 0;
+  padding: 0px 0px 0px 30px;
+}
+
+#delete_user{
+  background: transparent;
+  border: 0;
+  padding: 0px 0px 0px 30px;
+}
+
+#show-add-role{
+  background: transparent;
+  border: 0;
+  padding: 0px 0px 0px 30px;
+}
+
 #buttonC{
   width:250px;
   height:50px;
@@ -328,4 +347,58 @@ box-shadow: none;
   color: #444;
   display: block;
   margin-top: 12px;
+}
+
+/* Mensajes */
+.error {
+background: #FDD1C5;
+background-position: 15px 50%; /* x-pos y-pos */
+text-align: left;
+padding: 5px 20px 5px 45px;
+border-top: 2px solid #FBAB95;
+border-bottom: 2px solid #FBAB95;
+color:#000000;
+margin-top: 30px;
+
+}
+
+.exito {
+
+background: rgba(0, 0, 0, 0.15);
+background-position: 15px 50%;
+text-align: left;
+padding: 5px 20px 5px 45px;
+border-top: 2px solid #64C158;
+border-bottom: 2px solid #64C158;
+color: #36FF09;
+
+}
+
+/* Panel */
+
+.leftPanel ul {
+    list-style-type: none;
+    padding: 41px 0px 0px 0px;
+    width: 137px;
+    background-color: rgba(210, 210, 210, 0.58);
+    position: fixed;
+    height: 240px;
+    overflow: auto;
+}
+
+.leftPanel li a {
+    display: block;
+    color: #000;
+    padding: 8px 0 8px 16px;
+    text-decoration: none;
+}
+
+.leftPanel li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.leftPanel li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
 }

@@ -8,37 +8,22 @@ from app.models import User,Role,db,Appointment
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
-from app.controllers import appointment
+from app.controllers import appointment, user
 import datetime
 import json
-
-
-
-#@app.route('/')
-#@app.route('/index')
-#def index():
-#        return render_template('index.html',
-#                            conf = app.config)
-
-
-#db = SQLAlchemy(app)
-# @app.route('/',methods=['GET', 'POST'])
-# def index():
-# 	if request.method == 'GET':
-# 		usuarios = User.query.all()
-# 		for user in usuarios:
-# 			print(user.name)
-# 		return render_template('index.html')
 
 @app.route('/index',methods=['GET', 'POST'])
 def contact():
 	form = ContactForm(request.form)
 	if request.method == 'POST':
-		new_user = User(form.ci.data,form.username.data,form.password.data,form.name.data,form.last_name.data,form.email.data)
-		db.session.add(new_user)
-		db.session.commit()
-		return redirect ('/')
+		new_user = user.user()
+		result = new_user.insertUser(form.ci.data,form.username.data,form.password.data,form.name.data,form.last_name.data,form.email.data)
 		
+		if result['result']:
+			return redirect(url_for('login'))
+		else:
+			return render_template('contact.html', form=form, mensaje=result['message'])
+
 	elif request.method == 'GET':
 		return render_template('contact.html', form=form)
 

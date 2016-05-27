@@ -1,72 +1,85 @@
 {% extends "layout.html" %}
 {% block content %}
-  <div class="container">
-    <div id="cuerpoHeredado">
-  <h1> Bienvenido {{active_user.name}}</h1>
-      <center><h2>Datos de los usuarios</h2></center>
-      <table>
-        <tr>
-          <th>Cédula de Identidad</th>
-          <th>Username</th>
-          <th>Nombre</th> 
-          <th>Apellido</th>
-          <th>Correo electrónico</th>
-          <th></th>
-          <th></th>
-        </tr>
-        {% for user in users %}
-          <tr id="{{user.ci}}">
-            <td>{{user.ci}}</td>
-            <td>{{user.username}}</td>
-            <td>{{user.name}}</td>
-            <td>{{user.last_name}}</td> 
-            <td>{{user.email}}</td>
-            <td>
-              <a href="{{ url_for('modify_user', ci=user.ci) }}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
-            </td>
-            <td>
-              <button id="delete_user" value= "{{user.ci}}" onclick="openModal({{user.ci}})" name="ci"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
-
-            </td>
+<div id="cuerpoHeredado">
+  <div class = "leftPanel">
+    <ul>
+      <li><a class="active" href="#home">Home</a></li>
+      <li><a href="{{ url_for('show_appointments') }}">Mis Citas</a></li>
+    </ul>
+    <div style="margin-left:10%;padding:1px 16px;height:1000px;">
+      <h1> Bienvenido {{active_user.name}}</h1>
+          <!-- Modal content -->
+        <div id="myModal" class="modal-content">
+          <div class="modal-header">
+            <span class="close">×</span>
+            <h2></h2>
+          </div>
+          <div class="modal-body">
+            <p>¿Está seguro de que desea eliminar el usuario?</p>
+            <button id="deleteButton">Eliminar</button>
+            <button id="cancel_delete">Cancelar</button>
+          </div>
+          <div class="modal-footer">
+            <h3></h3>
+          </div>
+        </div>
+        <center><h2>Gestión de Usuarios</h2></center>
+        <table>
+          <tr>
+            <th>Cédula de Identidad</th>
+            <th>Username</th>
+            <th>Nombre</th> 
+            <th>Apellido</th>
+            <th>Correo electrónico</th>
+            <th></th>
           </tr>
+          {% for user in users %}
+            <tr id="{{user.ci}}">
+              <td>{{user.ci}}</td>
+              <td>{{user.username}}</td>
+              <td>{{user.name}}</td>
+              <td>{{user.last_name}}</td> 
+              <td>{{user.email}}</td>
+              <td>
+                <a href="{{ url_for('modify_user', ci=user.ci) }}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+                <button id="delete_user" value= "{{user.ci}}" onclick="openModal({{user.ci}})" name="ci"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
+
+              </td>
+            </tr>
+          {% endfor%}
+        </table>
+         <br>
+         <br> 
+        <center><h2>Gestión de Roles</h2></center>
+        <div class="col-xs-12 show-add-role" style="display:none;">
+          <br>
+          <br>
+          <form action="{{ url_for('add_role') }}" method=POST>
+          <span>Agregar nuevo rol: </span>
+          <input id="role" name="role" type="role">
+
+          <button id = "add-role">Agregar</button>
+          </form>
+         <br>
+         <br> 
+        </div>
+        <table>
+        <tr>
+          <th>Rol</th>
+          <th>Descripción</th>
+          <th style="text-align: right">
+             <button id="show-add-role"> <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i></button>
+          </th>
+        </tr>
+        {% for role in roles %}
+        <tr>
+          <td>{{ role.role_name }}</td>
+          <td>{{ role.role_descripcion }}</td>
+          <td></td>
+        </tr>
         {% endfor%}
       </table>
-      <center><h2>Gestión de roles</h2></center>
-      <br>
-      <button id="show-add-role">Agregar rol</button>
-      <button id="show-view-role">Ver roles</button>
-      <br>
-      <br>
-      <div class="col-xs-12 show-add-role" style="display:none;">
-        <form action="{{ url_for('add_role') }}" method=POST>
-        <span>Agregar nuevo rol: </span><input id="role" name="role" type="role">
-        <button id = "add-role">Agregar</button>
-      </div>
-      <br>
-      <br>
-      <div class="col-xs-12 show-view-role" style="display:none;">
-      <h3> Roles agregados </h3>
-      {% for role in roles %}
-        <p>{{ role.role_name }}</p>
-      {% endfor %}
-      </div>
-    </div>
-  </div>
-
-<!-- Modal content -->
-<div id="myModal" class="modal-content">
-  <div class="modal-header">
-    <span class="close">×</span>
-    <h2></h2>
-  </div>
-  <div class="modal-body">
-    <p>¿Está seguro de que desea eliminar el usuario?</p>
-    <button id="deleteButton">Eliminar</button>
-    <button id="cancel_delete">Cancelar</button>
-  </div>
-  <div class="modal-footer">
-    <h3></h3>
+    </div>  
   </div>
 </div>
-
 {% endblock %}

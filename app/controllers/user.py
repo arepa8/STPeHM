@@ -15,12 +15,12 @@ class user():
 
 	def insertUser(self, ci, username, password, name, last_name, email):
 		
-		check_ci 		= type(ci) == int
-		check_username	= type(username) == str
-		check_password	= type(password) == str 
-		check_name 		= type(name) == str
-		check_last_name = type(last_name) == str
-		check_email 	= type(email) == str 
+		check_ci 		= (ci !=None) and (type(ci) == int)
+		check_username	= (username !=None) and (type(username) == str)
+		check_password	= (password!=None) and (type(password) == str) 
+		check_name 		= (name !=None) and (type(name) == str)
+		check_last_name = (last_name !=None) and (type(last_name) == str)
+		check_email 	= (email !=None) and (type(email) == str) 
 
 		if (check_ci and check_username and check_password and check_name and check_last_name and check_email):
 
@@ -31,17 +31,52 @@ class user():
 			check_long_last_name= CONST_MIN <= len(last_name) <= CONST_MAX_NAME_MAIL
 			check_long_email 	= CONST_MIN <= len(email) <= CONST_MAX_NAME_MAIL
 
-			if (check_long_ci and check_long_username and check_long_password and check_long_name and check_long_last_name and check_long_email):
+			if not(check_long_ci):
+				return {'result':False, 'message':'Error en la cedula: Debe intruducir un valor entre 1 y 999999999' }
 
-				check_if_exist = User.query.filter_by(username=username).first()
+			if not(check_long_username):
+				return {'result':False, 'message':'Error en el nombre de usuario: Debe tener máximo 50 caracteres' }
 
-				if check_if_exist != []:
+			if not(check_long_password):
+				return {'result':False, 'message':'Error en el contraseña: Debe tener máximo 16 caracteres' }
 
-					new_user = User(ci,username,password,name,last_name,email)
-					db.session.add(new_user)
-					db.session.commit()
-					return True
-		return False
+			if not(check_long_name):
+				return {'result':False, 'message':'Error en el nombre: Debe tener máximo 255 caracteres' }
+
+			if not(check_long_last_name):
+				return {'result':False, 'message':'Error en el apellido: Debe tener máximo 255 caracteres' }
+
+			if not(check_long_email):
+				return {'result':False, 'message':'Error en el correo: Debe tener máximo 255 caracteres' }
+
+			
+			check_if_exist = User.query.filter_by(username=username).first()
+
+			if check_if_exist != None:
+				return {'result':False, 'message':'El nombre de usuario ya esta registrado' }
+
+			check_if_exist = User.query.filter_by(ci=ci).first()
+
+			if check_if_exist != None:
+				return {'result':False, 'message':'La cedula ya esta registrada' }
+
+			check_if_exist = User.query.filter_by(email=email).first()
+
+			if check_if_exist != None:
+				return {'result':False, 'message':'El correo electronico ya esta registrado' }
+
+			else:
+				
+				new_user = User(ci,username,password,name,last_name,email)
+				db.session.add(new_user)
+				db.session.commit()
+				return {'result':True, 'message':'Usted ha sido registrado exitosamente'}
+
+		else :
+			return {'result':False, 'message':'Asegurese de llenar todos los campos' }
+
+		return  {'result':False, 'message':'Lo lamentamos! Ha ocurrido un error, intentelo mas tarde' }
+
 
 	def getUser(self, username):
 		
@@ -74,36 +109,46 @@ class user():
 
 		return check_if_exist != []
 
-	def updateUser(self, ci, username, password, name, last_name, email):
-		check_ci 		= type(ci) == int
-		check_username	= type(username) == str
-		check_password	= type(password) == str 
-		check_name 		= type(name) == str
-		check_last_name = type(last_name) == str
-		check_email 	= type(email) == str 
+	def updateUser(self,username, password, name, last_name, email):
+		
+		check_password	= (type(password) == str) 
+		check_name 		= (name !=None) and (type(name) == str)
+		check_last_name = (last_name !=None) and (type(last_name) == str)
+		check_email 	= (email !=None) and (type(email) == str) 
 
-		if (check_ci and check_username and check_password and check_name and check_last_name and check_email):
+		if (check_password and check_name and check_last_name and check_email):
 
-			check_long_ci 		= CONST_MIN <= ci <= CONST_MAX_CI
-			check_long_username = CONST_MIN <= len(username) <= CONST_MAX_USERNAME
 			check_long_password = CONST_MIN <= len(password) <= CONST_MAX_PASSWORD
 			check_long_name 	= CONST_MIN <= len(name) <= CONST_MAX_NAME_MAIL
 			check_long_last_name= CONST_MIN <= len(last_name) <= CONST_MAX_NAME_MAIL
 			check_long_email 	= CONST_MIN <= len(email) <= CONST_MAX_NAME_MAIL
 
-			if (check_long_ci and check_long_username and check_long_password and check_long_name and check_long_last_name and check_long_email):
+			
+			if not(check_long_password):
+				return {'result':False, 'message':'Error en el contraseña: Debe tener máximo 16 caracteres' }
 
-				check_if_exist = self.existUser(username)
+			if not(check_long_name):
+				return {'result':False, 'message':'Error en el nombre: Debe tener máximo 255 caracteres' }
 
-				if (check_if_exist):
+			if not(check_long_last_name):
+				return {'result':False, 'message':'Error en el apellido: Debe tener máximo 255 caracteres' }
 
-					user = User.query.filter_by(username=username).first()
-					user[0].ci 		 = ci
-					user[0].usename  = username
-					user[0].password = password
-					user[0].name 	 = name
-					user[0].last_name= last_name
-					user[0].email 	 = user.email
-					db.session.commit()
-					return True
-		return False
+			if not(check_long_email):
+				return {'result':False, 'message':'Error en el correo: Debe tener máximo 255 caracteres' }
+
+			check_if_exist = self.existUser(username)
+
+			if (check_if_exist):
+
+				user = User.query.filter_by(username=username).first()
+				user[0].password = password
+				user[0].name 	 = name
+				user[0].last_name= last_name
+				user[0].email 	 = user.email
+				db.session.commit()
+				return {'result':True, 'message':'Usuario actualizado exitosamente'}
+
+		else :
+			return {'result':False, 'message':'Asegurese de llenar todos los campos' }
+
+		return  {'result':False, 'message':'Lo lamentamos! Ha ocurrido un error, intentelo mas tarde' }

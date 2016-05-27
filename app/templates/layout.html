@@ -33,19 +33,16 @@
           </button>
           <a class="navbar-brand" href="{{ url_for('login') }}">STPeHM</a>
         </div>
+
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">
-          <a class="navbar" href="{{ url_for('logout') }}">Salir</a>
-          <!--<li><a href="#">Sign up</a></li>
-            <li><a href="#">Sign in</a></li>-->
+            <li><a href="{{ url_for('logout') }}">Salir</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </div>
-    <div>
-      {% block content %}
-      {% endblock %}
-    </div>  
+    {% block content %}
+    {% endblock %} 
    
     <div id="footer">
       {% block footer %}

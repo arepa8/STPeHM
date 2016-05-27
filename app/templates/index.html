@@ -2,6 +2,9 @@
 {% block content %}
   <div id="header">
     <div class="container">
+      {% if mensaje %}
+        <p class="exito"> <i class="fa fa-check-circle-o"></i> {{ mensaje }}</p>
+      {% endif %}  
       <center>
         <div class="login">
           <div class="login-screen">
@@ -12,18 +15,18 @@
               <form action="" method="post">
                 <div class="control-group">
                   <input type="text" class="login-field" placeholder="Username" name="username" value="{{
-                  request.form.username }}">
+                  request.form.username }}" style= 'width: 264px'>
                   <label class="login-field-icon fui-user" for="login-name"></label>
                 </div>
                 <div class="control-group">
                   <input type="password" class="login-field" placeholder="Password" name="password" value="{{
-                  request.form.password }}">
+                  request.form.password }}" style= 'width: 264px'>
                   <label class="login-field-icon fui-lock" for="login-pass"></label>
                 </div>
-                <input class="btn btn-default" type="submit" value="Login">
+                <input class="btn btn-default" type="submit" value="Login" style= 'width: 264px'>
               </form>
               {% if error %}
-                <p class="error"><strong>Error:</strong> {{ error }}
+                <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>Error:</strong> {{ error }}</p>
               {% endif %}
               <a href="{{ url_for('contact')}}" id="registrarse"><b>Registrarse</b></a>
             
