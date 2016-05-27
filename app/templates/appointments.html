@@ -4,15 +4,15 @@
     <div id="cuerpoHeredado">
       <center><h2>Citas</h2></center>
       <!-- Modal content -->
-      <div id="myModal" class="modal-content">
+      <div id="myModal_appointment" class="modal-content">
         <div class="modal-header">
           <span class="close">×</span>
           <h2></h2>
         </div>
         <div class="modal-body">
           <p>¿Está seguro de que desea eliminar la cita?</p>
-          <button id="deleteButton">Eliminar</button>
-          <button id="cancel_delete">Cancelar</button>
+          <button id="deleteButton_appointment">Eliminar</button>
+          <button id="cancel_delete_appointment">Cancelar</button>
         </div>
         <div class="modal-footer">
           <h3></h3>
@@ -34,7 +34,7 @@
             <td>{{a.description}}</td>
             <td style="text-align: right">
               <a href="{{ url_for('modify_appointment', id=a.id) }}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
-              <button id="delete_appointment"  onclick="openModal({{a.id}})"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
+              <button id="deleteButton_appointment"  onclick="openModal({{a.id}})"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
             </td>
           </tr>
         {% endfor%}

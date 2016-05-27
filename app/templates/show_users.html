@@ -42,7 +42,7 @@
               <td>{{user.email}}</td>
               <td>
                 <a href="{{ url_for('modify_user', ci=user.ci) }}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
-                <button id="delete_user" value= "{{user.ci}}" onclick="openModal({{user.ci}})" name="ci"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
+                <button id="deleteButton" value= "{{user.ci}}" onclick="openModal({{user.ci}})" name="ci"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
 
               </td>
             </tr>
