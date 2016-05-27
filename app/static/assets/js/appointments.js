@@ -29,12 +29,12 @@ $(function(){
 // Get the modal
 var modal = document.getElementById('myModal_appointment');
 // Get the button that closes the modal
-var cancel = document.getElementById("cancel_delete_appointment");
+var cancel_appointment = document.getElementById("cancel_delete_appointment");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, close the modal 
-cancel.onclick = function() {
+cancel_appointment.onclick = function() {
     modal.style.display = "none";
 }
 // When the user clicks on <span> (x), close the modal

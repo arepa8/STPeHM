@@ -22,6 +22,9 @@ class user():
 		check_last_name = (last_name !=None) and (type(last_name) == str)
 		check_email 	= (email !=None) and (type(email) == str) 
 
+		if not(check_ci):
+				return {'result':False, 'message':'Error en la cedula: Debe introducir un valor numerico' }
+
 		if (check_ci and check_username and check_password and check_name and check_last_name and check_email):
 
 			check_long_ci 		= CONST_MIN <= ci <= CONST_MAX_CI

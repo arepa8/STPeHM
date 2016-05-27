@@ -1,10 +1,10 @@
 //JQuery para pasar la informacion al views de eliminar usuario
 
 $(function(){
-    $("#deleteButton").click(function(){
-        $("#myModal").hide();
+    $("#deleteButton_user").click(function(){
+        $("#myModal_user").hide();
 
-        var ci = $("#deleteButton").val();
+        var ci = $("#deleteButton_user").val();
         console.log(ci);
         
         $.ajax({
@@ -27,16 +27,14 @@ $(function(){
 
 // Funciones para controlar la aparicion del modal
 // Get the modal
-var modal = document.getElementById('myModal');
-// Get the button that opens the modal
-var btn = document.getElementById("delete_user");
+var modal_user = document.getElementById('myModal_user');
 // Get the button that closes the modal
-var cancel = document.getElementById("cancel_delete");
+var cancel_user = document.getElementById("cancel_user");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, close the modal 
-cancel.onclick = function() {
+cancel_user.onclick = function() {
     modal.style.display = "none";
 }
 // When the user clicks on <span> (x), close the modal
@@ -50,8 +48,8 @@ window.onclick = function(event) {
     }
 }
 // When the user clicks on the button, open the modal 
-function openModal(ci) {
+function openModal_user(ci) {
     console.log(ci);
-    modal.style.display = "block";
-    document.getElementById('deleteButton').value =  ci;
+    modal_user.style.display = "block";
+    document.getElementById('deleteButton_user').value =  ci;
 }
