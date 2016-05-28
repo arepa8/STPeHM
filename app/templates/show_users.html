@@ -1,5 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
+<!--GESTION DE USUARIOs-->
+
 <div id="cuerpoHeredado">
   <div class = "leftPanel">
     <ul>
@@ -53,21 +55,37 @@
             </tr>
           {% endfor%}
         </table>
+
+<!--GESTION DE ROLES-->
          <br>
          <br> 
         <center><h2>Gestión de Roles</h2></center>
+        <!--AGREGAR ROL-->        
         <div class="col-xs-12 show-add-role" style="display:none;">
           <br>
           <br>
-          <form action="{{ url_for('add_role') }}" method=POST>
+          <!--form action="{{ url_for('add_role') }}" method=POST-->
           <span>Agregar nuevo rol: </span>
-          <input id="role" name="role" type="role">
-
-          <button id = "add-role">Agregar</button>
-          </form>
+          <input id="add-role-input" name="role" type="role">
+          <button id = "add-role">Aceptar</button>
+          <!--/form-->
          <br>
          <br> 
         </div>
+        <!--MODIFICAR ROL-->    
+        <div class="col-xs-12 show-modify-role" style="display:none;">
+          <br>
+          <br>
+          <!--form action="{{ url_for('modify_role') }}" method=POST-->
+          <span>Modificar rol: </span>
+          <input id="modify-role-input" name="role" type="role">
+
+          <button id = "modify-role-form">Aceptar</button>
+          <!--/form-->
+         <br>
+         <br> 
+        </div>
+        <!-- TABLA DE ROLES-->    
         <table>
         <tr>
           <th>Rol</th>
@@ -80,7 +98,9 @@
         <tr>
           <td>{{ role.role_name }}</td>
           <td>{{ role.role_descripcion }}</td>
-          <td></td>
+          <td>
+            <button id="modify-role" name="{{role.role_name}}" value="{{role.id}}" onclick="show_modify_role({{role.id}},'{{role.role_name}}')"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></button>
+            <button id="delete-role" value= "{{role.id}}" onclick="delete_role({{role.id}})"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button></td>
         </tr>
         {% endfor %}
       </table>

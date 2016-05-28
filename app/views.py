@@ -8,10 +8,11 @@ from app.models import User,Role,db,Appointment
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
-from app.controllers import appointment, user
+from app.controllers import appointment, user, role
 import datetime
 import json
 
+# GESTION DE USUARIOS
 @app.route('/index',methods=['GET', 'POST'])
 def contact():
 	form = ContactForm(request.form)
@@ -109,21 +110,47 @@ def delete_user():
 	#return redirect ('users')
 	return json.dumps({'status':'OK','ci':ci})
 
+# GESTION DE ROLES
 @app.route('/add_role',methods=['POST'])
 def add_role():
-	role = request.json
-	print(role)
-	new_role = Role (role_name=role)
-	db.session.add(new_role)
-	db.session.commit()
-	return json.dumps({'status':'OK','role':role})
+	name = request.json
+	new_role = role.role()
+	created = new_role.createRole(name)
+	if created == True: 
+		return json.dumps({'status':'OK','role':name})
+	else:
+		return json.dumps({'status':'ERROR','role':name, 'error':created})
 
 @app.route('/view_role',methods=['POST'])
 def view_role():
 	roles = Role.query.all()
 	return render_template('show_users.html', roles=roles)
 
+@app.route('/modify_role',methods=['POST'])
+def modify_role():
+	getrole = request.json
+	id = getrole['id']
+	name = getrole['name']
+	print(getrole, id, name)
+	new_role = role.role()
+	modified = new_role.updateRole(id,name)
+	if modified == True:
+		return json.dumps({'status':'OK','role':name})
+	else:
+		return json.dumps({'status':'ERROR','role':name, 'error':modified})
 
+@app.route('/delete_role',methods=['POST'])
+def delete_role():
+	id = request.json
+	print(id)
+	new_role = role.role()
+	deleted = new_role.deleteRole(id)
+	if deleted == True:
+		return json.dumps({'status':'OK','id':id})
+	else:
+		return json.dumps({'status':'ERROR','role':id})
+
+# GESTION DE CITAS
 @app.route('/appointments',methods=['GET', 'POST'])
 def show_appointments():
 	if request.method == 'GET':
