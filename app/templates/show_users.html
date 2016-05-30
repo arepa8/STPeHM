@@ -29,7 +29,7 @@
           </div>
         </div>
         <center><h2>Gestión de Usuarios</h2></center>
-        <table>
+        <div id="show-users"><table>
           <tr>
             <th>Cédula de Identidad</th>
             <th>Username</th>
@@ -54,7 +54,7 @@
               </td>
             </tr>
           {% endfor%}
-        </table>
+        </table></div>
 
 <!--GESTION DE ROLES-->
          <br>
@@ -64,11 +64,9 @@
         <div class="col-xs-12 show-add-role" style="display:none;">
           <br>
           <br>
-          <!--form action="{{ url_for('add_role') }}" method=POST-->
           <span>Agregar nuevo rol: </span>
           <input id="add-role-input" name="role" type="role">
           <button id = "add-role">Aceptar</button>
-          <!--/form-->
          <br>
          <br> 
         </div>
@@ -76,22 +74,28 @@
         <div class="col-xs-12 show-modify-role" style="display:none;">
           <br>
           <br>
-          <!--form action="{{ url_for('modify_role') }}" method=POST-->
           <span>Modificar rol: </span>
           <input id="modify-role-input" name="role" type="role">
 
           <button id = "modify-role-form">Aceptar</button>
-          <!--/form-->
+         <br>
+         <br> 
+        </div>
+        <!--ERROR ROL-->    
+        <div class="col-xs-12 error-role" style="display:none;">
+          <br>
+          <br>
+          <span id="error-role-span"></span>
          <br>
          <br> 
         </div>
         <!-- TABLA DE ROLES-->    
-        <table>
+        <div id ="show-roles"><table>
         <tr>
           <th>Rol</th>
           <th>Descripción</th>
           <th style="text-align: right">
-             <button id="show-add-role"> <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i></button>
+             <button id="show-add-role" onclick="show_add_role()"> <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i></button>
           </th>
         </tr>
         {% for role in roles %}
@@ -103,7 +107,7 @@
             <button id="delete-role" value= "{{role.id}}" onclick="delete_role({{role.id}})"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button></td>
         </tr>
         {% endfor %}
-      </table>
+      </table></div>
     {% endif %}
     </div>  
   </div>

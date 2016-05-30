@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 38672f8ebffd
+Revision ID: a8e48faa36b3
 Revises: None
-Create Date: 2016-05-26 14:23:23.821881
+Create Date: 2016-05-30 15:37:13.789680
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '38672f8ebffd'
+revision = 'a8e48faa36b3'
 down_revision = None
 
 from alembic import op
@@ -19,7 +19,8 @@ def upgrade():
     op.create_table('Role',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('role_name', sa.String(length=255), nullable=False),
-    sa.PrimaryKeyConstraint('id')
+    sa.PrimaryKeyConstraint('id'),
+    sa.UniqueConstraint('role_name')
     )
     op.create_table('User',
     sa.Column('ci', sa.Integer(), nullable=False),
@@ -36,10 +37,12 @@ def upgrade():
     )
     op.create_table('Appointment',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('user', sa.Integer(), nullable=False),
+    sa.Column('patient', sa.Integer(), nullable=False),
+    sa.Column('doctor', sa.Integer(), nullable=False),
     sa.Column('date', sa.Date(), nullable=False),
     sa.Column('description', sa.String(length=500), nullable=False),
-    sa.ForeignKeyConstraint(['user'], ['User.ci'], ),
+    sa.ForeignKeyConstraint(['doctor'], ['User.ci'], ),
+    sa.ForeignKeyConstraint(['patient'], ['User.ci'], ),
     sa.PrimaryKeyConstraint('id')
     )
     ### end Alembic commands ###

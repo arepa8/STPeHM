@@ -148,7 +148,7 @@ def delete_role():
 	if deleted == True:
 		return json.dumps({'status':'OK','id':id})
 	else:
-		return json.dumps({'status':'ERROR','role':id})
+		return json.dumps({'status':'ERROR','id':id})
 
 # GESTION DE CITAS
 @app.route('/appointments',methods=['GET', 'POST'])

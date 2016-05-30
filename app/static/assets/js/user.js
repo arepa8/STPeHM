@@ -15,7 +15,8 @@ $(function(){
 
           success: function(response) {
               console.log(response);
-              window.location.reload(true);
+              //window.location.reload(true);
+              $('#show-users').load(document.URL +  ' #show-users');
           },
           error: function(error) {
               console.log(error);
@@ -43,7 +44,7 @@ span.onclick = function() {
 }
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == modal) {
+    if (event.target == modal_user) {
         modal_user.style.display = "none";
     }
 }

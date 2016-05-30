@@ -54,10 +54,10 @@ class role():
 		#check_long_target_id= CONST_MIN_ID <= target_id <= CONST_MAX_ID
 		
 		#if check_role_name and check_long_role_name:
-		role = Role.query.filter_by(id=target_id).first()
-
-		if role != None:
-			db.session.delete(role)
+		r = Role.query.filter_by(id=target_id).first()
+		u = r.users.all()
+		if r != None and u == []:
+			db.session.delete(r)
 			db.session.commit()
 			return True
 		return False
