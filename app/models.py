@@ -110,6 +110,46 @@ class Appointment(db.Model):
     def __repr__(self):
         return '<Appointment patient: %r, doctor: %r, date: %r>' % (self.patient, self.doctor, self.date)
 
+class Institution(db.Model):
+    __tablename__ = 'Institution'
+
+    id = db.Column(db.Integer,primary_key = True)
+    name = db.Column(db.String(255),nullable=False,unique=True)
+    address = db.Column(db.String(255),nullable=False,unique=True)
+
+    def __init__(self, name, address):
+        self.name = name
+        self.address = address
+
+    def __repr__(self):
+        return '<Institution name: %r>' % (self.name)
+
+class Specialization(db.Model):
+    __tablename__ = 'Specialization'
+
+    id = db.Column(db.Integer,primary_key = True)
+    speciality = db.Column(db.String(255),nullable=False,unique=True)
+
+    def __init__(self, speciality):
+        self.speciality = speciality
+
+    def __repr__(self):
+        return '<Specialization %r>' % (self.speciality)
+
+class Doctor_Specialization(db.Model):
+    __tablename__ = 'Doctor_Specialization'
+
+    id = db.Column(db.Integer,primary_key = True)
+    doctor = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    speciality = db.Column(db.Integer, db.ForeignKey('Specialization.id'), nullable=False)
+
+    def __init__(self, doctor, speciality):
+        self.doctor = doctor
+        self.speciality = speciality
+
+    def __repr__(self):
+        return '<Doctor_Specialization doctor: %r, speciality: %r>' % (self.doctor, self.speciality)
+        
 
 if __name__ == '__main__':
 	manager.run()
