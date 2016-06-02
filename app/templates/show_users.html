@@ -122,12 +122,17 @@
             <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i>
           </a>
         </th>
+        <th></th>
       </tr>
       {% for institucion in instituciones %}
         <tr>
           <td>{{institucion.id}}</td>
           <td>{{institucion.name}}</td>
-          <td>{{institucion.address}}</td>  
+          <td>{{institucion.address}}</td> 
+          <td>
+            <a href=""><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+            <a href=""><i class="fa fa-trash" style="font-size:16px;color:black"></i></a>
+          </td> 
         </tr>
       {% endfor%}
     </table></div>
@@ -146,12 +151,17 @@
             <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i>
           </a>
         </th>
+        <th></th>
       </tr>
       {% for especializacion in especializacion %}
         <tr>
           <td>{{especializacion.id}}</td>
           <td>{{especializacion.name}}</td>
           <td>{{especializacion.description}}</td>  
+          <td>
+            <a href=""><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+            <a href=""><i class="fa fa-trash" style="font-size:16px;color:black"></i></a>
+          </td> 
         </tr>
       {% endfor%}
     </table></div>
