@@ -68,5 +68,4 @@ class role():
 
 		if (check_target_id and check_long_target_id):
 			role = Role.query.filter_by(id=target_id).first()
-			return role 
-
+			return role
