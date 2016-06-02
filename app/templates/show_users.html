@@ -20,6 +20,8 @@
         <h3></h3>
       </div>
     </div>
+    <br>
+    <br> 
     <center><h2>Gestión de Usuarios</h2></center>
     <div id="show-users"><table>
       <tr>
@@ -106,6 +108,53 @@
     </tr>
     {% endfor %}
   </table></div>
+<!--GESTION DE INSTITUCIONES-->
+  <br>
+  <br> 
+  <center><h2>Gestión de Instituciones</h2></center>
+    <div id="show-users"><table>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th> 
+        <th>Direccion</th>
+        <th style="text-align: right">
+          <a id="add_appointment" href="{{ url_for('add_institution')}}">
+            <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i>
+          </a>
+        </th>
+      </tr>
+      {% for institucion in instituciones %}
+        <tr>
+          <td>{{institucion.id}}</td>
+          <td>{{institucion.name}}</td>
+          <td>{{institucion.address}}</td>  
+        </tr>
+      {% endfor%}
+    </table></div>
+
+<!--GESTION DE ESPECIALIZACIONES-->
+  <br>
+  <br> 
+  <center><h2>Gestión de Especializaciones</h2></center>
+    <div id="show-users"><table>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th> 
+        <th>Descripcion</th>
+        <th style="text-align: right">
+          <a id="add_appointment" href="{{ url_for('add_specialization')}}">
+            <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i>
+          </a>
+        </th>
+      </tr>
+      {% for especializacion in especializacion %}
+        <tr>
+          <td>{{especializacion.id}}</td>
+          <td>{{especializacion.name}}</td>
+          <td>{{especializacion.description}}</td>  
+        </tr>
+      {% endfor%}
+    </table></div>
   {% endif %}
 </div>
 {% endblock %}

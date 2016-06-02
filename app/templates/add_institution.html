@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div id="cuerpoHeredado">
+    <br>
+    <h2>{{title}} Intitucion</h2>
+    <form action="{{ url_for('add_institution') }}" method=POST>
+      {{ form.name.label }}
+      {{ form.name }}
+      {{ form.address.label }}
+      {{ form.address }}
+      {{ form.submit }}
+    </form>
+  </div>
+{% endblock %}

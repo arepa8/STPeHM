@@ -34,3 +34,12 @@ class DoctorAppointmentForm(Form):
 	date = DateField("Fecha", [validators.Required()])
 	description = TextField("Descripción", [validators.Required(), validators.length(max=500)])
 	submit = SubmitField("Aceptar",[validators.Required()])
+
+class InstitutionForm(Form):
+	name = TextField("Nombre", [validators.Required(), validators.length(max=500)])
+	address = TextField("Dirección", [validators.Required(), validators.length(max=500)])
+	submit = SubmitField("Aceptar",[validators.Required()])
+
+class SpecializationForm(Form):
+	name = TextField("Nombre", [validators.Required(), validators.length(max=500)])
+	submit = SubmitField("Aceptar",[validators.Required()])
