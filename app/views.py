@@ -156,7 +156,7 @@ def show_appointments():
 	if request.method == 'GET':
 		active_user = session['user']
 		a = appointment.appointment()
-		if active_user['role'] == 'Paciente':
+		if active_user['role'] != 'Medico':
 			appointments = a.getAppointmentsByPatient(active_user['ci'])
 		else:
 			appointments = a.getAppointmentsByDoctor(active_user['ci'])
@@ -165,7 +165,7 @@ def show_appointments():
 @app.route('/add_appointment',methods=['GET', 'POST'])
 def add_appointment():
 	active_user = session['user']
-	if active_user['role'] == 'Paciente':
+	if active_user['role'] != 'Medico':
 		form = PatientAppointmentForm(request.form)
 		if request.method == 'POST':
 			new_a = appointment.appointment()
