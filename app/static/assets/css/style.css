@@ -1,6 +1,7 @@
 /* ==== Google font ==== */
 @import url('http://fonts.googleapis.com/css?family=Lato:400,300,700,900');
 
+
 body {
   background-color: #f2f2f2;
     font-family: 'Lato', sans-serif;
@@ -62,6 +63,24 @@ a:after {
     -o-transition: color 0.1s ease-in, background 0.1s ease-in;
     transition: color 0.1s ease-in, background 0.1s ease-in;
 }
+.navbar-form input, .form-inline input {
+  width:auto;
+}
+
+
+header {
+  height: 223px;
+  background: url(../img/Banner-STPeHM.png);
+  background-color: rgba(0,110,182,1);
+}
+
+#nav.affix {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index:10;
+}
+
 .navbar-inverse .navbar-nav > li > a {
     color: rgb(71, 251, 229);
 }
@@ -113,24 +132,18 @@ a.navbar-brand:hover {
 /* Header */
 
 #header {	
-	background-color: #444;
-	background: url(../img/main-bg.jpg) no-repeat center top;
-	margin-top: -20px;
-	padding-top: 150px;
-	background-attachment: relative;
-	background-position: center center;
-	min-height: 650px;
-	width: 100%;
-	
-    -webkit-background-size: 100%;
-    -moz-background-size: 100%;
-    -o-background-size: 100%;
-    background-size: 100%;
-
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
+	background-color: #F5F5F5;
+  background-attachment: relative;
+  min-height: 500px;
+  width: 100%;
+  -webkit-background-size: 100%;
+  -moz-background-size: 100%;
+  -o-background-size: 100%;
+  background-size: 100%;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
 
 #header h1 {
@@ -148,8 +161,7 @@ h2.subtitle {
 
 /* CuerpoHeredado */
 #cuerpoHeredado {
-  margin-left:15%;
-  padding:1px 16px;
+  padding:1px 70px;
   height:1000px;
   margin-top: 80px;
   margin-bottom: 50px;
@@ -288,7 +300,7 @@ th {
   height: 50px;
   padding: 15px;
   vertical-align: middle;
-  background-color: #4CAF50;
+  background-color: #428BCA;
   color: white;
   border-bottom: 1px solid #ddd;
 }
@@ -310,7 +322,7 @@ margin: 20px auto;
 width: 300px;
 }
 .login-screen {
-background-color: rgba(255, 255, 255, 0.25);
+background-color: rgba(0,110,182,1);;
 padding: 20px;
 border-radius: 5px
 }
@@ -397,7 +409,7 @@ color: #36FF09;
 }
 
 .leftPanel li a.active {
-    background-color: #4CAF50;
+    background-color: #428BCA;
     color: white;
 }
 
