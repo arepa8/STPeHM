@@ -37,7 +37,7 @@ class specialization():
 		return False
 
 	def deleteSpecialization(self, id):
-		check_id = (id != None) and type(id) == int
+		check_id = (id != None) and (type(id) == int)
 		if check_id:
 			s = Specialization.query.filter_by(id=id).first()
 			if s:
