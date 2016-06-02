@@ -53,7 +53,7 @@ class institution():
 		return False
 
 	def deleteInstitution(self, id):
-		check_id = (id != None) and type(id) == int
+		check_id = (id != None) and (type(id) == int)
 		if check_id:
 			i = Institution.query.filter_by(id=id).first()
 			if i:
