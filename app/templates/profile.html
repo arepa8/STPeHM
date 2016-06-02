@@ -1,0 +1,38 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div id="cuerpoHeredado">
+    <h1 class="page-header">Mi Perfil</h1>
+    <div class="row">
+      <!-- left column -->
+      <div class="col-md-4 col-sm-6 col-xs-12">
+        <div class="text-center">
+          <img src="{{ url_for('static', filename= 'assets/img/avatar.png')}}" class="avatar img-circle img-thumbnail" alt="avatar">
+          <h6>Cambiar foto</h6>
+          <input type="file" class="text-center center-block well well-sm">
+        </div>
+      </div>
+      <!-- edit form column -->
+      <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+        {% if mensaje %}
+        <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>{{ mensaje }}</strong></p>
+        {% endif %}  
+        <h3>Perfil</h3>
+        <form action="{{ url_for('profile') }}" method=POST>
+          {{ form.name.label }}
+          {{ form.name }}
+          {{ form.last_name.label }}
+          {{ form.last_name }}
+          {{ form.email.label }}
+          {{ form.email }}
+          {% if active_user.role == 'Medico' %}
+          {{ form.hospital.label }}
+          {{ form.hospital }}
+          {{ form.especialidad.label }}
+          {{ form.especialidad }}
+          {% endif %}
+          {{ form.submit }}
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}  

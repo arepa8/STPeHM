@@ -1,46 +1,44 @@
 {% extends "layout.html" %}
 {% block content %}
-  <div class="container">
-    <div id="cuerpoHeredado">
-      <center><h2>Citas</h2></center>
-      <!-- Modal content -->
-      <div id="myModal_appointment" class="modal-content">
-        <div class="modal-header">
-          <span class="close">×</span>
-          <h2></h2>
-        </div>
-        <div class="modal-body">
-          <p>¿Está seguro de que desea eliminar la cita?</p>
-          <button id="deleteButton_appointment">Eliminar</button>
-          <button id="cancel_delete_appointment">Cancelar</button>
-        </div>
-        <div class="modal-footer">
-          <h3></h3>
-        </div>
+  <div id="cuerpoHeredado">
+    <center><h2>Citas</h2></center>
+    <!-- Modal content -->
+    <div id="myModal_appointment" class="modal-content">
+      <div class="modal-header">
+        <span class="close">×</span>
+        <h2></h2>
       </div>
-      <div id="show-appointments"><table>
-        <tr>
-          <th>Fecha</th>
-          <th>Descripción</th>
-          <th style="text-align: right">
-            <a id="add_appointment" href="{{ url_for('add_appointment')}}">
-              <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i>
-            </a>
-          </th>
-        </tr>
-        {% for a in appointments %}
-          <tr>
-            <td>{{a.date}}</td>
-            <td>{{a.description}}</td>
-            <td style="text-align: right">
-              <a href="{{ url_for('modify_appointment', id=a.id) }}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
-              <button id="deleteButton_appointment"  onclick="openModal({{a.id}})"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
-            </td>
-          </tr>
-        {% endfor%}
-      </table></div>
+      <div class="modal-body">
+        <p>¿Está seguro de que desea eliminar la cita?</p>
+        <button id="deleteButton_appointment">Eliminar</button>
+        <button id="cancel_delete_appointment">Cancelar</button>
+      </div>
+      <div class="modal-footer">
+        <h3></h3>
       </div>
     </div>
+    <div id="show-appointments"><table>
+      <tr>
+        <th>Fecha</th>
+        <th>Descripción</th>
+        <th style="text-align: right">
+          <a id="add_appointment" href="{{ url_for('add_appointment')}}">
+            <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i>
+          </a>
+        </th>
+      </tr>
+      {% for a in appointments %}
+        <tr>
+          <td>{{a.date}}</td>
+          <td>{{a.description}}</td>
+          <td style="text-align: right">
+            <a href="{{ url_for('modify_appointment', id=a.id) }}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+            <button id="deleteButton_appointment"  onclick="openModal({{a.id}})" style="background: transparent; border: 0;
+              padding: 0px 0px 0px 30px;"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
+          </td>
+        </tr>
+      {% endfor%}
+    </table></div>
+    </div>
   </div>
-
 {% endblock %}

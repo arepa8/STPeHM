@@ -14,6 +14,15 @@ class ContactForm(Form):
 	role = SelectField("Rol", [validators.Required()], coerce=int)
 	submit = SubmitField("Aceptar", [validators.Required()])
 
+class ProfileForm(Form):
+	name = TextField("Nombre", [validators.Required()])
+	last_name = TextField("Apellido", [validators.Required()])
+	email = TextField("Correo electrónico", [validators.Required()])
+	birthday = DateField('DatePicker', format='%Y-%m-%d')
+	hospital = SelectField("Hospital", [validators.Required()], coerce=int)
+	especialidad = SelectField("Especialidad", [validators.Required()], coerce=int)
+	submit = SubmitField("Modificar", [validators.Required()])
+
 class PatientAppointmentForm(Form):
 	doctor = IntegerField("Cédula de indentidad del doctor", [validators.Required()])
 	date = DateField("Fecha", [validators.Required()])

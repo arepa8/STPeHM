@@ -44,9 +44,21 @@
         </div><!--/.nav-collapse -->
       </div>
     </div>
+
+    {% if session.logged_in %}
+      <div class = "leftPanel">
+        <ul>
+          <li><a class="active" href="#home">Home</a></li>
+          {% if not active_user.role == 'Administrador' %}
+          <li><a ng-show="userRole =='Medico' || false" href="{{ url_for('profile') }}">Mi perfil</a></li>
+          <li><a ng-show="userRole =='Medico' || false" href="{{ url_for('show_appointments') }}">Mis citas</a></li>
+          {% endif %}
+        </ul>
+      </div>  
+    {% endif %}
     {% block content %}
-    {% endblock %} 
-   
+    {% endblock %}
+
     <div id="footer">
       {% block footer %}
         <div class="container">

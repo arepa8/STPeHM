@@ -1,27 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
-  <div class="container">
-    <div id="cuerpoHeredado">
-      <br>
-      <h2>{{title}} Cita</h2>
-      {% if title == "Agregar" %}
-      <form action="{{ url_for('add_appointment') }}" method=POST>
-      {% else %}
-      <form action="{{ url_for('modify_appointment', id=id) }}" method=POST>
-      {% endif %}
-      {% if form.doctor %}
-        {{ form.doctor.label }}
-        {{ form.doctor }}
-      {% else %}
-        {{ form.patient.label }}
-        {{ form.patient }}
-      {% endif %}
-        {{ form.date.label }}
-        {{ form.date }}
-        {{ form.description.label }}
-        {{ form.description }}
-        {{ form.submit }}
-      </form>
-    </div>
-  </div> 
+  <div id="cuerpoHeredado">
+    <br>
+    <h2>{{title}} Cita</h2>
+    {% if title == "Agregar" %}
+    <form action="{{ url_for('add_appointment') }}" method=POST>
+    {% else %}
+    <form action="{{ url_for('modify_appointment', id=id) }}" method=POST>
+    {% endif %}
+    {% if form.doctor %}
+      {{ form.doctor.label }}
+      {{ form.doctor }}
+    {% else %}
+      {{ form.patient.label }}
+      {{ form.patient }}
+    {% endif %}
+      {{ form.date.label }}
+      {{ form.date }}
+      {{ form.description.label }}
+      {{ form.description }}
+      {{ form.submit }}
+    </form>
+  </div>
 {% endblock %}

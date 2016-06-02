@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 from sqlalchemy import *
 from app import app, lm
-from app.forms import ContactForm, PatientAppointmentForm, DoctorAppointmentForm
+from app.forms import ContactForm, PatientAppointmentForm, DoctorAppointmentForm, ProfileForm
 from app.models import User,Role,db,Appointment
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
@@ -225,3 +225,20 @@ def delete_appointment():
 		return json.dumps({'status':'OK','id':id})
 	else: 
 		return json.dumps({'status':'ERROR','id':id})
+
+@app.route('/profile', methods=['GET','POST'])
+def profile():
+	active_user = session['user']
+	form = ProfileForm(request.form)
+	form.hospital.choices = [('1','Holpital_1')]
+	form.especialidad.choices = [('1','Especialidad_1')]
+	if request.method == 'POST':
+		result = True
+		
+		if result['result']:
+			return render_template('profile.html', form=form, active_user=active_user, mensaje='Exito')
+		else:
+			return render_template('profile.html', form=form, active_user=active_user, mensaje='Error')
+
+	elif request.method == 'GET':
+		return render_template('profile.html', active_user=active_user, form=form)
