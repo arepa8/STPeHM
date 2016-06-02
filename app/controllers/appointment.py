@@ -1,9 +1,9 @@
 import sys
-sys.path.append('app/')
-
+#sys.path.append('app/')
+sys.path.append('../')
 from models import *
 import datetime
-from app.controllers import user
+from controllers import user
 
 # Constantes
 CONST_MIN			= 1
