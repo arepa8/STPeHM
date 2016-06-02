@@ -174,7 +174,7 @@ def add_appointment():
 			else:
 				print('Error')
 		title = "Agregar"
-		return render_template('add_appointment.html', form = form, title= title)
+		return render_template('add_appointment.html', form = form, title= title, active_user=active_user)
 	else:
 		form = DoctorAppointmentForm(request.form)
 		if request.method == 'POST':
@@ -184,7 +184,7 @@ def add_appointment():
 			else:
 				print('Error')
 		title = "Agregar"
-		return render_template('add_appointment.html', form = form, title= title)
+		return render_template('add_appointment.html', form = form, title= title, active_user=active_user)
 
 @app.route('/modify_appointment/<id>',methods=['GET', 'POST'])
 def modify_appointment(id):
