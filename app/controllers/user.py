@@ -90,6 +90,15 @@ class user():
 			return result
 		return []
 
+	def getUserByCi(self, ci):
+		
+		check_if_exist = self.existUserCi(ci)
+
+		if (check_if_exist):
+			result = User.query.filter_by(ci=ci).first()
+			return result
+		return []
+
 	def deleteUser(self, username):
 		
 		check_username = (type(username) == str) and (CONST_MIN <= len(username) <= CONST_MAX_USERNAME)
@@ -106,11 +115,20 @@ class user():
 	def existUser(self, username):
 		check_username	= type(username) == str
 		check_long_username = CONST_MIN <= len(username) <= CONST_MAX_USERNAME
-
+		check_if_exist = None
 		if (check_username and check_long_username):
 			check_if_exist = User.query.filter_by(username=username).first()
 
-		return check_if_exist != []
+		return check_if_exist != None
+
+	def existUserCi(self, ci):
+		check_ci	= type(ci) == int
+		check_long_ci = 0 <= ci <= CONST_MAX_CI
+		check_if_exist = None
+		if (check_ci and check_long_ci):
+			check_if_exist = User.query.filter_by(ci=ci).first()
+
+		return check_if_exist != None
 
 	def updateUser(self,username, password, name, last_name, email, role):
 		

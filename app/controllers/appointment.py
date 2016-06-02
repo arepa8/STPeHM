@@ -3,6 +3,7 @@ sys.path.append('app/')
 
 from models import *
 import datetime
+from app.controllers import user
 
 # Constantes
 CONST_MIN			= 1
@@ -24,10 +25,16 @@ class appointment():
 			check_long_desc = CONST_MIN <= len(description) <= CONST_MAX_DESCR
 
 			if check_long_ciPatient and check_long_ciDoctor and check_long_desc:
-				new_a = Appointment(ciPatient,ciDoctor,date,description)
-				db.session.add(new_a)
-				db.session.commit()
-				return True
+				u = user.user()
+				if u.existUserCi(ciDoctor) and u.existUserCi(ciPatient):
+					uDoctor = u.getUserByCi(ciDoctor)
+					check_if_doctor = int(uDoctor.role) == 1
+					check_not_the_same = ciPatient != ciDoctor
+					if check_if_doctor and check_not_the_same:
+						new_a = Appointment(ciPatient,ciDoctor,date,description)
+						db.session.add(new_a)
+						db.session.commit()
+						return True
 		return False
 
 	def modifyAppointment(self,id,date,description):
