@@ -3,7 +3,7 @@ sys.path.append('app/')
 
 from models import *
 import datetime
-from app.controllers import user
+from app.controllers import user, role
 
 # Constantes
 CONST_MIN			= 1
@@ -28,7 +28,12 @@ class appointment():
 				u = user.user()
 				if u.existUserCi(ciDoctor) and u.existUserCi(ciPatient):
 					uDoctor = u.getUserByCi(ciDoctor)
-					check_if_doctor = int(uDoctor.role) == 1
+					# Inicio del cable sofisticado debido a error en el models.py
+					idRole = int(uDoctor.role)
+					aRole = role.role()
+					roleName = aRole.getRole(idRole).role_name
+					check_if_doctor = roleName == 'Medico'
+					# Fin del cable
 					check_not_the_same = ciPatient != ciDoctor
 					if check_if_doctor and check_not_the_same:
 						new_a = Appointment(ciPatient,ciDoctor,date,description)

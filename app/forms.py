@@ -19,7 +19,7 @@ class ProfileForm(Form):
 	last_name = TextField("Apellido", [validators.Required()])
 	email = TextField("Correo electrónico", [validators.Required()])
 	birthday = DateField('DatePicker', format='%Y-%m-%d')
-	hospital = SelectField("Hospital", [validators.Required()], coerce=int)
+	hospital = SelectField("Institucion", [validators.Required()], coerce=int)
 	especialidad = SelectField("Especialidad", [validators.Required()], coerce=int)
 	submit = SubmitField("Modificar", [validators.Required()])
 
