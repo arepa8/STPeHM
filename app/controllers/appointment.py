@@ -61,10 +61,9 @@ class appointment():
         return False
 
     def deleteAppointment(self,id):
-        check_id = type(id) == int
-
+        check_id = type(id) == str
         if check_id:
-            a = Appointment.query.filter_by(id =id).first()
+            a = Appointment.query.filter_by(id =int(id)).first()
             if a != None:
                 db.session.delete(a)
                 db.session.commit()
