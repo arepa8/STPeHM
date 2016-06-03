@@ -1,9 +1,10 @@
 import sys
-sys.path.append('app/')
-
+#sys.path.append('app/')
+sys.path.append('../')
 from models import *
 import datetime
 from app.controllers import user, role
+
 
 # Constantes
 CONST_MIN			= 1
@@ -19,7 +20,7 @@ class appointment():
 		check_date		  = type(date) == datetime.date
 		check_description = type(description) == str
 
-		if check_ciPatient and check_ciDoctor and check_description:
+		if check_ciPatient and check_ciDoctor and check_description and check_date:
 			check_long_ciPatient = CONST_MIN <= ciPatient <= CONST_MAX_CI
 			check_long_ciDoctor = CONST_MIN <= ciDoctor <= CONST_MAX_CI
 			check_long_desc = CONST_MIN <= len(description) <= CONST_MAX_DESCR
@@ -60,7 +61,7 @@ class appointment():
 		return False
 
 	def deleteAppointment(self,id):
-		check_id = type(id) == str
+		check_id = type(id) == int
 
 		if check_id:
 			a = Appointment.query.filter_by(id =id).first()
@@ -85,4 +86,3 @@ class appointment():
 			appointments = Appointment.query.filter_by(doctor=ci).all()
 			return appointments
 		return False
-

@@ -1,6 +1,6 @@
 import sys
-sys.path.append('app/')
-
+#sys.path.append('app/')
+sys.path.append('../')
 from models import *
 
 # Constantes
@@ -33,12 +33,11 @@ class role():
 	def updateRole(self, target_id, role_name):
 		check_target_id 	= type(target_id) == int
 		check_role_name 	 = type(role_name) == str
-		
+
 		if (check_role_name and check_target_id):
 			check_long_target_id = CONST_MIN_ID <= target_id <= CONST_MAX_ID
-			check_long_role_name = CONST_MIN_ROLE_NAME <= len(role_name) <= CONST_MAX_ROLE_NAME
-
-			if check_long_target_id and check_long_role_name:
+			check_long_role_name = CONST_MIN_ROLE_NAME <= len(role_name) <= CONST_MAX_ROLE_NAME	
+			if (check_long_target_id and check_long_role_name):
 				role = Role.query.filter_by(role_name=role_name).first()
 				if role != None and role.id == target_id:
 					return True
@@ -57,7 +56,7 @@ class role():
 		
 		#if check_role_name and check_long_role_name:
 		r = Role.query.filter_by(id=target_id).first()
-		if (r != None):
+		if r != None:
 			u = r.users.all()
 			if u == []:
 				db.session.delete(r)
@@ -81,4 +80,4 @@ class role():
 
 		if (check_role_name):
 			role = Role.query.filter_by(role_name=role_name).first()
-			return role 
+			return role
