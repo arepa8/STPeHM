@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from app import app, lm
 from app.forms import *
-from app.models import User,Role,db,Appointment, Institution
+from app.models import User,Role,db,Appointment, Institution, Specialization
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
@@ -38,7 +38,8 @@ def show_users():
         active_user = session['user']
         roles = Role.query.all()
         instituciones = Institution.query.all()
-        return render_template('show_users.html', users=users, active_user=active_user, roles=roles, instituciones=instituciones)
+        especializacion = Specialization.query.all()
+        return render_template('show_users.html', users=users, active_user=active_user, roles=roles, instituciones=instituciones, especializacion=especializacion)
 
 # route for handling the login page logic
 @app.route('/', methods=['GET', 'POST'])
@@ -273,9 +274,54 @@ def delete_institution():
     else: 
         return json.dumps({'status':'ERROR','id':id})
 
-######
+#
+# GESTIÓN DE ESPECIALIZACIONES
+#
+# @app.route('/add_institution', methods=['GET', 'POST'])
+# def add_institution():
+#     ''' Agrega una institución '''
+#     active_user = session['user']
+#     form = InstitutionForm(request.form)
+#     if request.method == 'POST':
+#         result = True
+#         if result['result']:
+#             return render_template('add_institution.html', form=form, active_user=active_user, mensaje='Exito')
+#         else:
+#             return render_template('add_institution.html', form=form, active_user=active_user, mensaje='Error')
+
+#     elif request.method == 'GET':
+#         return render_template('add_institution.html', active_user=active_user, form=form)
+
+
+# @app.route('/modify_institution/<id>', methods=['GET', 'POST'])
+# def modify_institution(id):
+#     ''' Modifica una institución '''
+#     form = InstitutionForm(request.form)
+#     if request.method == 'POST':
+#         inst = institution.institution()
+#         modified = inst.modifyInstitution(id, form.name.data, form.address.data)
+#         if modified:
+#             return redirect(url_for('show_users'))
+#     title = "Modificar"
+#     old = Institution.query.filter_by(id=id).first()
+#     form = InstitutionForm(request.form, name=old.name, address=old.address)
+#     return render_template('add_institution.html', form=form, title=title, id=id)
+
+
+# @app.route('/delete_institution', methods=['POST'])
+# def delete_institution():
+#     ''' Elimina una institución por su id '''
+#     id =  request.json
+#     inst = institution.institution()
+#     deleted = inst.deleteInstitution(id)
+#     if deleted:
+#         return json.dumps({'status':'OK','id':id})
+#     else: 
+#         return json.dumps({'status':'ERROR','id':id})
+        
+##############################
 # Funciones para retornar templates
-###### 
+##############################
 @app.route('/profile', methods=['GET','POST'])
 def profile():
     active_user = session['user']
