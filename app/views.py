@@ -8,7 +8,7 @@ from app.models import User,Role,db,Appointment, Institution, Specialization
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
-from app.controllers import appointment, user, role, institution
+from app.controllers import appointment, user, role, institution, specialization
 import datetime
 import json
 
@@ -34,7 +34,7 @@ def contact():
 def show_users():
     if request.method == 'GET':
         users = User.query.all()
-        print(session)
+        #print(session)
         active_user = session['user']
         roles = Role.query.all()
         instituciones = Institution.query.all()
@@ -238,25 +238,27 @@ def add_institution():
     active_user = session['user']
     form = InstitutionForm(request.form)
     if request.method == 'POST':
-        result = True
-        if result['result']:
-            return render_template('add_institution.html', form=form, active_user=active_user, mensaje='Exito')
+        new_i = institution.institution()
+        if new_i.insertInstitution(form.name.data,form.address.data):
+            return redirect(url_for('show_users'))
         else:
-            return render_template('add_institution.html', form=form, active_user=active_user, mensaje='Error')
-
-    elif request.method == 'GET':
-        return render_template('add_institution.html', active_user=active_user, form=form)
+            print('Error')
+    title = "Agregar"
+    return render_template('add_institution.html', active_user=active_user, form=form, title=title)
 
 
 @app.route('/modify_institution/<id>', methods=['GET', 'POST'])
 def modify_institution(id):
     ''' Modifica una institución '''
+    active_user = session['user']
     form = InstitutionForm(request.form)
     if request.method == 'POST':
         inst = institution.institution()
         modified = inst.modifyInstitution(id, form.name.data, form.address.data)
         if modified:
             return redirect(url_for('show_users'))
+        else:
+            print("Error")
     title = "Modificar"
     old = Institution.query.filter_by(id=id).first()
     form = InstitutionForm(request.form, name=old.name, address=old.address)
@@ -266,7 +268,7 @@ def modify_institution(id):
 @app.route('/delete_institution', methods=['POST'])
 def delete_institution():
     ''' Elimina una institución por su id '''
-    id =  request.json
+    id =  int(request.json)
     inst = institution.institution()
     deleted = inst.deleteInstitution(id)
     if deleted:
@@ -277,47 +279,49 @@ def delete_institution():
 #
 # GESTIÓN DE ESPECIALIZACIONES
 #
-# @app.route('/add_institution', methods=['GET', 'POST'])
-# def add_institution():
-#     ''' Agrega una institución '''
-#     active_user = session['user']
-#     form = InstitutionForm(request.form)
-#     if request.method == 'POST':
-#         result = True
-#         if result['result']:
-#             return render_template('add_institution.html', form=form, active_user=active_user, mensaje='Exito')
-#         else:
-#             return render_template('add_institution.html', form=form, active_user=active_user, mensaje='Error')
-
-#     elif request.method == 'GET':
-#         return render_template('add_institution.html', active_user=active_user, form=form)
-
-
-# @app.route('/modify_institution/<id>', methods=['GET', 'POST'])
-# def modify_institution(id):
-#     ''' Modifica una institución '''
-#     form = InstitutionForm(request.form)
-#     if request.method == 'POST':
-#         inst = institution.institution()
-#         modified = inst.modifyInstitution(id, form.name.data, form.address.data)
-#         if modified:
-#             return redirect(url_for('show_users'))
-#     title = "Modificar"
-#     old = Institution.query.filter_by(id=id).first()
-#     form = InstitutionForm(request.form, name=old.name, address=old.address)
-#     return render_template('add_institution.html', form=form, title=title, id=id)
+@app.route('/add_specialization', methods=['GET', 'POST'])
+def add_specialization():
+    ''' Agrega una Especialización '''
+    active_user = session['user']
+    form = SpecializationForm(request.form)
+    if request.method == 'POST':
+        new_s = specialization.specialization()
+        if new_s.insertSpecialization(form.name.data):
+            return redirect(url_for('show_users'))
+        else:
+            print('Error')
+    title = "Agregar"
+    return render_template('add_specialization.html', active_user=active_user, form=form, title=title)
 
 
-# @app.route('/delete_institution', methods=['POST'])
-# def delete_institution():
-#     ''' Elimina una institución por su id '''
-#     id =  request.json
-#     inst = institution.institution()
-#     deleted = inst.deleteInstitution(id)
-#     if deleted:
-#         return json.dumps({'status':'OK','id':id})
-#     else: 
-#         return json.dumps({'status':'ERROR','id':id})
+@app.route('/modify_specialization/<id>', methods=['GET', 'POST'])
+def modify_specialization(id):
+    ''' Modifica una especialización '''
+    active_user = session['user']
+    form = SpecializationForm(request.form)
+    if request.method == 'POST':
+        s = specialization.specialization()
+        modified = s.modifySpecialization(id, form.name.data)
+        if modified:
+            return redirect(url_for('show_users'))
+        else:
+            print("Error")
+    title = "Modificar"
+    old = Specialization.query.filter_by(id=id).first()
+    form = SpecializationForm(request.form, name=old.speciality)
+    return render_template('add_specialization.html', form=form, title=title, id=id)
+
+
+@app.route('/delete_specialization', methods=['POST'])
+def delete_specialization():
+    ''' Elimina una especialización por su id '''
+    id =  int(request.json)
+    s = specialization.specialization()
+    deleted = s.deleteSpecialization(id)
+    if deleted:
+        return json.dumps({'status':'OK','id':id})
+    else: 
+        return json.dumps({'status':'ERROR','id':id})
         
 ##############################
 # Funciones para retornar templates
@@ -338,20 +342,3 @@ def profile():
 
     elif request.method == 'GET':
         return render_template('profile.html', active_user=active_user, form=form)
-
-
-
-@app.route('/add_specialization', methods=['GET','POST'])
-def add_specialization():
-    active_user = session['user']
-    form = SpecializationForm(request.form)
-    if request.method == 'POST':
-        result = True
-        
-        if result['result']:
-            return render_template('add_specialization.html', form=form, active_user=active_user, mensaje='Exito')
-        else:
-            return render_template('add_specialization.html', form=form, active_user=active_user, mensaje='Error')
-
-    elif request.method == 'GET':
-        return render_template('add_specialization.html', active_user=active_user, form=form)

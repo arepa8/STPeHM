@@ -18,6 +18,10 @@
 
       <script type="text/javascript" src="{{ url_for('static', filename= 'assets/js/appointments.js')}}" defer></script>
 
+      <script type="text/javascript" src="{{ url_for('static', filename= 'assets/js/institution.js')}}" defer></script>
+
+      <script type="text/javascript" src="{{ url_for('static', filename= 'assets/js/specialization.js')}}" defer></script>
+
       <script src="{{ url_for('static', filename= 'assets/js/angular/ng-table.min.js')}}"></script>
 
       <title>{% block title %} STPeHM {% endblock %} </title>
@@ -41,7 +45,7 @@
         <div class="navbar-collapse collapse">
          {% if session.logged_in %}
 	        <ul class="nav navbar-nav navbar-left">
-	          {% if not active_user.role == 'Administrador' %}
+	          {% if not session.user.role == 'Administrador' %}
 	          <li><a ng-show="userRole =='Medico' || false" href="{{ url_for('profile') }}">Mi perfil</a></li>
 	          <li><a ng-show="userRole =='Medico' || false" href="{{ url_for('show_appointments') }}">Mis citas</a></li>
 	          {% endif %}

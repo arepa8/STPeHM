@@ -109,10 +109,24 @@
     {% endfor %}
   </table></div>
 <!--GESTION DE INSTITUCIONES-->
+  <div id="myModal_institution" class="modal-content">
+    <div class="modal-header">
+      <span class="close">×</span>
+      <h2></h2>
+    </div>
+    <div class="modal-body">
+      <p>¿Está seguro de que desea eliminar la institución?</p>
+      <button id="deleteButton_institution">Eliminar</button>
+      <button id="cancel_institution">Cancelar</button>
+    </div>
+    <div class="modal-footer">
+      <h3></h3>
+    </div>
+  </div>
   <br>
   <br> 
   <center><h2>Gestión de Instituciones</h2></center>
-    <div id="show-users"><table>
+    <div id="show-institutions"><table>
       <tr>
         <th>ID</th>
         <th>Nombre</th> 
@@ -122,7 +136,6 @@
             <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i>
           </a>
         </th>
-        <th></th>
       </tr>
       {% for institucion in instituciones %}
         <tr>
@@ -130,37 +143,48 @@
           <td>{{institucion.name}}</td>
           <td>{{institucion.address}}</td> 
           <td>
-            <a href=""><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
-            <a href=""><i class="fa fa-trash" style="font-size:16px;color:black"></i></a>
+            <a href="{{ url_for('modify_institution',id=institucion.id)}}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+            <button id="delete_institution" value= "{{institucion.id}}" onclick="openModal_institution({{institucion.id}})" name="id"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
           </td> 
         </tr>
       {% endfor%}
     </table></div>
 
 <!--GESTION DE ESPECIALIZACIONES-->
+  <div id="myModal_specialization" class="modal-content">
+    <div class="modal-header">
+      <span class="close">×</span>
+      <h2></h2>
+    </div>
+    <div class="modal-body">
+      <p>¿Está seguro de que desea eliminar la especialización?</p>
+      <button id="deleteButton_specialization">Eliminar</button>
+      <button id="cancel_specialization">Cancelar</button>
+    </div>
+    <div class="modal-footer">
+      <h3></h3>
+    </div>
+  </div>
   <br>
   <br> 
   <center><h2>Gestión de Especializaciones</h2></center>
-    <div id="show-users"><table>
+    <div id="show-specializations"><table>
       <tr>
         <th>ID</th>
         <th>Nombre</th> 
-        <th>Descripcion</th>
         <th style="text-align: right">
           <a id="add_appointment" href="{{ url_for('add_specialization')}}">
             <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i>
           </a>
         </th>
-        <th></th>
       </tr>
       {% for especializacion in especializacion %}
         <tr>
           <td>{{especializacion.id}}</td>
-          <td>{{especializacion.name}}</td>
-          <td>{{especializacion.description}}</td>  
+          <td>{{especializacion.speciality}}</td>
           <td>
-            <a href=""><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
-            <a href=""><i class="fa fa-trash" style="font-size:16px;color:black"></i></a>
+            <a href="{{ url_for('modify_specialization',id=especializacion.id)}}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+            <button id="delete_specialization" value= "{{especializacion.id}}" onclick="openModal_specialization({{especializacion.id}})" name="id"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
           </td> 
         </tr>
       {% endfor%}
