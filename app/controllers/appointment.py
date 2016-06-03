@@ -16,10 +16,10 @@ class appointment():
 	def insertAppointment(self,ciPatient,ciDoctor,date,description):
 		check_ciPatient   = type(ciPatient)   == int
 		check_ciDoctor    = type(ciDoctor)   == int
-		#check_date		  = type(date) == datetime
+		check_date		  = type(date) == datetime.date
 		check_description = type(description) == str
 
-		if check_ciPatient and check_ciDoctor and check_description:
+		if check_ciPatient and check_ciDoctor and check_description and check_date:
 			check_long_ciPatient = CONST_MIN <= ciPatient <= CONST_MAX_CI
 			check_long_ciDoctor = CONST_MIN <= ciDoctor <= CONST_MAX_CI
 			check_long_desc = CONST_MIN <= len(description) <= CONST_MAX_DESCR
@@ -39,8 +39,9 @@ class appointment():
 
 	def modifyAppointment(self,id,date,description):
 		check_description = type(description) == str
+		check_date		  = type(date) == datetime.date
 
-		if check_description:
+		if check_description and check_date:
 			check_long_desc = CONST_MIN <= len(description) <= CONST_MAX_DESCR
 			
 			if check_long_desc:
@@ -53,7 +54,7 @@ class appointment():
 		return False
 
 	def deleteAppointment(self,id):
-		check_id = type(id) == str
+		check_id = type(id) == int
 
 		if check_id:
 			a = Appointment.query.filter_by(id =id).first()
@@ -78,4 +79,3 @@ class appointment():
 			appointments = Appointment.query.filter_by(doctor=ci).all()
 			return appointments
 		return False
-
