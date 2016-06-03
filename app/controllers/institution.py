@@ -69,7 +69,7 @@ class institution():
 			return i 
 		return None
 
-	def getInstitutionByName(self, id):
+	def getInstitutionById(self, id):
 		check_id 		= (id != None) and (type(id) == int)
 		if check_id:
 			i = Institution.query.filter_by(id=id).first()
