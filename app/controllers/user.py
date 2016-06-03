@@ -162,11 +162,11 @@ class user():
 			if (check_if_exist):
 
 				user = User.query.filter_by(username=username).first()
-				user[0].password = password
-				user[0].name 	 = name
-				user[0].last_name= last_name
-				user[0].email 	 = user.email
-				user[0].role	 = role
+				user.password = password
+				user.name 	  = name
+				user.last_name= last_name
+				user.email    = email
+				user.role	  = role
 				db.session.commit()
 				return {'result':True, 'message':'Usuario actualizado exitosamente'}
 
