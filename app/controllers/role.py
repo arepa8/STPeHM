@@ -63,10 +63,16 @@ class role():
 		return False
 
 	def getRole(self, target_id):
-		check_target_id = type(check_target_id) == int
+		check_target_id = (target_id != None) and (type(target_id) == int)
 		check_long_target_id = CONST_MIN_ID <= target_id <= CONST_MAX_ID
 
 		if (check_target_id and check_long_target_id):
 			role = Role.query.filter_by(id=target_id).first()
 			return role 
 
+	def getRoleByRoleName(self, role_name):
+		check_role_name = (role_name != None) and (type(role_name) == int)
+
+		if (check_role_name):
+			role = Role.query.filter_by(role_name=role_name).first()
+			return role 
