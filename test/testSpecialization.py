@@ -179,7 +179,7 @@ class TestSpecialization(unittest.TestCase):
 		specialization_controller.deleteSpecialization(1)
 		specialization_controller.deleteSpecialization(2)
 	#se prueba funcionalidad con assert
-	def testGetAllSpecializations(self):
+	def testGetAllSpecializationsAsserts(self):
 		specialization_controller = specialization()
 		specialization_controller.insertSpecialization('speciality1')
 		specialization_controller.insertSpecialization('speciality2')

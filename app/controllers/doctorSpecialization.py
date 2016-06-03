@@ -21,7 +21,7 @@ class doctorSpecialization():
 			if check_lon_uci and check_lon_sid:
 				check_doctor_exists = User.query.filter_by(ci=uci).first()
 				check_spec_exists = Specialization.query.filter_by(id=sid).first()
-				if check_doctor_exists and check_spec_exists:
+				if check_doctor_exists and check_spec_exists and int(check_doctor_exists.role) == 1:
 					ds = Doctor_Specialization(uci, sid)
 					db.session.add(ds)
 					db.session.commit()
