@@ -4,11 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from app import app, lm
 from app.forms import *
-from app.models import User,Role,db,Appointment
+from app.models import User,Role,db,Appointment,Institution,Specialization
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
-from app.controllers import appointment, user, role
+from app.controllers import appointment, user, role, institution, specialization
 import datetime
 import json
 
@@ -253,27 +253,26 @@ def add_institution():
 	active_user = session['user']
 	form = InstitutionForm(request.form)
 	if request.method == 'POST':
-		result = True
-		
-		if result['result']:
-			return render_template('add_institution.html', form=form, active_user=active_user, mensaje='Exito')
+		institution_controller = institution.institution()
+		if (institution_controller.insertInstitution(form.name.data,form.address.data)):
+			print ("Se Agrego")
+			return redirect(url_for('show_users'))
 		else:
-			return render_template('add_institution.html', form=form, active_user=active_user, mensaje='Error')
-
-	elif request.method == 'GET':
-		return render_template('add_institution.html', active_user=active_user, form=form)
+			print('Error')
+	title = "Agregar"
+	return render_template('add_institution.html', form = form, title= title, active_user=active_user)
 
 @app.route('/add_specialization', methods=['GET','POST'])
 def add_specialization():
 	active_user = session['user']
 	form = SpecializationForm(request.form)
 	if request.method == 'POST':
-		result = True
-		
-		if result['result']:
-			return render_template('add_specialization.html', form=form, active_user=active_user, mensaje='Exito')
+		specialization_controller = specialization.specialization()
+		if (specialization_controller.insertSpecialization(form.name.data)):
+			print ("Se Agrego")
+			return redirect(url_for('show_users'))
 		else:
-			return render_template('add_specialization.html', form=form, active_user=active_user, mensaje='Error')
-
-	elif request.method == 'GET':
-		return render_template('add_specialization.html', active_user=active_user, form=form)
+			print('Error')
+	title = "Agregar"
+	return render_template('add_specialization.html', form = form, title= title, active_user=active_user)
+	
