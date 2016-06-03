@@ -54,8 +54,8 @@ class specialization():
 		return None
 
 	def getSpecializationBySpeciality(self, speciality):
-		check_id 		= (id != None) and (type(id) == int)
-		if check_id:
+		check_speciality 		= (speciality != None) and (type(speciality) == str)
+		if check_speciality:
 			s = Specialization.query.filter_by(speciality=speciality).first()
 			return s
 		return None

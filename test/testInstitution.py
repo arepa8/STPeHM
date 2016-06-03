@@ -163,11 +163,13 @@ class TestInstitution(unittest.TestCase):
 		institution_controller = institution()
 		institution_controller.insertInstitution('institucion','direccion')
 		result = institution_controller.deleteInstitution('1')
+		institution_controller.deleteInstitution(1)
 		self.assertFalse(result)
 	def testDeleteInstitutionIdNotExists(self):
 		institution_controller = institution()
 		institution_controller.insertInstitution('institucion','direccion')
 		result = institution_controller.deleteInstitution('1')
+		institution_controller.deleteInstitution(1)
 		self.assertFalse(result)
   ###########################################      
   #   Pruebas para getInstitutionByName    #
