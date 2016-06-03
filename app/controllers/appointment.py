@@ -16,7 +16,7 @@ class appointment():
 	def insertAppointment(self,ciPatient,ciDoctor,date,description):
 		check_ciPatient   = type(ciPatient)   == int
 		check_ciDoctor    = type(ciDoctor)   == int
-		#check_date		  = type(date) == datetime
+		check_date		  = type(date) == datetime.date
 		check_description = type(description) == str
 
 		if check_ciPatient and check_ciDoctor and check_description:
@@ -28,11 +28,12 @@ class appointment():
 				u = user.user()
 				if u.existUserCi(ciDoctor) and u.existUserCi(ciPatient):
 					uDoctor = u.getUserByCi(ciDoctor)
+					check_if_doctor = int(uDoctor.role) == 1
 					# Inicio del cable sofisticado debido a error en el models.py
-					idRole = int(uDoctor.role)
-					aRole = role.role()
-					roleName = aRole.getRole(idRole).role_name
-					check_if_doctor = roleName == 'Medico'
+					#idRole = int(uDoctor.role)
+					#aRole = role.role()
+					#roleName = aRole.getRole(idRole).role_name
+					#check_if_doctor = roleName == 'Medico'
 					# Fin del cable
 					check_not_the_same = ciPatient != ciDoctor
 					if check_if_doctor and check_not_the_same:
@@ -44,8 +45,9 @@ class appointment():
 
 	def modifyAppointment(self,id,date,description):
 		check_description = type(description) == str
+		check_date		  = type(date) == datetime.date
 
-		if check_description:
+		if check_description and check_date:
 			check_long_desc = CONST_MIN <= len(description) <= CONST_MAX_DESCR
 			
 			if check_long_desc:
