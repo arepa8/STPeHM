@@ -221,6 +221,7 @@ def modify_appointment(id):
 @app.route('/delete_appointment', methods=['POST'])
 def delete_appointment():
     id =  request.json
+    id = int(id)
     a = appointment.appointment()
     deleted = a.deleteAppointment(id)
     if deleted:
