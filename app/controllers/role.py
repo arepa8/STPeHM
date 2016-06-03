@@ -31,22 +31,24 @@ class role():
 		return False
 
 	def updateRole(self, target_id, role_name):
-		#check_target_id 	= type(check_target_id) == int
-		#check_long_target_id = CONST_MIN_ID <= target_id <= CONST_MAX_ID
+		check_target_id 	= type(target_id) == int
 		check_role_name 	 = type(role_name) == str
-		check_long_role_name = CONST_MIN_ROLE_NAME <= len(role_name) <= CONST_MAX_ROLE_NAME
-		
-		if check_role_name and check_long_role_name:
-			role = Role.query.filter_by(role_name=role_name).first()
-			if role != None and role.id == target_id:
-				return True
-			elif role != None and role.id != target_id:
-				return ("El rol ya existe.")
-			else:
-				role = Role.query.filter_by(id=target_id).first()
-				role.role_name = role_name
-				db.session.commit()
-				return True
+
+		if (check_role_name and check_target_id):
+			check_long_target_id = CONST_MIN_ID <= target_id <= CONST_MAX_ID
+			check_long_role_name = CONST_MIN_ROLE_NAME <= len(role_name) <= CONST_MAX_ROLE_NAME
+			
+			if (check_long_target_id and check_long_role_name):
+				role = Role.query.filter_by(role_name=role_name).first()
+				if role != None and role.id == target_id:
+					return True
+				elif role != None and role.id != target_id:
+					return ("El rol ya existe.")
+				else:
+					role = Role.query.filter_by(id=target_id).first()
+					role.role_name = role_name
+					db.session.commit()
+					return True
 		return False
 
 	def deleteRole(self, target_id):
@@ -55,17 +57,21 @@ class role():
 		
 		#if check_role_name and check_long_role_name:
 		r = Role.query.filter_by(id=target_id).first()
-		u = r.users.all()
-		if r != None and u == []:
-			db.session.delete(r)
-			db.session.commit()
-			return True
+		if r != None:
+			u = r.users.all()
+			if u == []:
+				db.session.delete(r)
+				db.session.commit()
+				return True
 		return False
 
 	def getRole(self, target_id):
-		check_target_id = type(check_target_id) == int
-		check_long_target_id = CONST_MIN_ID <= target_id <= CONST_MAX_ID
+		check_target_id = type(target_id) == int
+		
+		if (check_target_id):
 
-		if (check_target_id and check_long_target_id):
-			role = Role.query.filter_by(id=target_id).first()
-			return role
+			check_long_target_id = CONST_MIN_ID <= target_id <= CONST_MAX_ID
+
+			if (check_long_target_id):
+				role = Role.query.filter_by(id=target_id).first()
+				return role
