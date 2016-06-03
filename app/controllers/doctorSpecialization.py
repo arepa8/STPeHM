@@ -7,7 +7,7 @@ from models import *
 
 CONST_MIN_CI = 1
 CONST_MAX_CI = 999999999
-CONST_MIN_ID = 0
+CONST_MIN_ID = 1
 CONST_MAX_ID = 999999999
 
 class doctorSpecialization():
@@ -48,18 +48,22 @@ class doctorSpecialization():
 	def deleteDS(self, id):
 		check_id = (id != None) and (type(id) == int)
 		if check_id:
-			ds = Doctor_Specialization.query.filter_by(id=id).first()
-			if ds:
-				db.session.delete(ds)
-				db.session.commit()
-				return True
+			check_long_id = CONST_MIN_ID <= id <= CONST_MAX_ID
+			if (check_long_id):
+				ds = Doctor_Specialization.query.filter_by(id=id).first()
+				if ds:
+					db.session.delete(ds)
+					db.session.commit()
+					return True
 		return False
 
 	def getDSByID(self, id):
 		check_id = (id != None) and (type(id) == int)
 		if check_id:
-			ds = Doctor_Specialization.query.filter_by(id=id).first()
-			return ds
+			check_long_id = CONST_MIN_ID <= id <= CONST_MAX_ID
+			if check_long_id:
+				ds = Doctor_Specialization.query.filter_by(id=id).first()
+				return ds
 		return None
 
 	def getAllDS(self):
