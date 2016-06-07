@@ -55,9 +55,6 @@ function openModal_institution(id) {
     document.getElementById('deleteButton_institution').value =  id;
 }
 
-$("a.close-modal-button").click(function(){
-  alert("HOLA");
-});
 //Al darle click a la institucion, mostrar su informacion
 $("#show-institutions td").click(function(){
   var id = $(this).siblings().first().text();
@@ -70,10 +67,10 @@ $("#show-institutions td").click(function(){
           success: function(response) {
               var d = $.parseJSON(response);
               console.log(response);
-              $("p.name").append(d.name);
-              $("p.address").append(d.address);
+              $("p.name").html(d.name);
+              $("p.address").html(d.address);
               $(".modal-info-institution").modal('show');
-              $(".modal-backdrop.in").css('opacity','0'); 
+              $(".modal-backdrop.in").hide(); 
               $("a.close-modal-button").click(function(){
                 alert("HOLA");
                 $("button.modal-info-institution").modal('hide');

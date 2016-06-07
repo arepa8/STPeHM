@@ -149,6 +149,34 @@
         </tr>
       {% endfor%}
     </table></div>
+    <!-- MODAL DETALLE INSTITUCION -->
+    <!-- Modal -->
+        <div class="modal modal-info-institution fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog" style="display: block;">
+            <div class="modal-content" style="display: block;">
+              <div class="modal-header">
+                <button type="button" class="close close-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Información de la Institución</h4>
+              </div>
+              <div class="modal-body" style="display: block;">
+                <div class="container-fluid" style="display: block;">
+                    <div class="row" style="display: block;">
+                        <br>
+                        <h4>Nombre:</h4>
+                        <p class="name"></p>
+                        <h4>Dirección:</h4>
+                        <p class="address"></p>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" id="butt"class="btn btn-primary close-modal-button" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+    <!--FIN MODAL-->
+    
 
 <!--GESTION DE ESPECIALIZACIONES-->
   <div id="myModal_specialization" class="modal-content">
@@ -191,30 +219,5 @@
     </table></div>
   {% endif %}
 </div>
-<!-- MODAL DETALLE INSTITUCION -->
-<!-- Modal -->
-    <div class="modal modal-info-institution fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog" style="display: block;">
-        <div class="modal-content" style="display: block;">
-          <div class="modal-header">
-            <button type="button" class="close close-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="myModalLabel">Información de la Institución</h4>
-          </div>
-          <div class="modal-body" style="display: block;">
-            <div class="container-fluid" style="display: block;">
-                <div class="row" style="display: block;">
-                    <p class="name"></p>
-                    <p class="address"></p>
-                    <a class="close-modal-button">Cerrar</a>
-                </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" id="butt"class="btn btn-primary close-modal-button" data-dismiss="modal">Cerrar</button>
-          </div>
-        </div><!-- /.modal-content -->
-      </div><!-- /.modal-dialog -->
-    </div><!-- /.modal -->
-<!--FIN MODAL-->
 
 {% endblock %}
