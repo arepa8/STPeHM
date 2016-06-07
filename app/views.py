@@ -277,6 +277,17 @@ def delete_institution():
     else: 
         return json.dumps({'status':'ERROR','id':id})
 
+@app.route('/show_institution_data', methods=['POST'])
+def show_institution_data():
+    ''' Muestra una institución por su id '''
+    id =  int(request.json)
+    inst = Institution.query.filter_by(id = id).first()
+    name = inst.name
+    address = inst.address
+    print(name)
+    print(address)
+    return json.dumps({'status':'OK','id':id,'name':name,'address':address})
+
 #
 # GESTIÓN DE ESPECIALIZACIONES
 #

@@ -54,3 +54,37 @@ function openModal_institution(id) {
     modal_institution.style.display = "block";
     document.getElementById('deleteButton_institution').value =  id;
 }
+
+$("a.close-modal-button").click(function(){
+  alert("HOLA");
+});
+//Al darle click a la institucion, mostrar su informacion
+$("#show-institutions td").click(function(){
+  var id = $(this).siblings().first().text();
+  $.ajax({
+          type: 'POST',
+          url: '/show_institution_data',
+          data: JSON.stringify(id),
+          contentType:'application/json; charset=utf-8',
+
+          success: function(response) {
+              var d = $.parseJSON(response);
+              console.log(response);
+              $("p.name").append(d.name);
+              $("p.address").append(d.address);
+              $(".modal-info-institution").modal('show');
+              $(".modal-backdrop.in").css('opacity','0'); 
+              $("a.close-modal-button").click(function(){
+                alert("HOLA");
+                $("button.modal-info-institution").modal('hide');
+                $("button.modal-info-institution").css('display','none');
+              });
+
+              //window.location.reload(true);
+              //$('#show-institutions').load(document.URL +  ' #show-institutions');
+          },
+          error: function(error) {
+              console.log(error);
+          }
+      });
+  });
