@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from app import app, lm
 from app.forms import *
-from app.models import User,Role,db,Appointment, Institution, Specialization
+from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,Profile
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
@@ -360,27 +360,122 @@ def delete_specialization():
         return json.dumps({'status':'ERROR','id':id})
         
 ##############################
-# Funciones para retornar templates
+# PERFIL DE USUARIO
 ##############################
 @app.route('/profile', methods=['GET','POST'])
 def profile():
+
     active_user = session['user']
     user_controller = user.user()
-    form = ProfileForm(request.form)
-    form.name.data = active_user['name'].split()[0]
-    form.last_name.data = active_user['name'].split()[1]
-    form.email.data = user_controller.getUser(active_user['username']).email
-   
-    if request.method == 'POST' and form.validate():
-        result = True
+    u = user_controller.getUser(active_user['username'])
+    r = role.role()
+    user_role = r.getRole(int(u.role))
+
+    profile = Profile.query.filter_by(ci_user=u.ci).first()
+    patient = PatientProfile.query.filter_by(ci_patient=u.ci).first()
+    print(profile)
+    print(patient)
+    
+    #if user_role == 'Paciente':
+    form = PatientProfileForm(request.form)
+    #else:
+    #    form = DoctorProfileForm(request.form)
+
+    if request.method == 'POST': #and form.validate():
         
-        if result['result']:
-            return render_template('profile.html', form=form, active_user=active_user, mensaje='Exito')
-        else:
-            return render_template('profile.html', form=form, active_user=active_user, mensaje='Error')
+        # PONER ESTO CON CONTROLADORES
+        u.name = form.name.data
+        u.last_name = form.last_name.data
+        u.email = form.email.data        
+        db.session.commit()
+
+        # Datos de Profile
+        if profile == None:
+            print ("PRIMERA")
+            new_profile = Profile(u.ci,
+                                form.sex.data,
+                                form.date_of_birth.data,
+                                form.marital_status.data,
+                                form.telephone.data,
+                                form.address.data)
+            db.session.add(new_profile)
+            db.session.commit()
+
+        elif profile != None:
+            print("SEGUNDA")    
+            #profile.ci_user             = u.ci
+            profile.sex                 = form.sex.data
+            profile.date_of_birth       = form.date_of_birth.data
+            profile.marital_status      = form.marital_status.data
+            profile.telephone           = form.telephone.data
+            profile.address             = form.address.data
+            db.session.commit()
+
+        # Datos de PatientProfile
+        if patient == None:
+            print("TERCERA")
+            new_patient = PatientProfile(u.ci,
+                                        form.heigth.data,
+                                        form.weigth.data,
+                                        form.blood_type.data,
+                                        form.diabetic.data,
+                                        form.allergies.data,
+                                        form.emergency_contact.data,
+                                        form.emergency_number.data,
+                                        form.comments.data)
+            db.session.add(new_patient)
+            db.session.commit()
+        else:            
+            print("CUARTA")
+            patient.ci_patient          = u.ci
+            patient.heigth              = form.heigth.data
+            patient.weigth              = form.weigth.data
+            patient.blood_type          = form.blood_type.data
+            patient.diabetic            = form.diabetic.data
+            patient.allergies           = form.allergies.data
+            patient.emergency_contact   = form.emergency_contact.data
+            patient.emergency_number    = form.emergency_number.data
+            patient.comments            = form.comments.data
+            db.session.commit()
+      
+       #result = user_controller.updateUser(u.username, u.password, form.name.data, form.last_name.data, form.email.data, user_role)
+       #result = True
+       #if result['result']:
+       #    return render_template('profile.html', form=form, active_user=active_user, mensaje='Exito')
+       #else:
+       #     return render_template('profile.html', form=form, active_user=active_user, mensaje='Error')
+        #db.session.commit()
+        return render_template('profile.html', form=form, active_user=active_user, mensaje='Exito', ci = u.ci, username=u.username)
     
     elif request.method == 'GET':
-        return render_template('profile.html', active_user=active_user, form=form)
+        #form.ci.data        = u.ci
+        #form.username.data  = u.username
+        #form.password.data  = u.password
+        # Datos de User
+        form.name.data      = u.name
+        form.last_name.data = u.last_name
+        form.email.data     = u.email
+
+        # Datos de Profile
+        if profile != None:
+            form.sex.data = profile.sex
+            form.date_of_birth.data = profile.date_of_birth
+            form.marital_status.data = profile.marital_status
+            form.telephone.data = profile.telephone
+            form.address.data = profile.address
+            
+        # Datos de PatientProfile
+        if patient != None:
+            form.heigth.data = patient.heigth
+            form.weigth.data = patient.weigth
+            form.blood_type.data = patient.blood_type
+            form.diabetic.data = patient.diabetic
+            form.allergies.data = patient.allergies
+            form.emergency_contact.data = patient.emergency_contact
+            form.emergency_number.data = patient.emergency_number
+            form.comments.data = patient.comments
+
+        return render_template('profile.html', active_user=active_user, form=form, ci = u.ci, username=u.username)
 
 
 ##########################

@@ -35,7 +35,7 @@ class user():
 			check_long_email 	= CONST_MIN <= len(email) <= CONST_MAX_NAME_MAIL
 
 			if not(check_long_ci):
-				return {'result':False, 'message':'Error en la cedula: Debe intruducir un valor entre 1 y 999999999' }
+				return {'result':False, 'message':'Error en la cédula: Debe intruducir un valor entre 1 y 999999999' }
 
 			if not(check_long_username):
 				return {'result':False, 'message':'Error en el nombre de usuario: Debe tener máximo 50 caracteres' }
@@ -56,29 +56,29 @@ class user():
 			check_if_exist = User.query.filter_by(username=username).first()
 
 			if check_if_exist != None:
-				return {'result':False, 'message':'El nombre de usuario ya esta registrado' }
+				return {'result':False, 'message':'El nombre de usuario ya está registrado.' }
 
 			check_if_exist = User.query.filter_by(ci=ci).first()
 
 			if check_if_exist != None:
-				return {'result':False, 'message':'La cedula ya esta registrada' }
+				return {'result':False, 'message':'La cédula ya esta registrada' }
 
 			check_if_exist = User.query.filter_by(email=email).first()
 
 			if check_if_exist != None:
-				return {'result':False, 'message':'El correo electronico ya esta registrado' }
+				return {'result':False, 'message':'El correo electrónico ya esta registrado.' }
 
 			else:
 				
 				new_user = User(ci,username,password,name,last_name,email,role)
 				db.session.add(new_user)
 				db.session.commit()
-				return {'result':True, 'message':'Usted ha sido registrado exitosamente'}
+				return {'result':True, 'message':'Usted ha sido registrado exitosamente.'}
 
 		else :
-			return {'result':False, 'message':'Asegurese de llenar todos los campos' }
+			return {'result':False, 'message':'Asegúrese de completar todos los campos.' }
 
-		return  {'result':False, 'message':'Lo lamentamos! Ha ocurrido un error, intentelo mas tarde' }
+		return  {'result':False, 'message':'Lo lamentamos! Ha ocurrido un error, inténtelo más tarde.' }
 
 
 	def getUser(self, username):

@@ -17,12 +17,45 @@
         <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>{{ mensaje }}</strong></p>
         {% endif %}  
         <form action="{{ url_for('profile') }}" method=POST>
+          {{ form.ci.label }}
+          {{ ci }}
+          {{ form.username.label }}
+          {{ username }}
+          <!--{{ form.password.label }}
+          {{ form.password }}-->
           {{ form.name.label }}
           {{ form.name }}
           {{ form.last_name.label }}
           {{ form.last_name }}
           {{ form.email.label }}
           {{ form.email }}
+          {{ form.sex.label }}
+          {{ form.sex }}
+          {{ form.date_of_birth.label }}
+          {{ form.date_of_birth }}
+          {{ form.marital_status.label }}
+          {{ form.marital_status }}
+          {{ form.telephone.label }}
+          {{ form.telephone }}
+          {{ form.address.label }}
+          {{ form.address }}
+          {{ form.heigth.label }}
+          {{ form.heigth }}
+          {{ form.weigth.label }}
+          {{ form.weigth }}
+          {{ form.blood_type.label }}
+          {{ form.blood_type }}
+          {{ form.diabetic.label }}
+          {{ form.diabetic }}
+          {{ form.allergies.label }}
+          {{ form.allergies }}
+          {{ form.emergency_contact.label }}
+          {{ form.emergency_contact }}
+          {{ form.emergency_number.label }}
+          {{ form.emergency_number }}
+          {{ form.comments.label }}
+          {{ form.comments }}
+
           {{ form.submit }}
           </div>
         </form>
