@@ -28,12 +28,13 @@
       <title>{% block title %} STPeHM {% endblock %} </title>
     {% endblock %}
   </head>
+
   <body>
 	  <header>
 	  </header>
   <!-- Fixed navbar -->
-    <div class="navbar navbar-inverse navbar-afixed-top" style="border-radius: 0px;">
-      <div class="container">
+    <div id="top-nav" class="navbar navbar-inverse navbar-static-top">
+      <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
             <span class="icon-bar"></span>
@@ -44,25 +45,50 @@
         </div>
 
         <div class="navbar-collapse collapse">
-         {% if session.logged_in %}
-	        <ul class="nav navbar-nav navbar-left">
-	          {% if not session.user.role == 'Administrador' %}
-	          <li><a ng-show="userRole =='Medico' || false" href="{{ url_for('profile') }}">Mi perfil</a></li>
-	          <li><a ng-show="userRole =='Medico' || false" href="{{ url_for('show_appointments') }}">Mis citas</a></li>
-	          {% endif %}
-	        </ul>
-	    {% endif %}
-			<ul class="nav navbar-nav navbar-right">
-				{% if session.logged_in %}
-			<li><a href="{{ url_for('logout') }}">Salir</a></li>
-			{% endif %}
-			</ul>
-        </div><!--/.nav-collapse -->
+    			<ul class="nav navbar-nav navbar-right">
+    			 {% if session.logged_in %}
+    		    <li><a href="{{ url_for('logout') }}">Salir</a></li>
+    			 {% endif %}
+    			</ul>
+        </div>
       </div>
     </div>
 
-    {% block content %}
-    {% endblock %}
+    <!-- Main -->
+    {% if session.logged_in %}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3" style="padding-left: 30px;">
+         
+            <h4><center><strong>{{session.user.name}}</center></strong></h4>
+         
+          <hr>
+          <ul class="nav nav-pills nav-stacked">
+              <li class="nav-header"></li>
+              {% if not session.user.role == 'Administrador' %}
+                <li><a href="{{ url_for('profile') }}"><i class="fa fa-user"></i>  Ver Perfil</a></li>
+                {% if session.user.role == 'Medico' %}
+                  <li><a href="{{ url_for('show_consultations') }}"><i class="fa fa-calendar"></i>  Ver Consultas</a></li>
+                {% endif %}  
+                <li><a href="{{ url_for('show_appointments') }}"><i class="fa fa-pencil-square-o "></i>  Ver Citas</a></li>
+              {% else %} 
+                <li><a href="{{ url_for('show_users') }}"><i class="fa fa-user"></i>  Gestionar Usuarios</a></li>
+                <li><a href="{{ url_for('show_roles') }}"><i class="fa fa-users"></i>  Gestionar Roles</a></li>
+                <li><a href="{{ url_for('show_institutions') }}"><i class="fa fa-stethoscope"></i>  Gestionar Instituciones</a></li>
+                <li><a href="{{ url_for('show_specializations') }}"><i class="fa fa-h-square"></i>  Gestionar Especializaciones</a></li>
+              {% endif %}              
+          </ul>
+        </div>
+        <div class="col-sm-9">
+        {% block content %}
+        {% endblock %}
+        </div>
+      </div>
+    </div>
+    {% else %} 
+      {% block login %}
+      {% endblock %}
+    {% endif %}       
 
     <div id="footer">
       {% block footer %}

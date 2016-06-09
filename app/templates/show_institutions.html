@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+{% block content %}
+<div id="cuerpoHeredado">
+<!--GESTION DE INSTITUCIONES-->
+  <div id="myModal_institution" class="modal-content">
+    <div class="modal-header">
+      <span class="close">×</span>
+      <h2></h2>
+    </div>
+    <div class="modal-body">
+      <p>¿Está seguro de que desea eliminar la institución?</p>
+      <button id="deleteButton_institution">Eliminar</button>
+      <button id="cancel_institution">Cancelar</button>
+    </div>
+    <div class="modal-footer">
+      <h3></h3>
+    </div>
+  </div>
+  <center><h1>Gestión de Instituciones</h1></center>
+    <div id="show-institutions"><table>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th> 
+        <th>Direccion</th>
+        <th style="text-align: right">
+          <a id="add_appointment" href="{{ url_for('add_institution')}}">
+            <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i>
+          </a>
+        </th>
+      </tr>
+      {% for institucion in instituciones %}
+        <tr>
+          <td>{{institucion.id}}</td>
+          <td>{{institucion.name}}</td>
+          <td>{{institucion.address}}</td> 
+          <td style="text-align: right;">
+            <a href="{{ url_for('modify_institution',id=institucion.id)}}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+            <button id="delete_institution" value= "{{institucion.id}}" onclick="openModal_institution({{institucion.id}})" name="id"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
+          </td> 
+        </tr>
+      {% endfor%}
+    </table></div>
+    <!-- MODAL DETALLE INSTITUCION -->
+    <!-- Modal -->
+    <div class="modal modal-info-institution fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="display: block;">
+        <div class="modal-content" style="display: block;">
+          <div class="modal-header">
+            <button type="button" class="close close-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="myModalLabel">Información de la Institución</h4>
+          </div>
+          <div class="modal-body" style="display: block;">
+            <div class="container-fluid" style="display: block;">
+                <div class="row" style="display: block;">
+                    <br>
+                    <h4>Nombre:</h4>
+                    <p class="name"></p>
+                    <h4>Dirección:</h4>
+                    <p class="address"></p>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="butt"class="btn btn-primary close-modal-button" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <!--FIN MODAL-->
+</div>
+{% endblock %}
+    

@@ -1,11 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-<!--GESTION DE USUARIOs-->
-
-<div id="cuerpoHeredado">
-  <h1> Bienvenido, {{active_user.role}} {{active_user.name}}.</h1>
-      <!-- Modal content -->
-    {% if active_user.role == 'Administrador' %}
+  <div id="cuerpoHeredado">
     <div id="myModal_user" class="modal-content">
       <div class="modal-header">
         <span class="close">×</span>
@@ -20,16 +15,14 @@
         <h3></h3>
       </div>
     </div>
-    <br>
-    <br> 
-    <center><h2>Gestión de Usuarios</h2></center>
+    <center><h1>Gestión de Usuarios</h1></center>
     <div id="show-users"><table>
       <tr>
-        <th>Cédula de Identidad</th>
+        <th>Cédula</th>
         <th>Username</th>
         <th>Nombre</th> 
         <th>Apellido</th>
-        <th>Correo electrónico</th>
+        <th>Mail</th>
         <th> Rol </th>
         <th></th>
       </tr>
@@ -41,7 +34,7 @@
           <td>{{user.last_name}}</td> 
           <td>{{user.email}}</td>
           <td>{{user.role}}</td>  
-          <td>
+          <td style="text-align: right;">
             <a href="{{ url_for('modify_user', ci=user.ci) }}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
             <button id="delete_user" value= "{{user.ci}}" onclick="openModal_user({{user.ci}})" name="ci"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
 
@@ -49,175 +42,5 @@
         </tr>
       {% endfor%}
     </table></div>
-
-<!--GESTION DE ROLES-->
-     <br>
-     <br> 
-    <center><h2>Gestión de Roles</h2></center>
-    <!--AGREGAR ROL-->        
-    <div class="col-xs-12 show-add-role" style="display:none;">
-      <br>
-      <br>
-      <span>Agregar nuevo rol: </span>
-      <input id="add-role-input" name="role" type="role">
-      <button id = "add-role">Aceptar</button>
-     <br>
-     <br> 
-    </div>
-    <!--MODIFICAR ROL-->    
-    <div class="col-xs-12 show-modify-role" style="display:none;">
-      <br>
-      <br>
-      <span>Modificar rol: </span>
-      <input id="modify-role-input" name="role" type="role">
-
-      <button id = "modify-role-form">Aceptar</button>
-     <br>
-     <br> 
-    </div>
-    <!--ERROR ROL-->    
-    <div class="col-xs-12 error-role" style="display:none;">
-      <br>
-      <br>
-      <span id="error-role-span"></span>
-     <br>
-     <br> 
-    </div>
-    <!-- TABLA DE ROLES-->    
-    <div id ="show-roles"><table>
-    <tr>
-      <th>Rol ID</th>
-      <th>Rol</th>
-      <th>Descripción</th>
-      <th style="text-align: right">
-         <button id="show-add-role" onclick="show_add_role()"> <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i></button>
-      </th>
-    </tr>
-    {% for role in roles %}
-    <tr>
-      <td>{{ role.id }}</td>
-      <td>{{ role.role_name }}</td>
-      <td>{{ role.role_descripcion }}</td>
-      <td style="text-align: right;">
-        <button id="modify-role" name="{{role.role_name}}" value="{{role.id}}" onclick="show_modify_role({{role.id}},'{{role.role_name}}')"  style="background: transparent; border: 0;padding: 0px 0px 0px 30px;">
-            <i class="fa fa-pencil" style="font-size:16px;color:black"></i>
-        </button>
-        <button id="delete-role" value= "{{role.id}}" onclick="delete_role({{role.id}})"  style="background: transparent; border: 0;padding: 0px 0px 0px 30px;">
-          <i class="fa fa-trash" style="font-size:16px;color:black"></i>
-        </button></td>
-    </tr>
-    {% endfor %}
-  </table></div>
-<!--GESTION DE INSTITUCIONES-->
-  <div id="myModal_institution" class="modal-content">
-    <div class="modal-header">
-      <span class="close">×</span>
-      <h2></h2>
-    </div>
-    <div class="modal-body">
-      <p>¿Está seguro de que desea eliminar la institución?</p>
-      <button id="deleteButton_institution">Eliminar</button>
-      <button id="cancel_institution">Cancelar</button>
-    </div>
-    <div class="modal-footer">
-      <h3></h3>
-    </div>
   </div>
-  <br>
-  <br> 
-  <center><h2>Gestión de Instituciones</h2></center>
-    <div id="show-institutions"><table>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th> 
-        <th>Direccion</th>
-        <th style="text-align: right">
-          <a id="add_appointment" href="{{ url_for('add_institution')}}">
-            <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i>
-          </a>
-        </th>
-      </tr>
-      {% for institucion in instituciones %}
-        <tr>
-          <td>{{institucion.id}}</td>
-          <td>{{institucion.name}}</td>
-          <td>{{institucion.address}}</td> 
-          <td>
-            <a href="{{ url_for('modify_institution',id=institucion.id)}}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
-            <button id="delete_institution" value= "{{institucion.id}}" onclick="openModal_institution({{institucion.id}})" name="id"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
-          </td> 
-        </tr>
-      {% endfor%}
-    </table></div>
-    <!-- MODAL DETALLE INSTITUCION -->
-    <!-- Modal -->
-        <div class="modal modal-info-institution fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-          <div class="modal-dialog" style="display: block;">
-            <div class="modal-content" style="display: block;">
-              <div class="modal-header">
-                <button type="button" class="close close-modal" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Información de la Institución</h4>
-              </div>
-              <div class="modal-body" style="display: block;">
-                <div class="container-fluid" style="display: block;">
-                    <div class="row" style="display: block;">
-                        <br>
-                        <h4>Nombre:</h4>
-                        <p class="name"></p>
-                        <h4>Dirección:</h4>
-                        <p class="address"></p>
-                    </div>
-                </div>
-              </div>
-              <div class="modal-footer">
-                <button type="button" id="butt"class="btn btn-primary close-modal-button" data-dismiss="modal">Cerrar</button>
-              </div>
-            </div><!-- /.modal-content -->
-          </div><!-- /.modal-dialog -->
-        </div><!-- /.modal -->
-    <!--FIN MODAL-->
-    
-
-<!--GESTION DE ESPECIALIZACIONES-->
-  <div id="myModal_specialization" class="modal-content">
-    <div class="modal-header">
-      <span class="close">×</span>
-      <h2></h2>
-    </div>
-    <div class="modal-body">
-      <p>¿Está seguro de que desea eliminar la especialización?</p>
-      <button id="deleteButton_specialization">Eliminar</button>
-      <button id="cancel_specialization">Cancelar</button>
-    </div>
-    <div class="modal-footer">
-      <h3></h3>
-    </div>
-  </div>
-  <br>
-  <br> 
-  <center><h2>Gestión de Especializaciones</h2></center>
-    <div id="show-specializations"><table>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th> 
-        <th style="text-align: right">
-          <a id="add_appointment" href="{{ url_for('add_specialization')}}">
-            <i class="fa fa-plus-circle" style="font-size:20px;color:white"></i>
-          </a>
-        </th>
-      </tr>
-      {% for especializacion in especializacion %}
-        <tr>
-          <td>{{especializacion.id}}</td>
-          <td>{{especializacion.speciality}}</td>
-          <td>
-            <a href="{{ url_for('modify_specialization',id=especializacion.id)}}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
-            <button id="delete_specialization" value= "{{especializacion.id}}" onclick="openModal_specialization({{especializacion.id}})" name="id"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
-          </td> 
-        </tr>
-      {% endfor%}
-    </table></div>
-  {% endif %}
-</div>
-
 {% endblock %}

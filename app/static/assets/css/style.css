@@ -1,9 +1,16 @@
 /* ==== Google font ==== */
 @import url('http://fonts.googleapis.com/css?family=Lato:400,300,700,900');
 
+i {
+  font-size:16px;
+}
+
+.nav > li > a {
+  color:#787878;
+}
 
 body {
-  background-color: #f2f2f2;
+  background-color: #fff;
     font-family: 'Lato', sans-serif;
     font-weight: 300;
     font-size: 16px;
@@ -39,7 +46,6 @@ p {
 
 
 a {
-    color: #d6ee18;
     word-wrap: break-word;
     -webkit-transition: color 0.1s ease-in, background 0.1s ease-in;
     -moz-transition: color 0.1s ease-in, background 0.1s ease-in;
@@ -50,7 +56,6 @@ a {
 
 a:hover,
 a:focus {
-    color: #b7cb1b;
     text-decoration: none;
     outline: 0;
 }
@@ -63,6 +68,11 @@ a:after {
     -o-transition: color 0.1s ease-in, background 0.1s ease-in;
     transition: color 0.1s ease-in, background 0.1s ease-in;
 }
+
+.navbar-static-top {
+  margin-bottom:20px;
+}
+
 .navbar-form input, .form-inline input {
   width:auto;
 }
@@ -132,7 +142,6 @@ a.navbar-brand:hover {
 /* Header */
 
 #header {	
-	background-color: #F5F5F5;
   background-attachment: relative;
   min-height: 500px;
   width: 100%;
@@ -161,16 +170,16 @@ h2.subtitle {
 
 /* CuerpoHeredado */
 #cuerpoHeredado {
-  padding:1px 70px;
+  padding:1px 10px;
   min-height:1000px;
-  margin-top: 80px;
-  margin-bottom: 50px;
 }
 
 /* footer */
 #footer {
-	background: #428BCA;
-	padding: 20px 0 5px;
+	margin-top:20px;
+  padding-top:20px;
+  padding-bottom:20px;
+  background-color:rgba(0,110,182,1);
 }
 
 p.copyright {
@@ -245,13 +254,33 @@ form input#submit:hover{
 
 /* Button */
 
-#delete_appointment{
+#deleteButton_appointment{
   background: transparent;
   border: 0;
   padding: 0px 0px 0px 30px;
 }
 
 #delete_user{
+  background: transparent;
+  border: 0;
+  padding: 0px 0px 0px 30px;
+}
+
+#delete_consultation{
+  background: transparent;
+  border: 0;
+  padding: 0px 0px 0px 30px;
+}
+
+
+#delete_institution{
+  background: transparent;
+  border: 0;
+  padding: 0px 0px 0px 30px;
+}
+
+
+#delete_specialization{
   background: transparent;
   border: 0;
   padding: 0px 0px 0px 30px;

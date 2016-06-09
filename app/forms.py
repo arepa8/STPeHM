@@ -19,9 +19,12 @@ class ProfileForm(Form):
 	last_name = TextField("Apellido", [validators.Required()])
 	email = TextField("Correo electrónico", [validators.Required()])
 	birthday = DateField('DatePicker', format='%Y-%m-%d')
+	submit = SubmitField("Modificar", [validators.Required()])
+
+class ConsultationForm(Form):
 	hospital = SelectField("Institucion", [validators.Required()], coerce=int)
 	especialidad = SelectField("Especialidad", [validators.Required()], coerce=int)
-	submit = SubmitField("Modificar", [validators.Required()])
+	submit = SubmitField("Agregar", [validators.Required()])
 
 class PatientAppointmentForm(Form):
 	doctor = IntegerField("Cédula de indentidad del doctor", [validators.Required()])

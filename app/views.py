@@ -30,16 +30,40 @@ def contact():
     elif request.method == 'GET':
         return render_template('contact.html', form=form)
 
+@app.route('/home',methods=['GET', 'POST'])
+def home():
+    if request.method == 'GET':
+        active_user = session['user']
+        return render_template('home.html', active_user=active_user)
+
+
 @app.route('/users',methods=['GET', 'POST'])
 def show_users():
     if request.method == 'GET':
         users = User.query.all()
-        #print(session['user']['username'])
+        active_user = session['user']
+        return render_template('show_users.html', users=users, active_user=active_user)
+
+@app.route('/roles',methods=['GET', 'POST'])
+def show_roles():
+    if request.method == 'GET':
         active_user = session['user']
         roles = Role.query.all()
+        return render_template('show_roles.html', active_user=active_user, roles=roles)
+
+@app.route('/institutions',methods=['GET', 'POST'])
+def show_institutions():
+    if request.method == 'GET':
+        active_user = session['user']
         instituciones = Institution.query.all()
+        return render_template('show_institutions.html', active_user=active_user, instituciones=instituciones)
+
+@app.route('/specializations',methods=['GET', 'POST'])
+def show_specializations():
+    if request.method == 'GET':
+        active_user = session['user']
         especializacion = Specialization.query.all()
-        return render_template('show_users.html', users=users, active_user=active_user, roles=roles, instituciones=instituciones, especializacion=especializacion)
+        return render_template('show_specializations.html', active_user=active_user, especializacion=especializacion)
 
 # route for handling the login page logic
 @app.route('/', methods=['GET', 'POST'])
@@ -65,10 +89,10 @@ def login():
                     session['user'] = {'name': user.name+' '+user.last_name,'username': user.username, 'ci': user.ci, 'role': role}
                     session['logged_in'] = True
                     flash('You were logged in')
-                    return redirect(url_for('show_users'))
+                    return redirect(url_for('home'))
             error = 'Invalid username or password'
         return render_template('index.html', error=error)
-    return redirect(url_for('show_users'))
+    return redirect(url_for('home'))
 
 
 @app.route('/logout')
@@ -126,7 +150,7 @@ def add_role():
 @app.route('/view_role',methods=['POST'])
 def view_role():
     roles = Role.query.all()
-    return render_template('show_users.html', roles=roles)
+    return render_template('show_roles.html', roles=roles)
 
 @app.route('/modify_role',methods=['POST'])
 def modify_role():
@@ -241,7 +265,7 @@ def add_institution():
     if request.method == 'POST':
         new_i = institution.institution()
         if new_i.insertInstitution(form.name.data,form.address.data):
-            return redirect(url_for('show_users'))
+            return redirect(url_for('show_institutions'))
         else:
             print('Error')
     title = "Agregar"
@@ -257,7 +281,7 @@ def modify_institution(id):
         inst = institution.institution()
         modified = inst.modifyInstitution(id, form.name.data, form.address.data)
         if modified:
-            return redirect(url_for('show_users'))
+            return redirect(url_for('show_institutions'))
         else:
             print("Error")
     title = "Modificar"
@@ -299,7 +323,7 @@ def add_specialization():
     if request.method == 'POST':
         new_s = specialization.specialization()
         if new_s.insertSpecialization(form.name.data):
-            return redirect(url_for('show_users'))
+            return redirect(url_for('show_specializations'))
         else:
             print('Error')
     title = "Agregar"
@@ -315,7 +339,7 @@ def modify_specialization(id):
         s = specialization.specialization()
         modified = s.modifySpecialization(id, form.name.data)
         if modified:
-            return redirect(url_for('show_users'))
+            return redirect(url_for('show_specializations'))
         else:
             print("Error")
     title = "Modificar"
@@ -341,18 +365,12 @@ def delete_specialization():
 @app.route('/profile', methods=['GET','POST'])
 def profile():
     active_user = session['user']
-    speciality_controller = specialization.specialization()
-    institution_controller = institution.institution()
     user_controller = user.user()
     form = ProfileForm(request.form)
-    institutions = institution_controller.getAllInstitutions()
-    specialities = speciality_controller.getAllSpecializations()
     form.name.data = active_user['name'].split()[0]
     form.last_name.data = active_user['name'].split()[1]
     form.email.data = user_controller.getUser(active_user['username']).email
-    form.hospital.choices = [(str(inst.id),str(inst.name)) for inst in institutions]
-    form.especialidad.choices = [(str(speciality.id),str(speciality.speciality)) for speciality in specialities]
-    
+   
     if request.method == 'POST' and form.validate():
         result = True
         
@@ -363,3 +381,29 @@ def profile():
     
     elif request.method == 'GET':
         return render_template('profile.html', active_user=active_user, form=form)
+
+
+##########################
+# VIEWS NO IMPLEMENTADAS #
+##########################
+
+@app.route('/consultations',methods=['GET', 'POST'])
+def show_consultations():
+    if request.method == 'GET':
+        active_user = session['user']
+        consultas = [{'institution': 'Hospital1', 'speciality': 'Especialidad1'}]
+        return render_template('show_consultations.html', active_user=active_user, consultations=consultas)
+
+@app.route('/add_consultation',methods=['GET', 'POST'])
+def add_consultation():
+    if request.method == 'GET':
+        active_user = session['user']
+        form = ConsultationForm(request.form)
+        institution_controller = institution.institution()
+        speciality_controller = specialization.specialization()
+        institutions = institution_controller.getAllInstitutions()
+        specialities = speciality_controller.getAllSpecializations()
+        form.hospital.choices = [(str(inst.id),str(inst.name)) for inst in institutions]
+        form.especialidad.choices = [(str(speciality.id),str(speciality.speciality)) for speciality in specialities]
+    
+        return render_template('add_consultation.html', active_user=active_user, form=form)
