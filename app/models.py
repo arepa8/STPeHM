@@ -151,7 +151,7 @@ class Doctor_Specialization(db.Model):
         return '<Doctor_Specialization doctor: %r, speciality: %r>' % (self.doctor, self.speciality)
 
 class Profile(object):
-       __tablename__ = 'Profile'
+    __tablename__ = 'Profile'
 
     id = db.Column(db.Integer,primary_key = True)
     ci_user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
