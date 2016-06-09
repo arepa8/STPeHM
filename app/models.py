@@ -150,6 +150,7 @@ class Doctor_Specialization(db.Model):
     def __repr__(self):
         return '<Doctor_Specialization doctor: %r, speciality: %r>' % (self.doctor, self.speciality)
 
+
 class Profile(db.Model):
     __tablename__ = 'Profile'
 
