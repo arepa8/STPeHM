@@ -159,7 +159,6 @@ class Profile(object):
     last_name = db.Column(db.String(255),nullable=False)
     email = db.Column(db.String(255),nullable=False, unique=True)
     id_institution = db.Column(db.Integer, db.ForeignKey('Institution.id'))
-    id_speciality = db.Column(db.Integer, db.ForeignKey('Specialization.id'))
 
     def __init__(self, ci_user, name, last_name, email, id_institution, id_speciality):
         self.ci_user = ci_user
@@ -167,7 +166,6 @@ class Profile(object):
         self.last_name = last_name
         self.email = email
         self.id_institution = id_institution
-        self.id_speciality = id_speciality
 
     def __repr__(self):
         return '<Profile ci_user = %r, name = %r, last_name = %r>' % (self.ci_user, self.name, self.last_name)
