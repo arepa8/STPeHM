@@ -34,7 +34,7 @@ def contact():
 def show_users():
     if request.method == 'GET':
         users = User.query.all()
-        #print(session)
+        #print(session['user']['username'])
         active_user = session['user']
         roles = Role.query.all()
         instituciones = Institution.query.all()
@@ -341,16 +341,25 @@ def delete_specialization():
 @app.route('/profile', methods=['GET','POST'])
 def profile():
     active_user = session['user']
+    speciality_controller = specialization.specialization()
+    institution_controller = institution.institution()
+    user_controller = user.user()
     form = ProfileForm(request.form)
-    form.hospital.choices = [('1','Holpital_1')]
-    form.especialidad.choices = [('1','Especialidad_1')]
-    if request.method == 'POST':
+    institutions = institution_controller.getAllInstitutions()
+    specialities = speciality_controller.getAllSpecializations()
+    form.name.data = active_user['name'].split()[0]
+    form.last_name.data = active_user['name'].split()[1]
+    form.email.data = user_controller.getUser(active_user['username']).email
+    form.hospital.choices = [(str(inst.id),str(inst.name)) for inst in institutions]
+    form.especialidad.choices = [(str(speciality.id),str(speciality.speciality)) for speciality in specialities]
+    
+    if request.method == 'POST' and form.validate():
         result = True
         
         if result['result']:
             return render_template('profile.html', form=form, active_user=active_user, mensaje='Exito')
         else:
             return render_template('profile.html', form=form, active_user=active_user, mensaje='Error')
-
+    
     elif request.method == 'GET':
         return render_template('profile.html', active_user=active_user, form=form)
