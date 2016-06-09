@@ -3,7 +3,7 @@
 # Se importan las librerias necesarias.
 import os
 
-from flask                 import Flask
+from flask         import Flask
 from flask.ext.script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from flask_sqlalchemy import SQLAlchemy
@@ -149,7 +149,26 @@ class Doctor_Specialization(db.Model):
 
     def __repr__(self):
         return '<Doctor_Specialization doctor: %r, speciality: %r>' % (self.doctor, self.speciality)
-        
+
+class Profile(object):
+       __tablename__ = 'Profile'
+
+    id = db.Column(db.Integer,primary_key = True)
+    ci_user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    name = db.Column(db.String(255),nullable=False)
+    last_name = db.Column(db.String(255),nullable=False)
+    email = db.Column(db.String(255),nullable=False, unique=True)
+    id_institution = db.Column(db.Integer, db.ForeignKey('Institution.id'))
+
+    def __init__(self, ci_user, name, last_name, email, id_institution, id_speciality):
+        self.ci_user = ci_user
+        self.name = name
+        self.last_name = last_name
+        self.email = email
+        self.id_institution = id_institution
+
+    def __repr__(self):
+        return '<Profile ci_user = %r, name = %r, last_name = %r>' % (self.ci_user, self.name, self.last_name)
 
 if __name__ == '__main__':
 	manager.run()
