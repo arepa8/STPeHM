@@ -1,6 +1,6 @@
 import sys
-sys.path.append('app/')
-sys.append('../')
+#sys.path.append('app/')
+sys.path.append('../')
 
 from models import *
 
@@ -8,6 +8,7 @@ CONST_MIN = 1
 CONST_MAX_TEL = 15
 CONST_MAX_ADDRESS = 100
 CONST_MAX_SEX = 10
+
 class profile():
 
 	def insertProfile(self, ci_user, sex, date_of_birth, marital_status, telephone, address):

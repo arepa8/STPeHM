@@ -1,6 +1,6 @@
 import sys
 sys.path.append('app/')
-sys.append('../')
+sys.path.append('../')
 
 from models import *
 
