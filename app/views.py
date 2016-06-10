@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from app import app, lm
 from app.forms import *
-from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,Profile
+from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,DoctorProfile,Profile
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
@@ -360,7 +360,7 @@ def delete_specialization():
         return json.dumps({'status':'ERROR','id':id})
         
 ##############################
-# PERFIL DE USUARIO
+# PERFIL DE PACIENTE
 ##############################
 @app.route('/profile', methods=['GET','POST'])
 def profile():
@@ -476,6 +476,120 @@ def profile():
             form.comments.data = patient.comments
 
         return render_template('profile.html', active_user=active_user, form=form, ci = u.ci, username=u.username)
+
+
+@app.route('/profile_doctor', methods=['GET','POST'])
+def profile_doctor():
+
+    active_user = session['user']
+    user_controller = user.user()
+    u = user_controller.getUser(active_user['username'])
+    r = role.role()
+    user_role = r.getRole(int(u.role))
+
+    profile = Profile.query.filter_by(ci_user=u.ci).first()
+    doctor = DoctorProfile.query.filter_by(ci_doctor=u.ci).first()
+    print(profile)
+    print(doctor)
+    
+    form = DoctorProfileForm(request.form)
+
+    if request.method == 'POST': #and form.validate():
+        
+        # PONER ESTO CON CONTROLADORES
+        u.name = form.name.data
+        u.last_name = form.last_name.data
+        u.email = form.email.data        
+        db.session.commit()
+
+        # Datos de Profile
+        if profile == None:
+            print ("PRIMERA")
+            new_profile = Profile(u.ci,
+                                form.sex.data,
+                                form.date_of_birth.data,
+                                form.marital_status.data,
+                                form.telephone.data,
+                                form.address.data)
+            db.session.add(new_profile)
+            db.session.commit()
+
+        elif profile != None:
+            print("SEGUNDA")    
+            #profile.ci_user             = u.ci
+            profile.sex                 = form.sex.data
+            profile.date_of_birth       = form.date_of_birth.data
+            profile.marital_status      = form.marital_status.data
+            profile.telephone           = form.telephone.data
+            profile.address             = form.address.data
+            db.session.commit()
+
+        # Datos de DoctorProfile
+        if doctor == None:
+            print("TERCERA")
+            new_doctor = DoctorProfile(u.ci,
+                                        form.habilities.data,
+                                        form.pregrade.data,
+                                        form.postgrade.data,
+                                        form.experience.data,
+                                        form.courses.data,
+                                        form.seminars.data,
+                                        form.publications.data,
+                                        form.awards.data)
+            db.session.add(new_doctor)
+            db.session.commit()
+        else:            
+            print("CUARTA")
+            doctor.ci_doctor    = u.ci
+            doctor.habilities   = form.habilities.data
+            doctor.pregrade     = form.pregrade.data
+            doctor.postgrade    = form.postgrade.data
+            doctor.experience   = form.experience.data
+            doctor.courses      = form.courses.data
+            doctor.seminars     = form.seminars.data
+            doctor.publications = form.publications.data
+            doctor.awards       = form.awards.data
+            db.session.commit()
+      
+       #result = user_controller.updateUser(u.username, u.password, form.name.data, form.last_name.data, form.email.data, user_role)
+       #result = True
+       #if result['result']:
+       #    return render_template('profile.html', form=form, active_user=active_user, mensaje='Exito')
+       #else:
+       #     return render_template('profile.html', form=form, active_user=active_user, mensaje='Error')
+        #db.session.commit()
+        return render_template('profile.html', form=form, active_user=active_user, mensaje='Exito', ci = u.ci, username=u.username)
+    
+    elif request.method == 'GET':
+        #form.ci.data        = u.ci
+        #form.username.data  = u.username
+        #form.password.data  = u.password
+        # Datos de User
+        form.name.data      = u.name
+        form.last_name.data = u.last_name
+        form.email.data     = u.email
+
+        # Datos de Profile
+        if profile != None:
+            form.sex.data = profile.sex
+            form.date_of_birth.data = profile.date_of_birth
+            form.marital_status.data = profile.marital_status
+            form.telephone.data = profile.telephone
+            form.address.data = profile.address
+            
+        # Datos de DoctorProfile
+        if doctor != None:
+            form.habilities.data = doctor.habilities
+            form.pregrade.data = doctor.pregrade
+            form.postgrade.data = doctor.postgrade
+            form.experience.data = doctor.experience
+            form.courses.data = doctor.courses
+            form.seminars.data = doctor.seminars
+            form.publications.data = doctor.publications
+            form.awards.data = doctor.awards
+
+        return render_template('profile.html', active_user=active_user, form=form, ci = u.ci, username=u.username)
+
 
 
 ##########################

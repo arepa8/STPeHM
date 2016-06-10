@@ -15,12 +15,8 @@
       <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
         {% if mensaje %}
         <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>{{ mensaje }}</strong></p>
-        {% endif %} 
-        {% if session.user.role == 'Medico' %}
-          <form action="{{ url_for('profile_doctor') }}" method=POST>
-        {% else %}
-          <form action="{{ url_for('profile') }}" method=POST>
-        {% endif %}
+        {% endif %}  
+        <form action="{{ url_for('profile_doctor') }}" method=POST>
           {{ form.ci.label }}
           {{ ci }}
           {{ form.username.label }}
@@ -44,42 +40,23 @@
           {{ form.address.label }}
           {{ form.address }}
           <!-- DOCTOR PROFILE-->
-          {% if session.user.role == 'Medico' %}
-            {{ form.habilities.label }}
-            {{ form.habilities }}
-            {{ form.pregrade.label }}
-            {{ form.pregrade }}
-            {{ form.postgrade.label }}
-            {{ form.postgrade }}
-            {{ form.experience.label }}
-            {{ form.experience }}
-            {{ form.courses.label }}
-            {{ form.courses }}
-            {{ form.seminars.label }}
-            {{ form.seminars }}
-            {{ form.publications.label }}
-            {{ form.publications }}
-            {{ form.awards.label }}
-            {{ form.awards }}
-          {% else %}
-          <!-- PATIENT PROFILE-->
-            {{ form.heigth.label }}
-            {{ form.heigth }}
-            {{ form.weigth.label }}
-            {{ form.weigth }}
-            {{ form.blood_type.label }}
-            {{ form.blood_type }}
-            {{ form.diabetic.label }}
-            {{ form.diabetic }}
-            {{ form.allergies.label }}
-            {{ form.allergies }}
-            {{ form.emergency_contact.label }}
-            {{ form.emergency_contact }}
-            {{ form.emergency_number.label }}
-            {{ form.emergency_number }}
-            {{ form.comments.label }}
-            {{ form.comments }}
-          {% endif %}
+          {{ form.habilities.label }}
+          {{ form.habilities }}
+          {{ form.pregrade.label }}
+          {{ form.pregrade }}
+          {{ form.postgrade.label }}
+          {{ form.postgrade }}
+          {{ form.experience.label }}
+          {{ form.experience }}
+          {{ form.courses.label }}
+          {{ form.courses }}
+          {{ form.seminars.label }}
+          {{ form.seminars }}
+          {{ form.publications.label }}
+          {{ form.publications }}
+          {{ form.awards.label }}
+          {{ form.awards }}
+
           {{ form.submit }}
           </div>
         </form>

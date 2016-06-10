@@ -66,8 +66,11 @@
           <ul class="nav nav-pills nav-stacked">
               <li class="nav-header"></li>
               {% if not session.user.role == 'Administrador' %}
+                {% if session.user.role == 'Paciente' %}
                 <li><a href="{{ url_for('profile') }}"><i class="fa fa-user"></i>  Ver Perfil</a></li>
+                {% endif %}  
                 {% if session.user.role == 'Medico' %}
+                  <li><a href="{{ url_for('profile_doctor') }}"><i class="fa fa-user"></i>  Ver Perfil</a></li>
                   <li><a href="{{ url_for('show_consultations') }}"><i class="fa fa-calendar"></i>  Ver Consultas</a></li>
                 {% endif %}  
                 <li><a href="{{ url_for('show_appointments') }}"><i class="fa fa-pencil-square-o "></i>  Ver Citas</a></li>

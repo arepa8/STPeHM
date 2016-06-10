@@ -175,8 +175,8 @@ class Profile(db.Model):
 
 class DoctorProfile(db.Model):
     __tablename__ = 'DoctorProfile'
-    #id = db.Column(db.Integer,primary_key = True)
-    id = Column(Integer, ForeignKey('Profile.id'), primary_key=True)
+    id = db.Column(db.Integer,primary_key = True)
+    #id = Column(Integer, ForeignKey('Profile.id'), primary_key=True)
     ci_doctor = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
     habilities = db.Column(db.String(500))
     pregrade = db.Column(db.String(100))
