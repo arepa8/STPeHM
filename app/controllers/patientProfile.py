@@ -4,6 +4,11 @@ sys.append('../')
 
 from models import *
 
+CONST_MIN = 1
+CONST_MAX_ALLER = 500
+CONST_MAX_HEIGTH = 15
+CONST_MAX_DIAB = 3
+CONST_MAX_CONTACT = 100
 class patientProfile():
 
 	def insertPatientProfile(self, ci_patient, heigth, weigth, blood_type, diabetic, allergies, emergency_contact, emergency_number,comments):
@@ -18,15 +23,15 @@ class patientProfile():
 		check_comments 	= (type(comments) == str) and (comments != None)
 
 		if check_ci_patient and check_heigth and check_weigth and check_blood_type and check_diabetic and check_allergies and check_emergency_contact and check_emergency_number and check_comments:
-			check_long_ci_patient 	= (0 < ci_user <= 99999999)
-			check_long_heigth 		= (1 <= len(heigth) <= 15)
-			check_long_weigth 		= (1 <= len(weigth) <= 15)
-			check_long_blood_type 	= (1 <= len(blood_type) <= 3)
-			check_long_diabetic 	= (1 <= len(diabetic) <= 3)
-			check_long_allergies 	= (1 <= len(allergies) <= 500)
-			check_long_emer_contact = (1 <= len(emergency_contact) <= 100)
-			check_long_emer_number 	= (1 <= len(emergency_number) <= 15)
-			check_long_comments 	= (1 <= len(comments) <= 500)
+			check_long_ci_patient 	= (CONST_MIN <= ci_user <= 99999999)
+			check_long_heigth 		= (CONST_MIN <= len(heigth) <= CONST_MAX_HEIGTH)
+			check_long_weigth 		= (CONST_MIN <= len(weigth) <= CONST_MAX_HEIGTH)
+			check_long_blood_type 	= (CONST_MIN <= len(blood_type) <= CONST_MAX_DIAB)
+			check_long_diabetic 	= (CONST_MIN <= len(diabetic) <= CONST_MAX_DIAB)
+			check_long_allergies 	= (CONST_MIN <= len(allergies) <= CONST_MAX_ALLER)
+			check_long_emer_contact = (CONST_MIN <= len(emergency_contact) <= CONST_MAX_CONTACT)
+			check_long_emer_number 	= (CONST_MIN <= len(emergency_number) <= CONST_MAX_HEIGTH)
+			check_long_comments 	= (CONST_MIN <= len(comments) <= CONST_MAX_ALLER)
 
 			if check_long_ci_patient and check_long_heigth and check_long_weigth and check_long_blood_type and check_long_diabetic and check_long_allergies and check_long_emer_contact and check_long_emer_number and check_long_comments:
 				target_profile = PatientProfile.query.filter_by(ci_patient=ci_patient).first()
@@ -50,15 +55,15 @@ class patientProfile():
 		check_comments 	= (type(comments) == str) and (comments != None)
 
 		if check_ci_patient and check_heigth and check_weigth and check_blood_type and check_diabetic and check_allergies and check_emergency_contact and check_emergency_number and check_comments:
-			check_long_ci_patient 	= (0 < ci_user <= 99999999)
-			check_long_heigth 		= (1 <= len(heigth) <= 15)
-			check_long_weigth 		= (1 <= len(weigth) <= 15)
-			check_long_blood_type 	= (1 <= len(blood_type) <= 3)
-			check_long_diabetic 	= (1 <= len(diabetic) <= 3)
-			check_long_allergies 	= (1 <= len(allergies) <= 500)
-			check_long_emer_contact = (1 <= len(emergency_contact) <= 100)
-			check_long_emer_number 	= (1 <= len(emergency_number) <= 15)
-			check_long_comments 	= (1 <= len(comments) <= 500)
+			check_long_ci_patient 	= (CONST_MIN <= ci_user <= 99999999)
+			check_long_heigth 		= (CONST_MIN <= len(heigth) <= CONST_MAX_HEIGTH)
+			check_long_weigth 		= (CONST_MIN <= len(weigth) <= CONST_MAX_HEIGTH)
+			check_long_blood_type 	= (CONST_MIN <= len(blood_type) <= CONST_MAX_DIAB)
+			check_long_diabetic 	= (CONST_MIN <= len(diabetic) <= CONST_MAX_DIAB)
+			check_long_allergies 	= (CONST_MIN <= len(allergies) <= CONST_MAX_ALLER)
+			check_long_emer_contact = (CONST_MIN <= len(emergency_contact) <= CONST_MAX_CONTACT)
+			check_long_emer_number 	= (CONST_MIN <= len(emergency_number) <= CONST_MAX_HEIGTH)
+			check_long_comments 	= (CONST_MIN <= len(comments) <= CONST_MAX_ALLER)
 
 			if check_long_ci_patient and check_long_heigth and check_long_weigth and check_long_blood_type and check_long_diabetic and check_long_allergies and check_long_emer_contact and check_long_emer_number and check_long_comments:
 				target_profile = PatientProfile.query.filter_by(ci_patient=ci_patient).first()
@@ -80,7 +85,7 @@ class patientProfile():
 	def getPatientProfileById(self, id):
 		check_id = (type(id) == int) and (id!=None)
 		if check_id:
-			check_long_id = (1 <= id)
+			check_long_id = (CONST_MIN <= id)
 			if check_long_id:
 				result = Profile.query.filter_by(id=id).first()
 				return result

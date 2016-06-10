@@ -4,6 +4,10 @@ sys.append('../')
 
 from models import *
 
+CONST_MIN = 1
+CONST_MAX_TEL = 15
+CONST_MAX_ADDRESS = 100
+CONST_MAX_SEX = 10
 class profile():
 
 	def insertProfile(self, ci_user, sex, date_of_birth, marital_status, telephone, address):
@@ -15,11 +19,11 @@ class profile():
 		check_address		= (type(address) == str) and (address!=None)
 
 		if check_ci_user and check_sex and check_date_of_birth and check_marital_status and check_telephone and check_address:
-			check_long_ci_user 		= (0 < ci_user <= 99999999)
-			check_long_sex 			= (0 < len(sex) <= 10)
-			check_long_marital_status= (0 < len(marital_status) <= 15)
-			check_long_telephone	= (0 < len(telephone) <= 15)
-			check_long_address		= (0 < len(address) <= 100)
+			check_long_ci_user 		= (CONST_MIN<= ci_user <= 99999999)
+			check_long_sex 			= (CONST_MIN<= len(sex) <= CONST_MAX_SEX)
+			check_long_marital_status= (CONST_MIN<= len(marital_status) <= CONST_MAX_TEL)
+			check_long_telephone	= (CONST_MIN<= len(telephone) <= CONST_MAX_TEL)
+			check_long_address		= (CONST_MIN<= len(address) <= CONST_MAX_ADDRESS)
 			
 			if check_long_ci_user and check_long_sex and check_long_marital_status and check_long_telephone and check_long_address:
 				target_profile = Profile.query.filter_by(ci_user=ci_user).first()
@@ -40,11 +44,11 @@ class profile():
 		check_address		= (type(address) == str) and (address!=None)
 
 		if check_ci_user and check_sex and check_date_of_birth and check_marital_status and check_telephone and check_address:
-			check_long_ci_user 		= (0 < ci_user <= 99999999)
-			check_long_sex 			= (0 < len(sex) <= 10)
-			check_long_marital_status= (0 < len(marital_status) <= 15)
-			check_long_telephone	= (0 < len(telephone) <= 15)
-			check_long_address		= (0 < len(address) <= 100)
+			check_long_ci_user 		= (CONST_MIN<= ci_user <= 99999999)
+			check_long_sex 			= (CONST_MIN<= len(sex) <= CONST_MAX_SEX)
+			check_long_marital_status= (CONST_MIN<= len(marital_status) <= CONST_MAX_TEL)
+			check_long_telephone	= (CONST_MIN<= len(telephone) <= CONST_MAX_TEL)
+			check_long_address		= (CONST_MIN<= len(address) <= CONST_MAX_ADDRESS)
 			
 			if check_long_ci_user and check_long_sex and check_long_marital_status and check_long_telephone and check_long_address:
 				target_profile = Profile.query.filter_by(ci_user=ci_user).first()
@@ -71,7 +75,7 @@ class profile():
 		return False
 
 	def getProfile(self, ci_user):
-		check_ci_user = (type(ci_user) == int) and (0 < ci_user <= 99999999)
+		check_ci_user = (type(ci_user) == int) and (CONST_MIN<= ci_user <= 99999999)
 		if check_ci_user:
 			result = Profile.query.filter_by(ci_user=ci_user).first()
 			return result
@@ -80,7 +84,7 @@ class profile():
 	def getProfileByID(self, id):
 		check_id = (type(id) == int) and (id!=None)
 		if check_id:
-			check_long_id = (1 <= id)
+			check_long_id = (CONST_MIN<= id)
 			if check_long_id:
 				result = Profile.query.filter_by(id=id).first()
 				return result

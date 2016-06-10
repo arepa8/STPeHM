@@ -4,6 +4,9 @@ sys.append('../')
 
 from models import *
 
+CONST_MIN = 1
+CONST_MAX_PREGRADE = 100
+CONST_MAX_EXP = 500
 class doctorProfile():
 
 	def insertDoctorProfile(self, ci_doctor, habilities, pregrade, postgrade, experience, courses, seminars, publications, awards):
@@ -18,15 +21,15 @@ class doctorProfile():
 		check_awards 		= (type(awards) == str) and (awards != None)
 
 		if check_ci_doctor and check_habilities and check_pregrade and check_postgrade and check_experience and check_courses and check_seminars and check_publications and check_awards:
-			check_long_ci_doctor 	= (1 <= ci_doctor <= 99999999)
-			check_long_habilities 	= (1 <= len(habilities) <= 500)
-			check_long_pregrade 	= (1 <= len(pregrade) <= 100)
-			check_long_postgrade 	= (1 <= len(postgrade) <= 100)
-			check_long_experience 	= (1 <= len(experience) <= 500)
-			check_long_courses 		= (1 <= len(courses) <= 500)
-			check_long_seminars 	= (1 <= len(seminars) <= 500)
-			check_long_publications = (1 <= len(publications) <= 500)
-			check_long_awards 		= (1 <= len(awards) <= 500)
+			check_long_ci_doctor 	= (CONST_MIN <= ci_doctor <= 99999999)
+			check_long_habilities 	= (CONST_MIN <= len(habilities) <= CONST_MAX_EXP)
+			check_long_pregrade 	= (CONST_MIN <= len(pregrade) <= CONST_MAX_PREGRADE)
+			check_long_postgrade 	= (CONST_MIN <= len(postgrade) <= CONST_MAX_PREGRADE)
+			check_long_experience 	= (CONST_MIN <= len(experience) <= CONST_MAX_EXP)
+			check_long_courses 		= (CONST_MIN <= len(courses) <= CONST_MAX_EXP)
+			check_long_seminars 	= (CONST_MIN <= len(seminars) <= CONST_MAX_EXP)
+			check_long_publications = (CONST_MIN <= len(publications) <= CONST_MAX_EXP)
+			check_long_awards 		= (CONST_MIN <= len(awards) <= CONST_MAX_EXP)
 
 			if check_long_ci_doctor and check_long_habilities and check_long_pregrade and check_long_postgrade and check_long_experience and check_long_courses and check_long_seminars and check_long_publications and check_long_awards:
 				target_profile = DoctorProfile.query.filter_by(ci_doctor=ci_doctor).first()
@@ -51,15 +54,15 @@ class doctorProfile():
 		check_awards 		= (type(awards) == str) and (awards != None)
 
 		if check_ci_doctor and check_habilities and check_pregrade and check_postgrade and check_experience and check_courses and check_seminars and check_publications and check_awards:
-			check_long_ci_doctor 	= (1 <= ci_doctor <= 99999999)
-			check_long_habilities 	= (1 <= len(habilities) <= 500)
-			check_long_pregrade 	= (1 <= len(pregrade) <= 100)
-			check_long_postgrade 	= (1 <= len(postgrade) <= 100)
-			check_long_experience 	= (1 <= len(experience) <= 500)
-			check_long_courses 		= (1 <= len(courses) <= 500)
-			check_long_seminars 	= (1 <= len(seminars) <= 500)
-			check_long_publications = (1 <= len(publications) <= 500)
-			check_long_awards 		= (1 <= len(awards) <= 500)
+			check_long_ci_doctor 	= (CONST_MIN <= ci_doctor <= 99999999)
+			check_long_habilities 	= (CONST_MIN <= len(habilities) <= CONST_MAX_EXP)
+			check_long_pregrade 	= (CONST_MIN <= len(pregrade) <= CONST_MAX_PREGRADE)
+			check_long_postgrade 	= (CONST_MIN <= len(postgrade) <= CONST_MAX_PREGRADE)
+			check_long_experience 	= (CONST_MIN <= len(experience) <= CONST_MAX_EXP)
+			check_long_courses 		= (CONST_MIN <= len(courses) <= CONST_MAX_EXP)
+			check_long_seminars 	= (CONST_MIN <= len(seminars) <= CONST_MAX_EXP)
+			check_long_publications = (CONST_MIN <= len(publications) <= CONST_MAX_EXP)
+			check_long_awards 		= (CONST_MIN <= len(awards) <= CONST_MAX_EXP)
 
 			if check_long_ci_doctor and check_long_habilities and check_long_pregrade and check_long_postgrade and check_long_experience and check_long_courses and check_long_seminars and check_long_publications and check_long_awards:
 				target_profile = DoctorProfile.query.filter_by(ci_doctor=ci_doctor).first()
@@ -81,7 +84,7 @@ class doctorProfile():
 	def getDoctorProfileById(self, id):
 		check_id = (type(id) == int) and (id!=None)
 		if check_id:
-			check_long_id = (1 <= id)
+			check_long_id = (CONST_MIN <= id)
 			if check_long_id:
 				result = Profile.query.filter_by(id=id).first()
 				return result
