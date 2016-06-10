@@ -45,6 +45,7 @@
           {{ form.address }}
           <!-- DOCTOR PROFILE-->
           {% if session.user.role == 'Medico' %}
+            <br><br><h2>Mi Perfil Profesional</h2>
             {{ form.habilities.label }}
             {{ form.habilities }}
             {{ form.pregrade.label }}
@@ -61,8 +62,9 @@
             {{ form.publications }}
             {{ form.awards.label }}
             {{ form.awards }}
-          {% else %}
           <!-- PATIENT PROFILE-->
+          {% else %}
+            <br><br><h2>Mis Datos Médicos</h2>
             {{ form.heigth.label }}
             {{ form.heigth }}
             {{ form.weigth.label }}
