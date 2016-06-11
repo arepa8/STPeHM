@@ -90,5 +90,106 @@ class TestPatientProfile(unittest.TestCase):
 		profile_controller.deletePatientProfile(123)
 		self.assertFalse(result)
 
+	def testUpdateProfileStatusNotStr(self):
+		fecha = date(2016, 7, 1)
+		profile_controller = patientProfile()
+		profile_controller.insertPatientProfile(123, 'Femenino', fecha, 'Soltero', '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		result = profile_controller.updatePatientProfile(123, 'Masculino', fecha, 575, '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		p = profile_controller.getPatientProfileByCi(123)
+		profile_controller.deletePatientProfile(p.id)
+		self.assertFalse(result)
+
+	def testUpdateProfileTelphoneNotStr(self):
+		fecha = date(2016, 7, 1)
+		profile_controller = patientProfile()
+		profile_controller.insertPatientProfile(123, 'Femenino', fecha, 'Soltero', '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		result = profile_controller.updatePatientProfile(123, 'Masculino', fecha, 'Soltero', 4242135767, 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		p = profile_controller.getPatientProfileByCi(123)
+		profile_controller.deletePatientProfile(p.id)
+		self.assertFalse(result)
+
+	def testUpdateProfileAddressNotStr(self):
+		fecha = date(2016, 7, 1)
+		profile_controller = patientProfile()
+		profile_controller.insertPatientProfile(123, 'Femenino', fecha, 'Soltero', '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		result = profile_controller.updatePatientProfile(123, 'Masculino', fecha, 'Soltero', '04242135767', -8,'1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		p = profile_controller.getPatientProfileByCi(123)
+		profile_controller.deletePatientProfile(p.id)
+		self.assertFalse(result)
+
+	def testUpdateProfileCIMAX(self):
+		fecha = date(2016, 7, 1)
+		profile_controller = patientProfile()
+		profile_controller.insertPatientProfile(123, 'Femenino', fecha, 'Soltero', '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		result = profile_controller.updatePatientProfile(1000000000, 'Masculino', fecha, 'Soltero', '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		p = profile_controller.getPatientProfileByCi(123)
+		profile_controller.deletePatientProfile(p.id)
+		self.assertFalse(result)
+
+	def testUpdateProfileStatusStrMax(self):
+		fecha = date(2016, 7, 1)
+		profile_controller = patientProfile()
+		profile_controller.insertPatientProfile(123, 'Femenino', fecha, 'Soltero', '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		result = profile_controller.updatePatientProfile(123, 'Masculino', fecha, 'Solteroooooooooo', '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		p = profile_controller.getPatientProfileByCi(123)
+		profile_controller.deletePatientProfile(p.id)
+		self.assertFalse(result)
+
+	def testUpdateProfileTelphoneStrMax(self):
+		fecha = date(2016, 7, 1)
+		profile_controller = patientProfile()
+		profile_controller.insertPatientProfile(123, 'Femenino', fecha, 'Soltero', '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		result = profile_controller.updatePatientProfile(123, 'Masculino', fecha, 'Soltero', '0042421357670000', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		p = profile_controller.getPatientProfileByCi(123)
+		profile_controller.deletePatientProfile(p.id)
+		self.assertFalse(result)
+
+	def testUpdateProfileAddressStrMax(self):
+		fecha = date(2016, 7, 1)
+		profile_controller = patientProfile()
+		profile_controller.insertPatientProfile(123, 'Femenino', fecha, 'Soltero', '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		result = profile_controller.updatePatientProfile(123, 'Masculino', fecha, 'Soltero', '04242135767', "d" * 101,'1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		p = profile_controller.getPatientProfileByCi(123)
+		profile_controller.deletePatientProfile(p.ci_user)
+		self.assertFalse(result)
+
+	#########################################     
+	#   Pruebas para deletePatientProfile   #
+	#########################################
+	def testDeleteProfileTrue(self):
+		fecha = date(2016, 7, 1)
+		profile_controller = patientProfile()
+		profile_controller.insertPatientProfile(123, 'Femenino', fecha, 'Soltero', '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		p = profile_controller.getPatientProfileByCi(123)
+		result = profile_controller.deletePatientProfile(p.ci_user)	
+		self.assertTrue(result)
+
+	def testDeleteProfileFalse(self):
+		profile_controller = patientProfile()
+		result = profile_controller.deletePatientProfile('123')
+		self.assertFalse(result)
+
+	##########################################    
+	#   Pruebas para getPatientProfileByCi   #
+	##########################################
+
+	def testGetProfileTrue(self):
+		fecha = date(2016, 7, 1)	
+		profile_controller = patientProfile()
+		profile_controller.insertPatientProfile(123, 'Femenino', fecha, 'Soltero', '04242135767', 'direccion','1,5m','55kg','a+','F','Ninguna', 'Contacto', '04165551234','Comentario')
+		result = profile_controller.getPatientProfileByCi(123)
+		profile_controller.deletePatientProfile(result.ci_user)
+		self.assertEqual(123, result.ci_user)
+
+	def testGetProfileDoNotExists(self):
+		profile_controller = patientProfile()
+		result = profile_controller.getPatientProfileByCi(-1)
+		self.assertEqual(None, result)
+
+	def testGetProfileNotValidCi(self):
+		profile_controller = patientProfile()
+		result = profile_controller.getPatientProfileByCi('2')
+		self.assertEqual(None,result)
+
 if __name__ == '__main__':
 	unittest.main()
