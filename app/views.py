@@ -383,38 +383,19 @@ def profile_user():
 
         # Crear perfil de paciente
         if patient == None:
-            result1 = p.insertPatientProfile(int(u.ci),
-                                        form.sex.data,
-                                        form.date_of_birth.data,
-                                        form.marital_status.data,
-                                        form.telephone.data,
-                                        form.address.data,
-                                        form.heigth.data,
-                                        form.weigth.data,
-                                        form.blood_type.data,
-                                        form.diabetic.data,
-                                        form.allergies.data,
-                                        form.emergency_contact.data,
-                                        form.emergency_number.data,
+            result1 = p.insertPatientProfile(int(u.ci),form.sex.data,form.date_of_birth.data,form.marital_status.data,
+                                        form.telephone.data,form.address.data,form.heigth.data,form.weigth.data,
+                                        form.blood_type.data, form.diabetic.data,form.allergies.data,
+                                        form.emergency_contact.data,form.emergency_number.data,
                                         form.comments.data)
 
         # Modificar perfil de paciente
         else:            
-            result1 = p.updatePatientProfile (int(u.ci),
-                                        form.sex.data,
-                                        form.date_of_birth.data,
-                                        form.marital_status.data,
-                                        form.telephone.data,
-                                        form.address.data,
-                                        form.heigth.data,
-                                        form.weigth.data,
-                                        form.blood_type.data,
-                                        form.diabetic.data,
-                                        form.allergies.data,
-                                        form.emergency_contact.data,
-                                        form.emergency_number.data,
-                                        form.comments.data)           
-        print(result1)
+            result1 = p.updatePatientProfile (int(u.ci),form.sex.data,form.date_of_birth.data,
+                                        form.marital_status.data,form.telephone.data,form.address.data,
+                                        form.heigth.data,form.weigth.data,form.blood_type.data,
+                                        form.diabetic.data,form.allergies.data,form.emergency_contact.data,
+                                        form.emergency_number.data,form.comments.data)           
       
         if result0['result'] and result1:
             active_user['name'] = form.name.data+' '+form.last_name.data
@@ -470,40 +451,18 @@ def profile_doctor():
 
         # Crear perfil de doctor
         if doctor == None:
-            print("CREAR")
-            result1 = d.insertDoctorProfile(int(u.ci),
-                                        form.sex.data,
-                                        form.date_of_birth.data,
-                                        form.marital_status.data,
-                                        form.telephone.data,
-                                        form.address.data,
-                                        form.habilities.data,
-                                        form.pregrade.data,
-                                        form.postgrade.data,
-                                        form.experience.data,
-                                        form.courses.data,
-                                        form.publications.data,
+            
+            result1 = d.insertDoctorProfile(int(u.ci), form.sex.data,form.date_of_birth.data,form.marital_status.data,
+                                        form.telephone.data, form.address.data, form.habilities.data,form.pregrade.data,
+                                        form.postgrade.data,form.experience.data,form.courses.data,form.publications.data,
                                         form.awards.data)
-            print(result1)
-        # Modificar perfil de paciente
+        # Modificar perfil de doctor
         else:            
-            print("Modificar")
 
-            result1 = d.updateDoctorProfile(int(u.ci),
-                                form.sex.data,
-                                form.date_of_birth.data,
-                                form.marital_status.data,
-                                form.telephone.data,
-                                form.address.data,
-                                form.habilities.data,
-                                form.pregrade.data,
-                                form.postgrade.data,
-                                form.experience.data,
-                                form.courses.data,
-                                form.publications.data,
+            result1 = d.updateDoctorProfile(int(u.ci),form.sex.data, form.date_of_birth.data,form.marital_status.data,
+                                form.telephone.data,form.address.data,form.habilities.data,form.pregrade.data,
+                                form.postgrade.data,form.experience.data,form.courses.data,form.publications.data,
                                 form.awards.data)
-
-            print(result1)
       
         if result0['result'] and result1:
             active_user['name'] = form.name.data+' '+form.last_name.data
