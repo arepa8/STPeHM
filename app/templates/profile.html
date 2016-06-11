@@ -19,7 +19,7 @@
         {% if session.user.role == 'Medico' %}
           <form action="{{ url_for('profile_doctor') }}" method=POST>
         {% else %}
-          <form action="{{ url_for('profile') }}" method=POST>
+          <form action="{{ url_for('profile_user') }}" method=POST>
         {% endif %}
           {{ form.ci.label }}
           {{ ci }}

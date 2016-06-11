@@ -10,20 +10,15 @@ class ContactForm(Form):
 	name = TextField("Nombre", [validators.Required()])
 	last_name = TextField("Apellido", [validators.Required()])
 	email = TextField("Correo electrónico", [validators.Required()])
-	#birthday = DateField('DatePicker', format='%Y-%m-%d')
 	role = SelectField("Rol", [validators.Required()], coerce=int)
 	submit = SubmitField("Aceptar", [validators.Required()])
 
 class ProfileForm(ContactForm):
-	#name = TextField("Nombre", [validators.Required()])
-	#last_name = TextField("Apellido", [validators.Required()])
-	#email = TextField("Correo electrónico", [validators.Required()])
 	sex = SelectField('Sexo',choices=[('F', 'Femenino'), ('M', 'Masculino')])
 	date_of_birth = DateField('Fecha de nacimiento', format='%Y-%m-%d')
 	marital_status = SelectField('Estado civil', choices=[('soltero', 'Soltero'), ('casado', 'Casado'), ('viudo', 'Viudo'), ('divorciado','Divorciado'), ('Otro','Otro')])
 	telephone = TextField("Número de teléfono")
 	address = TextField("Dirección", [validators.length(max=500)])
-	submit = SubmitField("Modificar", [validators.Required()])
 
 class DoctorProfileForm(ProfileForm):
 	habilities = TextField("Habilidades y destrezas", [validators.length(max=500)])

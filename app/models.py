@@ -150,74 +150,77 @@ class Doctor_Specialization(db.Model):
     def __repr__(self):
         return '<Doctor_Specialization doctor: %r, speciality: %r>' % (self.doctor, self.speciality)
 
-
-class Profile(db.Model):
-    __tablename__ = 'Profile'
-
+class DoctorProfile(db.Model):
+    __tablename__ = 'DoctorProfile'
     id = db.Column(db.Integer,primary_key = True)
     ci_user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    
     sex = db.Column(db.String(10))
     date_of_birth = db.Column(db.Date)
     marital_status = db.Column(db.String(15))
     telephone = db.Column(db.String(15))
     address = db.Column(db.String(100))
 
-    def __init__(self, ci_user,sex, date_of_birth, marital_status, telephone, address):
+    habilities = db.Column(db.String(500))
+    pregrade = db.Column(db.String(100))
+    postgrade = db.Column(db.String(100))
+    experience =db.Column(db.String(500))
+    courses = db.Column(db.String(500))
+    publications = db.Column(db.String(500))
+    awards = db.Column(db.String(500))
+
+    def __init__(self, ci_user, sex, date_of_birth, marital_status, telephone, address,
+        habilities, pregrade, postgrade, experience, courses, publications, awards):
         self.ci_user = ci_user
+
         self.sex = sex
         self.date_of_birth = date_of_birth
         self.marital_status = marital_status
         self.telephone = telephone
         self.address = address
 
-    def __repr__(self):
-        return '<Profile ci_user = %r>' % (self.ci_user)
-
-class DoctorProfile(db.Model):
-    __tablename__ = 'DoctorProfile'
-    id = db.Column(db.Integer,primary_key = True)
-    #id = Column(Integer, ForeignKey('Profile.id'), primary_key=True)
-    ci_doctor = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
-    habilities = db.Column(db.String(500))
-    pregrade = db.Column(db.String(100))
-    postgrade = db.Column(db.String(100))
-    experience =db.Column(db.String(500))
-    courses = db.Column(db.String(500))
-    seminars = db.Column(db.String(500))
-    publications = db.Column(db.String(500))
-    awards = db.Column(db.String(500))
-
-    def __init__(self, ci_doctor, habilities, pregrade, postgrade, experience, courses, seminars, publications, awards):
-        self.ci_doctor = ci_doctor
         self.habilities = habilities
         self.pregrade = pregrade
         self.postgrade = postgrade
         self.experience = experience
         self.courses = courses
-        self.seminars = seminars
         self.publications = publications
         self.awards = awards
 
     def __repr__(self):
-        return '<DoctorProfile ci_doctor = %r>' % (self.ci_doctor)
+        return '<DoctorProfile ci_user = %r>' % (self.ci_user)
 
 
 class PatientProfile(db.Model):
     __tablename__ = 'PatientProfile'
     id = db.Column(db.Integer,primary_key = True)
-    #id_for = Column(Integer, ForeignKey('Profile.id'), primary_key=True)
-    ci_patient = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    ci_user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    
+    sex = db.Column(db.String(10))
+    date_of_birth = db.Column(db.Date)
+    marital_status = db.Column(db.String(15))
+    telephone = db.Column(db.String(15))
+    address = db.Column(db.String(100))
+    
     heigth = db.Column(db.String(15))
     weigth =  db.Column(db.String(15))
-    blood_type = db.Column(db.String(3))
-    diabetic = db.Column(db.String(3))
+    blood_type = db.Column(db.String(2))
+    diabetic = db.Column(db.String(1))
     allergies = db.Column(db.String(500))
     emergency_contact = db.Column(db.String(100))
     emergency_number = db.Column(db.String(15))
     comments =  db.Column(db.String(500))
 
-    def __init__(self, ci_patient, heigth, weigth, blood_type, diabetic, allergies, emergency_contact, emergency_number,comments):
-        self.ci_patient = ci_patient
+    def __init__(self, ci_user, sex, date_of_birth, marital_status, telephone, address,
+        heigth, weigth, blood_type, diabetic, allergies, emergency_contact, emergency_number,comments):
+        self.ci_user = ci_user
+
+        self.sex = sex
+        self.date_of_birth = date_of_birth
+        self.marital_status = marital_status
+        self.telephone = telephone
+        self.address = address
+
         self.heigth = heigth
         self.weigth = weigth
         self.blood_type = blood_type
@@ -228,7 +231,7 @@ class PatientProfile(db.Model):
         self.comments = comments
 
     def __repr__(self):
-        return '<PatientProfile ci_patient = %r>' % (self.ci_patient)
+        return '<PatientProfile ci_user = %r>' % (self.ci_user)
 
 
 if __name__ == '__main__':

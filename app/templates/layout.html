@@ -67,7 +67,7 @@
               <li class="nav-header"></li>
               {% if not session.user.role == 'Administrador' %}
                 {% if session.user.role == 'Paciente' %}
-                <li><a href="{{ url_for('profile') }}"><i class="fa fa-user"></i>  Ver Perfil</a></li>
+                <li><a href="{{ url_for('profile_user') }}"><i class="fa fa-user"></i>  Ver Perfil</a></li>
                 {% endif %}  
                 {% if session.user.role == 'Medico' %}
                   <li><a href="{{ url_for('profile_doctor') }}"><i class="fa fa-user"></i>  Ver Perfil</a></li>
