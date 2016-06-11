@@ -26,7 +26,6 @@ class DoctorProfileForm(ProfileForm):
 	postgrade =TextField("Postgrado", [validators.length(max=100)])
 	experience =TextField("Experiencia profesional", [validators.length(max=500)])
 	courses =TextField("Cursos", [validators.length(max=500)])
-	seminars =TextField("Seminarios", [validators.length(max=500)])
 	publications =TextField("Publicaciones", [validators.length(max=500)])
 	awards =TextField("Reconocimientos", [validators.length(max=500)])
 	submit = SubmitField("Modificar", [validators.Required()])

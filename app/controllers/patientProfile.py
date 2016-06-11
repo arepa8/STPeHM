@@ -5,7 +5,7 @@ sys.path.append('../')
 from models import *
 import datetime
 
-CONST_MIN = 0
+CONST_MIN = 1
 CONST_MAX_TEL = 15
 CONST_MAX_ADDRESS = 100
 CONST_MAX_SEX = 15
@@ -84,7 +84,7 @@ class patientProfile():
 
 		return False
 
-	def updatePatientProfile(self, ci_user,sex, date_of_birth, marital_status, telephone, address,
+	def updatePatientProfile(self, ci_user, sex, date_of_birth, marital_status, telephone, address,
 		heigth, weigth, blood_type, diabetic, allergies, emergency_contact, emergency_number,comments):
 		
 		check_ci_user 			= (type(ci_user) == int) and (ci_user!=None)
@@ -158,7 +158,7 @@ class patientProfile():
 		if check_ci:
 			target_profile = PatientProfile.query.filter_by(ci_user=ci).first()
 			
-			if target_profile:
+			if target_profile != None:
 				db.session.delete(target_profile)
 				db.session.commit()
 				return True
