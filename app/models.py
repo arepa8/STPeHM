@@ -208,6 +208,99 @@ class DoctorProfile(db.Model):
     def __repr__(self):
         return '<DoctorProfile ci_user = %r>' % (self.ci_user)
 
+class Doctor_Ability(db.Model):
+    __tablename__ = 'DoctorAbility'
+    id = db.Column(db.Integer, primary_key=True)
+    ci_doctor = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    ability = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.String(100))
+
+    def __init__(self, ci_doctor, ability, description):
+        self.ci_doctor = ci_doctor
+        self.ability = ability
+        self.description = description
+
+class Doctor_Publication(db.Model):
+    __tablename__ = 'DoctorPublication'
+
+    id = db.Column(db.Integer, primary_key=True)
+    ci_doctor = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    publication = db.Column(db.String(500), nullable=False)
+    date = db.Column(db.Date)
+    description = db.Column(db.String(100))
+    
+    def __init__(self, ci_doctor, publication, date, description):
+        self.ci_doctor = ci_doctor
+        self.publication = publication
+        self.date = date
+        self.description = description
+
+class Doctor_Study(db.Model):
+    __tablename__ = 'DoctorStudy'
+
+    id = db.Column(db.Integer, primary_key=True)
+    ci_doctor = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    study = db.Column(db.String(500), nullable=False)
+    date_of_graduation = db.Column(db.Date)
+    description = db.Column(db.String(100))
+    institution = db.Column(db.String(500), nullable=False)
+
+    def __init__(self, ci_doctor, study, date_of_graduation, description, institution):
+        self.ci_doctor = ci_doctor
+        self.study = study
+        self.date_of_graduation = date_of_graduation
+        self.description = description
+        self.institution = institution
+
+class Doctor_Award(db.Model):
+    __tablename__ = 'DoctorAward'
+
+    id = db.Column(db.Integer, primary_key=True)
+    ci_doctor = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    award = db.Column(db.String(500), nullable=False)
+    date = db.Column(db.Date)
+    institution = db.Column(db.String(500), nullable=False)
+
+    def __init__(self, ci_doctor, award, date, institution):
+        self.ci_doctor = ci_doctor
+        self.award = award
+        self.date = date
+        self.institution = institution
+        
+class Doctor_Event(db.Model):
+    __tablename__ = 'DoctorEvent'
+
+    id = db.Column(db.Integer, primary_key=True)
+    ci_doctor = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    event = db.Column(db.String(500), nullable=False)
+    date = db.Column(db.Date)
+    institution = db.Column(db.String(500), nullable=False)
+    description =db.Column(db.String(100))
+
+    def __init__(self, ci_doctor, event, date, institution, description):
+        slef.ci_doctor = ci_doctor
+        self.event = event
+        self.institution = institution
+        self.description = description
+        
+class Doctor_Experience(db.Model):
+    __tablename__ = 'DoctorExperience'
+
+    id = db.Column(db.Integer, primary_key=True)
+    ci_doctor = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+    experience = db.Column(db.String(500), nullable=False)
+    date_of_start = db.Column(db.Date)
+    date_of_finish = db.Column(db.Date)
+    institution = db.Column(db.String(500), nullable=False)
+    description = db.Column(db.String(100))
+
+    def __init__(self, ci_doctor, experience, date_of_start, date_of_finish, institution, description):
+        self.ci_doctor = ci_doctor
+        self.experience = experience
+        self.date_of_start = date_of_start
+        self.date_of_finish = date_of_finish
+        self.institution = institution
+        self.description = description
 
 class PatientProfile(db.Model):
     __tablename__ = 'PatientProfile'
