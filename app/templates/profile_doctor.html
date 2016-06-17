@@ -65,7 +65,7 @@
 						<p>{{study.description}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
+						<a href="{{ url_for('modify_study',id=study.id)}}"> Modificar </a>
 						<a> Eliminar </a>
 					</div>
 				</div>
@@ -83,7 +83,7 @@
 						<p>{{award.institution}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
+						<a href="{{ url_for('modify_award',id=award.id)}}"> Modificar </a>
 						<a> Eliminar </a>
 					</div>
 				</div>
@@ -101,7 +101,7 @@
 						<p>{{publication.description}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
+						<a href="{{ url_for('modify_publication',id=publication.id)}}"> Modificar </a>
 						<a> Eliminar </a>
 					</div>
 				</div>
@@ -120,7 +120,7 @@
 						<p>{{experience.description}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
+						<a href="{{ url_for('modify_experience',id=experience.id)}}">  Modificar </a>
 						<a> Eliminar </a>
 					</div>
 				</div>
@@ -138,7 +138,7 @@
 						<p>{{ability.description}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
+						<a href="{{ url_for('modify_ability',id=ability.id)}}"> Modificar </a>
 						<a> Eliminar </a>
 					</div>
 				</div>
@@ -157,7 +157,7 @@
 						<p>{{event.description}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
+						<a href="{{ url_for('modify_event',id=event.id)}}">  Modificar </a>
 						<a> Eliminar </a>
 					</div>
 				</div>

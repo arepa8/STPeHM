@@ -600,7 +600,29 @@ def add_study():
 		db.session.commit()
 		return redirect(url_for('profile_doctor'))
 
-	return render_template('add_studies.html', active_user=active_user, form=form)
+	title = "Agregar"
+	return render_template('add_studies.html', title=title, active_user=active_user, form=form)
+
+@app.route('/modify_study/<id>',methods=['GET', 'POST'])
+def modify_study(id):
+	active_user = session['user']
+	form = DoctorStudiesForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+
+	if request.method == 'POST':
+		old = DoctorStudies.query.filter_by(id=id).first()
+		old.title=form.studies.data
+		old.date_of_graduation=form.date_of_graduation.data
+		old.description=form.description.data
+		old.institution=form.institution.data
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+
+	title = "Modificar"
+	old = DoctorStudies.query.filter_by(id=id).first()
+	form = DoctorStudiesForm(request.form, studies=old.title,date_of_graduation= old.date_of_graduation,description=old.description,institution=old.institution)
+	return render_template('add_studies.html', form=form, studies=old.title,date_of_graduation= old.date_of_graduation,description=old.description,institution=old.institution, id=id, title=title)
 
 
 @app.route('/add_ability',methods=['GET', 'POST'])
@@ -617,6 +639,26 @@ def add_ability():
 		return redirect(url_for('profile_doctor'))
 
 	return render_template('add_abilities.html', active_user=active_user, form=form)
+
+@app.route('/modify_ability/<id>',methods=['GET', 'POST'])
+def modify_ability(id):
+	active_user = session['user']
+	form = DoctorAbilitiesForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+
+	if request.method == 'POST':
+		old = DoctorAbilities.query.filter_by(id=id).first()
+		old.title=form.abilities.data
+		old.description=form.description.data
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+
+	title = "Modificar"
+	old = DoctorAbilities.query.filter_by(id=id).first()
+	form = DoctorAbilitiesForm(request.form, abilities=old.title,description=old.description)
+	return render_template('add_abilities.html', form=form,abilities=old.title,description=old.description, id=id, title=title)
+
 
 
 # BUSCADOR
@@ -648,6 +690,26 @@ def add_award():
 		return redirect(url_for('profile_doctor'))
 	return render_template('add_awards.html', active_user=active_user, form=form)
 
+@app.route('/modify_award/<id>',methods=['GET', 'POST'])
+def modify_award(id):
+	active_user = session['user']
+	form = DoctorAwardsForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+
+	if request.method == 'POST':
+		old = DoctorAwards.query.filter_by(id=id).first()
+		old.title=form.award.data
+		old.date=form.date.data
+		old.institution=form.institution.data
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+
+	title = "Modificar"
+	old = DoctorAwards.query.filter_by(id=id).first()
+	form = DoctorAwardsForm(request.form, award=old.title,date= old.date,institution=old.institution)
+	return render_template('add_awards.html', form=form, award=old.title,date= old.date,institution=old.institution, id=id, title=title)
+
 
 @app.route('/add_publication',methods=['GET', 'POST'])
 def add_publication():
@@ -664,6 +726,27 @@ def add_publication():
 	return render_template('add_publications.html', active_user=active_user, form=form)
 
 
+@app.route('/modify_publication/<id>',methods=['GET', 'POST'])
+def modify_publication(id):
+	active_user = session['user']
+	form = DoctorPublicationForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+
+	if request.method == 'POST':
+		old = DoctorPublications.query.filter_by(id=id).first()
+		old.title=form.publication.data
+		old.date=form.date.data
+		old.description=form.description.data
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+
+	title = "Modificar"
+	old = DoctorPublications.query.filter_by(id=id).first()
+	form = DoctorPublicationForm(request.form, publication=old.title,date= old.date,description=old.description)
+	return render_template('add_publications.html', form=form, publication=old.title,date= old.date,description=old.description, id=id, title=title)
+
+
 @app.route('/add_experience',methods=['GET', 'POST'])
 def add_experience():
 	active_user = session['user']
@@ -677,6 +760,29 @@ def add_experience():
 		return redirect(url_for('profile_doctor'))
 	return render_template('add_experiences.html', active_user=active_user, form=form)
 
+@app.route('/modify_experience/<id>',methods=['GET', 'POST'])
+def modify_experience(id):
+	active_user = session['user']
+	form = DoctorExperienceForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+
+	if request.method == 'POST':
+		old = DoctorExperiences.query.filter_by(id=id).first()
+		old.title=form.experience.data
+		old.date_of_start=form.date_of_start.data
+		old.date_of_finish=form.date_of_finish.data
+		old.description=form.description.data
+		old.institution=form.institution.data
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+
+	title = "Modificar"
+	old = DoctorExperiences.query.filter_by(id=id).first()
+	form = DoctorExperienceForm(request.form, experience=old.title,date_of_start= old.date_of_start,date_of_finish= old.date_of_finish,description=old.description,institution=old.institution)
+	return render_template('add_experiences.html', form=form, experience=old.title,date_of_start= old.date_of_start,date_of_finish= old.date_of_finish,description=old.description,institution=old.institution, id=id, title=title)
+
+
 @app.route('/add_event',methods=['GET', 'POST'])
 def add_event():
 	active_user = session['user']
@@ -689,6 +795,28 @@ def add_event():
 		db.session.commit()
 		return redirect(url_for('profile_doctor'))
 	return render_template('add_events.html', active_user=active_user, form=form)
+
+
+@app.route('/modify_event/<id>',methods=['GET', 'POST'])
+def modify_event(id):
+	active_user = session['user']
+	form = DoctorEventsForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+
+	if request.method == 'POST':
+		old = DoctorEvents.query.filter_by(id=id).first()
+		old.title=form.event.data
+		old.date=form.date.data
+		old.description=form.description.data
+		old.institution=form.institution.data
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+
+	title = "Modificar"
+	old = DoctorEvents.query.filter_by(id=id).first()
+	form = DoctorEventsForm(request.form, event=old.title,date= old.date,description=old.description,institution=old.institution)
+	return render_template('add_events.html', form=form, event=old.title,date= old.date,description=old.description,institution=old.institution, id=id, title=title)
 
 
 @app.route('/consultations',methods=['GET', 'POST'])

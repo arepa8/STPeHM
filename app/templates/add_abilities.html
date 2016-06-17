@@ -3,7 +3,11 @@
   <div id="cuerpoHeredado">
     <br>
     <h2>{{title}} Habilidades</h2>
+    {% if title == "Modificar" %}
+    <form action="{{ url_for('modify_ability', id=id) }}" method=POST>
+    {% else %}
     <form action="{{ url_for('add_ability') }}" method=POST>
+    {% endif %}
       {{ form.abilities.label }}
       {{ form.abilities }}
       {{ form.description.label }}
