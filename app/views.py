@@ -494,7 +494,21 @@ def profile_doctor():
 
         return render_template('profile.html', active_user=active_user, form=form, ci = u.ci, username=u.username)
 
-
+# BUSCADOR
+@app.route('/search',methods=['GET', 'POST'])
+def search():
+    if request.method == 'GET':
+        active_user = session['user']
+        print(active_user)
+        usuarios = User.query.all()
+        medicos = []
+        otros = []
+        for user in usuarios:
+            if user.role == "1":
+                medicos.append(user)
+            else:
+                otros.append(user)
+        return render_template('search.html',medicos = medicos, otros=otros, active=active_user)
 
 ##########################
 # VIEWS NO IMPLEMENTADAS #

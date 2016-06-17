@@ -9,6 +9,8 @@
       <link href="{{ url_for('static', filename= 'assets/css/bootstrap-theme.css')}}" rel="stylesheet">
       <link href="{{ url_for('static', filename= 'assets/css/style.css')}}" rel="stylesheet">     
       <link href="{{ url_for('static', filename= 'assets/css/modal.css')}}" rel="stylesheet">     
+      <link href="{{ url_for('static', filename= 'assets/css/search.css')}}" rel="stylesheet">     
+      <link href="{{ url_for('static', filename= 'assets/css/jquery.dataTables.min.css')}}" rel="stylesheet">     
       <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.4.0/css/font-awesome.min.css">
 
       <!--script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script-->
@@ -22,6 +24,12 @@
       <script type="text/javascript" src="{{ url_for('static', filename= 'assets/js/institution.js')}}" defer></script>
 
       <script type="text/javascript" src="{{ url_for('static', filename= 'assets/js/specialization.js')}}" defer></script>
+      
+      <script type="text/javascript" src="{{ url_for('static', filename= 'assets/js/search.js')}}" defer></script>
+      
+      <script type="text/javascript" src="{{ url_for('static', filename= 'assets/js/jquery-1.12.3.min.js')}}" defer></script>
+      
+      <script type="text/javascript" src="{{ url_for('static', filename= 'assets/js/jquery.dataTables.min.js')}}" defer></script>
 
       <script src="{{ url_for('static', filename= 'assets/js/angular/ng-table.min.js')}}"></script>
 
@@ -74,6 +82,7 @@
                   <li><a href="{{ url_for('show_consultations') }}"><i class="fa fa-calendar"></i>  Ver Consultas</a></li>
                 {% endif %}  
                 <li><a href="{{ url_for('show_appointments') }}"><i class="fa fa-pencil-square-o "></i>  Ver Citas</a></li>
+                <li><a href="{{ url_for('search') }}"><i class="fa fa-search "></i>  Buscar</a></li>
               {% else %} 
                 <li><a href="{{ url_for('show_users') }}"><i class="fa fa-user"></i>  Gestionar Usuarios</a></li>
                 <li><a href="{{ url_for('show_roles') }}"><i class="fa fa-users"></i>  Gestionar Roles</a></li>
