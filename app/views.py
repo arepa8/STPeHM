@@ -624,6 +624,22 @@ def modify_study(id):
 	form = DoctorStudiesForm(request.form, studies=old.title,date_of_graduation= old.date_of_graduation,description=old.description,institution=old.institution)
 	return render_template('add_studies.html', form=form, studies=old.title,date_of_graduation= old.date_of_graduation,description=old.description,institution=old.institution, id=id, title=title)
 
+@app.route('/delete_study/<id>', methods=['GET','POST'])
+def delete_study(id):
+    ''' Elimina una evento por su id '''
+    #id =  int(request.json)
+    print (session)
+    active_user = session['user']
+    user_controller = user.user()
+    u = user_controller.getUser(active_user['username'])
+    target_study = DoctorStudies.query.filter_by(id=id).first()
+    deleted = False
+    if target_study:
+        db.session.delete(target_study)
+        db.session.commit()
+        deleted = True
+
+    return redirect(url_for('profile_doctor'))
 
 @app.route('/add_ability',methods=['GET', 'POST'])
 def add_ability():
@@ -659,7 +675,22 @@ def modify_ability(id):
 	form = DoctorAbilitiesForm(request.form, abilities=old.title,description=old.description)
 	return render_template('add_abilities.html', form=form,abilities=old.title,description=old.description, id=id, title=title)
 
+@app.route('/delete_ability/<id>', methods=['GET','POST'])
+def delete_ability(id):
+    ''' Elimina una evento por su id '''
+    #id =  int(request.json)
+    print (session)
+    active_user = session['user']
+    user_controller = user.user()
+    u = user_controller.getUser(active_user['username'])
+    target_ability = DoctorAbilities.query.filter_by(id=id).first()
+    deleted = False
+    if target_ability:
+        db.session.delete(target_ability)
+        db.session.commit()
+        deleted = True
 
+    return redirect(url_for('profile_doctor'))
 
 # BUSCADOR
 @app.route('/search',methods=['GET', 'POST'])
@@ -711,6 +742,23 @@ def modify_award(id):
 	return render_template('add_awards.html', form=form, award=old.title,date= old.date,institution=old.institution, id=id, title=title)
 
 
+@app.route('/delete_award/<id>', methods=['GET','POST'])
+def delete_award(id):
+    ''' Elimina una evento por su id '''
+    #id =  int(request.json)
+    print (session)
+    active_user = session['user']
+    user_controller = user.user()
+    u = user_controller.getUser(active_user['username'])
+    target_award = DoctorAwards.query.filter_by(id=id).first()
+    deleted = False
+    if target_award:
+        db.session.delete(target_award)
+        db.session.commit()
+        deleted = True
+
+    return redirect(url_for('profile_doctor'))
+
 @app.route('/add_publication',methods=['GET', 'POST'])
 def add_publication():
 	active_user = session['user']
@@ -746,6 +794,22 @@ def modify_publication(id):
 	form = DoctorPublicationForm(request.form, publication=old.title,date= old.date,description=old.description)
 	return render_template('add_publications.html', form=form, publication=old.title,date= old.date,description=old.description, id=id, title=title)
 
+@app.route('/delete_publication/<id>', methods=['GET','POST'])
+def delete_publication(id):
+    ''' Elimina una evento por su id '''
+    #id =  int(request.json)
+    print (session)
+    active_user = session['user']
+    user_controller = user.user()
+    u = user_controller.getUser(active_user['username'])
+    target_publication = DoctorPublications.query.filter_by(id=id).first()
+    deleted = False
+    if target_publication:
+        db.session.delete(target_publication)
+        db.session.commit()
+        deleted = True
+
+    return redirect(url_for('profile_doctor'))
 
 @app.route('/add_experience',methods=['GET', 'POST'])
 def add_experience():
@@ -782,6 +846,22 @@ def modify_experience(id):
 	form = DoctorExperienceForm(request.form, experience=old.title,date_of_start= old.date_of_start,date_of_finish= old.date_of_finish,description=old.description,institution=old.institution)
 	return render_template('add_experiences.html', form=form, experience=old.title,date_of_start= old.date_of_start,date_of_finish= old.date_of_finish,description=old.description,institution=old.institution, id=id, title=title)
 
+@app.route('/delete_experience/<id>', methods=['GET','POST'])
+def delete_experience(id):
+    ''' Elimina una evento por su id '''
+    #id =  int(request.json)
+    print (session)
+    active_user = session['user']
+    user_controller = user.user()
+    u = user_controller.getUser(active_user['username'])
+    target_experience = DoctorExperiences.query.filter_by(id=id).first()
+    deleted = False
+    if target_experience:
+        db.session.delete(target_experience)
+        db.session.commit()
+        deleted = True
+
+    return redirect(url_for('profile_doctor'))
 
 @app.route('/add_event',methods=['GET', 'POST'])
 def add_event():
@@ -818,6 +898,28 @@ def modify_event(id):
 	form = DoctorEventsForm(request.form, event=old.title,date= old.date,description=old.description,institution=old.institution)
 	return render_template('add_events.html', form=form, event=old.title,date= old.date,description=old.description,institution=old.institution, id=id, title=title)
 
+@app.route('/delete_event/<id>', methods=['GET','POST'])
+def delete_event(id):
+    ''' Elimina una evento por su id '''
+    #id =  int(request.json)
+    print (session)
+    active_user = session['user']
+    user_controller = user.user()
+    u = user_controller.getUser(active_user['username'])
+    target_event = DoctorEvents.query.filter_by(id=id).first()
+    deleted = False
+    if target_event:
+        db.session.delete(target_event)
+        db.session.commit()
+        deleted = True
+
+    return redirect(url_for('profile_doctor'))
+
+    # if deleted:
+    #     return json.dumps({'status':'OK','id':id})
+    # else: 
+    #     return json.dumps({'status':'ERROR','id':id})
+
 
 @app.route('/consultations',methods=['GET', 'POST'])
 def show_consultations():
@@ -839,3 +941,5 @@ def add_consultation():
         form.especialidad.choices = [(str(speciality.id),str(speciality.speciality)) for speciality in specialities]
     
         return render_template('add_consultation.html', active_user=active_user, form=form)
+
+
