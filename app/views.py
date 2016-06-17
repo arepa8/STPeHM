@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from app import app, lm
 from app.forms import *
-from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,DoctorProfile, InstitutionElement
+from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,DoctorProfile, InstitutionElement, DoctorStudies, DoctorAbilities, DoctorAwards, DoctorPublications, DoctorExperiences, DoctorEvents
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
@@ -534,84 +534,89 @@ def profile_user():
 @app.route('/profile_doctor', methods=['GET','POST'])
 def profile_doctor():
 
-    active_user = session['user']
-    user_controller = user.user()
-    u = user_controller.getUser(active_user['username'])
-    r = role.role()
-    user_role = r.getRole(int(u.role))
+	active_user = session['user']
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+	r = role.role()
+	user_role = r.getRole(int(u.role))
+	form = ProfileForm(request.form)    
+	d = doctorProfile.doctorProfile()
+	doctor = DoctorProfile.query.filter_by(ci_user=u.ci).first()
 
-    #d = doctorProfile.doctorProfile()
-    #doctor = DoctorProfile.query.filter_by(ci_user=u.ci).first()
+	if request.method == 'POST': #and form.validate():
 
-    # if request.method == 'POST': #and form.validate():
-        
-    #     result0 = user_controller.updateUser(u.username, u.password, form.name.data, form.last_name.data, form.email.data, int(u.role))
+		result0 = user_controller.updateUser(u.username, u.password, form.name.data, form.last_name.data, form.email.data, int(u.role))
 
-    #     # Crear perfil de doctor
-    #     if doctor == None:
-            
-    #         result1 = d.insertDoctorProfile(int(u.ci), form.sex.data,form.date_of_birth.data,form.marital_status.data,
-    #                                     form.telephone.data, form.address.data, form.habilities.data,form.pregrade.data,
-    #                                     form.postgrade.data,form.experience.data,form.courses.data,form.publications.data,
-    #                                     form.awards.data)
-    #     # Modificar perfil de doctor
-    #     else:            
+		# Crear perfil de doctor
+		if doctor == None:
 
-    #         result1 = d.updateDoctorProfile(int(u.ci),form.sex.data, form.date_of_birth.data,form.marital_status.data,
-    #                             form.telephone.data,form.address.data,form.habilities.data,form.pregrade.data,
-    #                             form.postgrade.data,form.experience.data,form.courses.data,form.publications.data,
-    #                             form.awards.data)
-      
-    #     if result0['result'] and result1:
-    #         active_user['name'] = form.name.data+' '+form.last_name.data
-    #         return render_template('profile_doctor.html', form=form, active_user=active_user, mensaje='Exito')
-    #     else:
-    #         return render_template('profile_doctor.html', form=form, active_user=active_user, mensaje='Error')
-    
-    # elif request.method == 'GET':
+			result1 = d.insertDoctorProfile(int(u.ci), form.sex.data,form.date_of_birth.data,form.marital_status.data,
+			            form.telephone.data, form.address.data)
+		# Modificar perfil de doctor
+		else:            
 
-    #     form.name.data      = u.name
-    #     form.last_name.data = u.last_name
-    #     form.email.data     = u.email
+			result1 = d.updateDoctorProfile(int(u.ci),form.sex.data, form.date_of_birth.data,form.marital_status.data,
+			            form.telephone.data,form.address.data)
 
-    #     # Datos de DoctorProfile
-    #     if doctor != None:
-    #         form.sex.data = doctor.sex
-    #         form.date_of_birth.data = doctor.date_of_birth
-    #         form.marital_status.data = doctor.marital_status
-    #         form.telephone.data = doctor.telephone
-    #         form.address.data = doctor.address
+		if result0['result'] and result1:
+			active_user['name'] = form.name.data+' '+form.last_name.data
+			return render_template('profile_doctor.html', form=form, active_user=active_user, mensaje='Exito')
+		else:
+			return render_template('profile_doctor.html', form=form, active_user=active_user, mensaje='Error')
 
-    #         form.habilities.data = doctor.habilities
-    #         form.pregrade.data = doctor.pregrade
-    #         form.postgrade.data = doctor.postgrade
-    #         form.experience.data = doctor.experience
-    #         form.courses.data = doctor.courses
-    #         form.publications.data = doctor.publications
-    #         form.awards.data = doctor.awards
+	elif request.method == 'GET':
 
+		form.name.data      = u.name
+		form.last_name.data = u.last_name
+		form.email.data     = u.email
 
-    form = ProfileForm(request.form)
-    studies = [{'title': 'Ing. Computacion', 'institution': 'Universidad Simon Bolivar', 'date_of_graduation': '2017', 'description': 'Titulo en educacion superior en las ciencias de la computacion'},{'title': 'Ing. Computacion', 'institution': 'Universidad Simon Bolivar', 'date_of_graduation': '2017', 'description': 'Titulo en educacion superior en las ciencias de la computacion'} ]
-    abilities = [{'title': 'Ing. Computacion', 'description': 'Titulo en educacion superior en las ciencias de la computacion'},{'title': 'Ing. Computacion', 'description': 'Titulo en educacion superior en las ciencias de la computacion'} ]
-    experiences = [{'title': 'Ing. Computacion', 'institution': 'Universidad Simon Bolivar', 'date_of_finish': '2012','date_of_start': '2015', 'description': 'Titulo en educacion superior en las ciencias de la computacion'},{'title': 'Ing. Computacion', 'institution': 'Universidad Simon Bolivar',  'date_of_start': '2012','date_of_finish': '2015', 'description': 'Titulo en educacion superior en las ciencias de la computacion'} ]
-    publications = [{'title': 'Ing. Computacion', 'date': '2017', 'description': 'Titulo en educacion superior en las ciencias de la computacion'},{'title': 'Ing. Computacion', 'date': '2017', 'description': 'Titulo en educacion superior en las ciencias de la computacion'} ]
-    awards = [{'title': 'Premio 1', 'institution': 'Universidad Simon Bolivar', 'date': '2017', 'description': 'Titulo en educacion superior en las ciencias de la computacion'},{'title': 'Ing. Computacion', 'institution': 'Universidad Simon Bolivar', 'date': '2017', 'description': 'Titulo en educacion superior en las ciencias de la computacion'} ]
-    events = [{'title': 'Ing. Computacion', 'institution': 'Universidad Simon Bolivar', 'date': '2017', 'description': 'Titulo en educacion superior en las ciencias de la computacion'},{'title': 'Ing. Computacion', 'institution': 'Universidad Simon Bolivar', 'date': '2017', 'description': 'Titulo en educacion superior en las ciencias de la computacion'} ]
-    return render_template('profile_doctor.html', events=events, studies=studies, abilities=abilities, experiences=experiences, publications=publications, awards=awards, active_user=active_user, form=form, ci = u.ci, username=u.username)
+		# Datos de DoctorProfile
+		if doctor != None:
+			form.sex.data = doctor.sex
+			form.date_of_birth.data = doctor.date_of_birth
+			form.marital_status.data = doctor.marital_status
+			form.telephone.data = doctor.telephone
+			form.address.data = doctor.address
+
+		studies = DoctorStudies.query.filter_by(ci_user=u.ci)
+		abilities = DoctorAbilities.query.filter_by(ci_user=u.ci)
+		experiences = DoctorExperiences.query.filter_by(ci_user=u.ci)
+		publications = DoctorPublications.query.filter_by(ci_user=u.ci)
+		awards = DoctorAwards.query.filter_by(ci_user=u.ci)
+		events = DoctorEvents.query.filter_by(ci_user=u.ci)
+
+		return render_template('profile_doctor.html', events=events, studies=studies, abilities=abilities, experiences=experiences, publications=publications, awards=awards, active_user=active_user, form=form, ci = u.ci, username=u.username)
 
 @app.route('/add_study',methods=['GET', 'POST'])
 def add_study():
-    active_user = session['user']
-    form = DoctorStudiesForm(request.form)
-    return render_template('add_studies.html', active_user=active_user, form=form)
+	active_user = session['user']
+	form = DoctorStudiesForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+
+	if request.method == 'POST':
+		new_study = DoctorStudies(u.ci,form.studies.data,form.date_of_graduation.data,form.description.data,form.institution.data)
+		db.session.add(new_study)
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+
+	return render_template('add_studies.html', active_user=active_user, form=form)
 
 
 @app.route('/add_ability',methods=['GET', 'POST'])
 def add_ability():
-    active_user = session['user']
-    form = DoctorAbilitiesForm(request.form)
-    return render_template('add_abilities.html', active_user=active_user, form=form)
+	active_user = session['user']
+	form = DoctorAbilitiesForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+
+	if request.method == 'POST':
+		new_ability = DoctorAbilities(u.ci,form.abilities.data,form.description.data)
+		db.session.add(new_ability)
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+
+	return render_template('add_abilities.html', active_user=active_user, form=form)
 
 
 # BUSCADOR
@@ -632,29 +637,58 @@ def search():
 
 @app.route('/add_award',methods=['GET', 'POST'])
 def add_award():
-    active_user = session['user']
-    form = DoctorAwardsForm(request.form)
-    return render_template('add_awards.html', active_user=active_user, form=form)
+	active_user = session['user']
+	form = DoctorAwardsForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+	if request.method == 'POST':
+		new = DoctorAwards(u.ci,form.award.data,form.date.data,form.institution.data)
+		db.session.add(new)
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+	return render_template('add_awards.html', active_user=active_user, form=form)
 
 
 @app.route('/add_publication',methods=['GET', 'POST'])
 def add_publication():
-    active_user = session['user']
-    form = DoctorPublicationForm(request.form)
-    return render_template('add_publications.html', active_user=active_user, form=form)
+	active_user = session['user']
+	form = DoctorPublicationForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+	if request.method == 'POST':
+		new = DoctorPublications(u.ci,form.publication.data,form.date.data,form.description.data)
+		db.session.add(new)
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+
+	return render_template('add_publications.html', active_user=active_user, form=form)
 
 
 @app.route('/add_experience',methods=['GET', 'POST'])
 def add_experience():
-    active_user = session['user']
-    form = DoctorExperienceForm(request.form)
-    return render_template('add_experiences.html', active_user=active_user, form=form)
+	active_user = session['user']
+	form = DoctorExperienceForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+	if request.method == 'POST':
+		new = DoctorExperiences(u.ci,form.experience.data,form.date_of_start.data,form.date_of_finish.data,form.description.data,form.institution.data)
+		db.session.add(new)
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+	return render_template('add_experiences.html', active_user=active_user, form=form)
 
 @app.route('/add_event',methods=['GET', 'POST'])
 def add_event():
-    active_user = session['user']
-    form = DoctorEventsForm(request.form)
-    return render_template('add_events.html', active_user=active_user, form=form)
+	active_user = session['user']
+	form = DoctorEventsForm(request.form)
+	user_controller = user.user()
+	u = user_controller.getUser(active_user['username'])
+	if request.method == 'POST':
+		new = DoctorEvents(u.ci,form.event.data,form.date.data,form.description.data,form.institution.data)
+		db.session.add(new)
+		db.session.commit()
+		return redirect(url_for('profile_doctor'))
+	return render_template('add_events.html', active_user=active_user, form=form)
 
 
 @app.route('/consultations',methods=['GET', 'POST'])
