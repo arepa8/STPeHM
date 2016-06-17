@@ -20,17 +20,45 @@ class ProfileForm(ContactForm):
 	telephone = TextField("Número de teléfono")
 	address = TextField("Dirección", [validators.length(max=500)])
 
-class DoctorProfileForm(ProfileForm):
-	habilities = TextField("Habilidades y destrezas", [validators.length(max=500)])
-	pregrade = TextField("Pregrado", [validators.length(max=100)])
-	postgrade =TextField("Postgrado", [validators.length(max=100)])
-	experience =TextField("Experiencia profesional", [validators.length(max=500)])
-	courses =TextField("Cursos", [validators.length(max=500)])
-	publications =TextField("Publicaciones", [validators.length(max=500)])
-	awards =TextField("Reconocimientos", [validators.length(max=500)])
-	submit = SubmitField("Modificar", [validators.Required()])
+class DoctorStudiesForm(Form):
+	studies = TextField("Estudios", [validators.length(max=500)])
+	date_of_graduation = DateField("Fecha de culminacion", [validators.Required()])
+	description =TextField("Descripción", [validators.length(max=100)])
+	institution =TextField("Institución", [validators.length(max=500)])
+	submit = SubmitField("Agregar", [validators.Required()])
 
+class DoctorAbilitiesForm(Form):
+	abilities = TextField("Habilidad", [validators.length(max=500)])
+	description =TextField("Descripción", [validators.length(max=100)])
+	submit = SubmitField("Agregar", [validators.Required()])
 
+class DoctorAwardsForm(Form):		
+	award = TextField("Reconocimiento", [validators.length(max=500)])
+	date = DateField("Fecha", [validators.Required()])
+	institution =TextField("Institución", [validators.length(max=500)])
+	submit = SubmitField("Agregar", [validators.Required()])
+
+class DoctorEventsForm(Form):		
+	event = TextField("Evento", [validators.length(max=500)])
+	date = DateField("Fecha", [validators.Required()])
+	institution =TextField("Institución", [validators.length(max=500)])
+	description =TextField("Descripción", [validators.length(max=100)])
+	submit = SubmitField("Agregar", [validators.Required()])
+
+class DoctorPublicationForm(Form):		
+	publication = TextField("Publicacion", [validators.length(max=500)])
+	date = DateField("Fecha", [validators.Required()])
+	description =TextField("Descripción", [validators.length(max=100)])
+	submit = SubmitField("Agregar", [validators.Required()])
+
+class DoctorExperienceForm(Form):
+	experience =TextField("Puesto Ocupado", [validators.length(max=500)])
+	date_of_start = DateField("Fecha de inicio", [validators.Required()])
+	date_of_finish = DateField("Fecha de culminacion")
+	description =TextField("Descripción", [validators.length(max=100)])
+	institution =TextField("Institución", [validators.length(max=500)])
+	submit = SubmitField("Agregar", [validators.Required()])
+				
 class PatientProfileForm(ProfileForm):
 	heigth = TextField("Altura", [validators.length(max=15)])
 	weigth = TextField("Peso", [validators.length(max=15)])
