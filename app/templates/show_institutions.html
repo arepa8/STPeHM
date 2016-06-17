@@ -34,7 +34,7 @@
           <td>{{institucion.name}}</td>
           <td>{{institucion.address}}</td> 
           <td style="text-align: right;">
-            <a href="{{ url_for('modify_institution',id=institucion.id)}}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
+            <a href="{{ url_for('edit_institution',id=institucion.id)}}"><i class="fa fa-pencil" style="font-size:16px;color:black"></i></a>
             <button id="delete_institution" value= "{{institucion.id}}" onclick="openModal_institution({{institucion.id}})" name="id"><i class="fa fa-trash" style="font-size:16px;color:black"></i></button>
           </td> 
         </tr>

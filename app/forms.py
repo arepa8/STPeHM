@@ -95,6 +95,11 @@ class InstitutionForm(Form):
 	address = TextField("Dirección", [validators.Required(), validators.length(max=500)])
 	submit = SubmitField("Aceptar",[validators.Required()])
 
+class InstitutionElementForm(Form):
+	name = TextField("Nombre", [validators.Required(), validators.length(max=500)])
+	description = TextField("Descripción", [validators.Required(), validators.length(max=500)])
+	submit = SubmitField("Aceptar",[validators.Required()])
+
 class SpecializationForm(Form):
 	name = TextField("Nombre", [validators.Required(), validators.length(max=500)])
 	submit = SubmitField("Aceptar",[validators.Required()])

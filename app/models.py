@@ -116,6 +116,8 @@ class Institution(db.Model):
     id = db.Column(db.Integer,primary_key = True)
     name = db.Column(db.String(255),nullable=False,unique=True)
     address = db.Column(db.String(255),nullable=False,unique=True)
+    elements = db.relationship('InstitutionElement', backref='institution',
+                                lazy='dynamic')
 
     def __init__(self, name, address):
         self.name = name
@@ -123,6 +125,22 @@ class Institution(db.Model):
 
     def __repr__(self):
         return '<Institution name: %r>' % (self.name)
+
+class InstitutionElement(db.Model):
+    __tablename__ = 'InstitutionElement'
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(32), nullable=False)
+    description = db.Column(db.String(255), nullable=False)
+    institution_id = db.Column(db.Integer, db.ForeignKey('Institution.id'))
+
+    def __init__(self, name, description):
+        self.name = name
+        self.description = description
+
+    def __repr__(self):
+        return '<InstitutionElement name: %r>' % (self.name)
+
 
 class Specialization(db.Model):
     __tablename__ = 'Specialization'

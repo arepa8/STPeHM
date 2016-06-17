@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div id="cuerpoHeredado">
+    <br>
+      {% if type == 'other' %}
+        <h2>{{title}} información de una Institución</h2>
+        <form action="{{ url_for('add_institutionElement',id=id) }}" method=POST>
+        {{ form.name.label }}
+        {{ form.name }}    
+      {% elif type == 'history' %}
+        <h2>{{title}} historia de una Institución</h2>
+        <form action="{{ url_for('add_history',id=id) }}" method=POST>
+      {% elif type == 'mision' %}
+        <h2>{{title}} misión de una Institución</h2>
+        <form action="{{ url_for('add_mision',id=id) }}" method=POST>
+      {% elif type == 'vision' %}
+        <h2>{{title}} visión de una Institución</h2>
+        <form action="{{ url_for('add_vision',id=id) }}" method=POST>
+      {% elif type == 'value' %}
+        <h2>{{title}} valor de una Institución</h2>
+        <form action="{{ url_for('add_value',id=id) }}" method=POST> 
+      {% elif type == 'objetive' %}
+        <h2>{{title}} objetivo de una Institución</h2>
+        <form action="{{ url_for('add_objetive',id=id) }}" method=POST>       
+      {% endif %}
+      {{ form.description.label }}
+      {{ form.description }}
+      {{ form.submit }}
+      </form>
+  </div>
+{% endblock %}

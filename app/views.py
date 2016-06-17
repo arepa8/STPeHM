@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from app import app, lm
 from app.forms import *
-from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,DoctorProfile
+from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,DoctorProfile, InstitutionElement
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
@@ -272,9 +272,9 @@ def add_institution():
     return render_template('add_institution.html', active_user=active_user, form=form, title=title)
 
 
-@app.route('/modify_institution/<id>', methods=['GET', 'POST'])
-def modify_institution(id):
-    ''' Modifica una institución '''
+@app.route('/edit_institution/<id>', methods=['GET', 'POST'])
+def edit_institution(id):
+    '''Ofrece la parametrización detallada para modificar una institución'''
     active_user = session['user']
     form = InstitutionForm(request.form)
     if request.method == 'POST':
@@ -284,10 +284,104 @@ def modify_institution(id):
             return redirect(url_for('show_institutions'))
         else:
             print("Error")
-    title = "Modificar"
     old = Institution.query.filter_by(id=id).first()
     form = InstitutionForm(request.form, name=old.name, address=old.address)
-    return render_template('add_institution.html', form=form, title=title, id=id)
+    return render_template('edit_institution.html', form=form, id=id, institution = old)
+
+
+
+@app.route('/add_mision/<id>', methods=['GET', 'POST'])
+def add_mision(id):
+    ''' Agrega una institución '''
+    active_user = session['user']
+    form = InstitutionElementForm(request.form)
+    if request.method == 'POST':
+        new_ie = InstitutionElement('mision', form.description.data)
+        i = Institution.query.filter_by(id=id).first()
+        i.elements.append(new_ie)
+        db.session.add(new_ie)
+        db.session.commit()
+        return redirect(url_for('edit_institution',id=id))
+    title = "Agregar"
+    return render_template('add_institutionElement.html', active_user=active_user, form=form, title=title, id=id,type='mision')
+
+
+@app.route('/add_vision/<id>', methods=['GET', 'POST'])
+def add_vision(id):
+    ''' Agrega una institución '''
+    active_user = session['user']
+    form = InstitutionElementForm(request.form)
+    if request.method == 'POST':
+        new_ie = InstitutionElement('vision', form.description.data)
+        i = Institution.query.filter_by(id=id).first()
+        i.elements.append(new_ie)
+        db.session.add(new_ie)
+        db.session.commit()
+        return redirect(url_for('edit_institution',id=id))
+    title = "Agregar"
+    return render_template('add_institutionElement.html', active_user=active_user, form=form, title=title, id=id,type='vision')
+
+
+@app.route('/add_value/<id>', methods=['GET', 'POST'])
+def add_value(id):
+    ''' Agrega una institución '''
+    active_user = session['user']
+    form = InstitutionElementForm(request.form)
+    if request.method == 'POST':
+        new_ie = InstitutionElement('value', form.description.data)
+        i = Institution.query.filter_by(id=id).first()
+        i.elements.append(new_ie)
+        db.session.add(new_ie)
+        db.session.commit()
+        return redirect(url_for('edit_institution',id=id))
+    title = "Agregar"
+    return render_template('add_institutionElement.html', active_user=active_user, form=form, title=title, id=id,type='value')
+
+
+@app.route('/add_objective/<id>', methods=['GET', 'POST'])
+def add_objetive(id):
+    ''' Agrega una institución '''
+    active_user = session['user']
+    form = InstitutionElementForm(request.form)
+    if request.method == 'POST':
+        new_ie = InstitutionElement('objetive', form.description.data)
+        i = Institution.query.filter_by(id=id).first()
+        i.elements.append(new_ie)
+        db.session.add(new_ie)
+        db.session.commit()
+        return redirect(url_for('edit_institution',id=id))
+    title = "Agregar"
+    return render_template('add_institutionElement.html', active_user=active_user, form=form, title=title, id=id,type='objetive')
+
+@app.route('/add_history/<id>', methods=['GET', 'POST'])
+def add_history(id):
+    ''' Agrega una institución '''
+    active_user = session['user']
+    form = InstitutionElementForm(request.form)
+    if request.method == 'POST':
+        new_ie = InstitutionElement('history', form.description.data)
+        i = Institution.query.filter_by(id=id).first()
+        i.elements.append(new_ie)
+        db.session.add(new_ie)
+        db.session.commit()
+        return redirect(url_for('edit_institution',id=id))
+    title = "Agregar"
+    return render_template('add_institutionElement.html', active_user=active_user, form=form, title=title, id=id,type='history')
+
+@app.route('/add_institutionElement/<id>', methods=['GET', 'POST'])
+def add_institutionElement(id):
+    ''' Agrega una institución '''
+    active_user = session['user']
+    form = InstitutionElementForm(request.form)
+    if request.method == 'POST':
+        new_ie = InstitutionElement('other', form.description.data)
+        i = Institution.query.filter_by(id=id).first()
+        i.elements.append(new_ie)
+        db.session.add(new_ie)
+        db.session.commit()
+        return redirect(url_for('edit_institution',id=id))
+    title = "Agregar"
+    return render_template('add_institutionElement.html', active_user=active_user, form=form, title=title, id=id,type='other')
 
 
 @app.route('/delete_institution', methods=['POST'])
@@ -301,6 +395,7 @@ def delete_institution():
     else: 
         return json.dumps({'status':'ERROR','id':id})
 
+
 @app.route('/show_institution_data', methods=['POST'])
 def show_institution_data():
     ''' Muestra una institución por su id '''
@@ -311,6 +406,7 @@ def show_institution_data():
     print(name)
     print(address)
     return json.dumps({'status':'OK','id':id,'name':name,'address':address})
+
 
 #
 # GESTIÓN DE ESPECIALIZACIONES
