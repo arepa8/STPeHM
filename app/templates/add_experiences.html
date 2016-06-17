@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div id="cuerpoHeredado">
+    <br>
+    <h2>{{title}} Experiencias</h2>
+    <form action="{{ url_for('add_experience') }}" method=POST>
+      {{ form.experience.label }}
+      {{ form.experience }}
+      {{ form.date_of_start.label }}
+      {{ form.date_of_start }}
+      {{ form.date_of_finish.label }}
+      {{ form.date_of_finish }}
+      {{ form.institution.label }}
+      {{ form.institution }}
+      {{ form.description.label }}
+      {{ form.description }}
+      {{ form.submit }}
+       </form>
+  </div>
+{% endblock %}
