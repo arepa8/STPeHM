@@ -1,13 +1,13 @@
 """empty message
 
-Revision ID: 971badc3fed3
+Revision ID: 72271a5fd1e5
 Revises: None
-Create Date: 2016-06-10 19:45:27.528110
+Create Date: 2016-06-28 21:13:51.385821
 
 """
 
 # revision identifiers, used by Alembic.
-revision = '971badc3fed3'
+revision = '72271a5fd1e5'
 down_revision = None
 
 from alembic import op
@@ -36,6 +36,14 @@ def upgrade():
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('speciality')
     )
+    op.create_table('InstitutionElement',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(length=32), nullable=False),
+    sa.Column('description', sa.String(length=255), nullable=False),
+    sa.Column('institution_id', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['institution_id'], ['Institution.id'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('User',
     sa.Column('ci', sa.Integer(), nullable=False),
     sa.Column('username', sa.String(length=50), nullable=True),
@@ -59,6 +67,44 @@ def upgrade():
     sa.ForeignKeyConstraint(['patient'], ['User.ci'], ),
     sa.PrimaryKeyConstraint('id')
     )
+    op.create_table('DoctorAbilities',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('ci_user', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=500), nullable=True),
+    sa.Column('description', sa.String(length=500), nullable=True),
+    sa.ForeignKeyConstraint(['ci_user'], ['User.ci'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('DoctorAwards',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('ci_user', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=500), nullable=True),
+    sa.Column('date', sa.Date(), nullable=True),
+    sa.Column('institution', sa.String(length=500), nullable=True),
+    sa.ForeignKeyConstraint(['ci_user'], ['User.ci'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('DoctorEvents',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('ci_user', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=500), nullable=True),
+    sa.Column('date', sa.Date(), nullable=True),
+    sa.Column('description', sa.String(length=500), nullable=True),
+    sa.Column('institution', sa.String(length=500), nullable=True),
+    sa.ForeignKeyConstraint(['ci_user'], ['User.ci'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('DoctorExperiences',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('ci_user', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=500), nullable=True),
+    sa.Column('date_of_start', sa.Date(), nullable=True),
+    sa.Column('date_of_finish', sa.Date(), nullable=True),
+    sa.Column('description', sa.String(length=500), nullable=True),
+    sa.Column('institution', sa.String(length=500), nullable=True),
+    sa.ForeignKeyConstraint(['ci_user'], ['User.ci'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
     op.create_table('DoctorProfile',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('ci_user', sa.Integer(), nullable=False),
@@ -67,13 +113,29 @@ def upgrade():
     sa.Column('marital_status', sa.String(length=15), nullable=True),
     sa.Column('telephone', sa.String(length=15), nullable=True),
     sa.Column('address', sa.String(length=100), nullable=True),
-    sa.Column('habilities', sa.String(length=500), nullable=True),
-    sa.Column('pregrade', sa.String(length=100), nullable=True),
-    sa.Column('postgrade', sa.String(length=100), nullable=True),
-    sa.Column('experience', sa.String(length=500), nullable=True),
-    sa.Column('courses', sa.String(length=500), nullable=True),
-    sa.Column('publications', sa.String(length=500), nullable=True),
-    sa.Column('awards', sa.String(length=500), nullable=True),
+    sa.ForeignKeyConstraint(['ci_user'], ['User.ci'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('DoctorPublications',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('ci_user', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=100), nullable=True),
+    sa.Column('authors', sa.String(length=100), nullable=True),
+    sa.Column('description', sa.String(length=500), nullable=True),
+    sa.Column('magazine', sa.String(length=100), nullable=True),
+    sa.Column('number', sa.String(length=5), nullable=True),
+    sa.Column('volume', sa.String(length=5), nullable=True),
+    sa.Column('date', sa.Date(), nullable=True),
+    sa.ForeignKeyConstraint(['ci_user'], ['User.ci'], ),
+    sa.PrimaryKeyConstraint('id')
+    )
+    op.create_table('DoctorStudies',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('ci_user', sa.Integer(), nullable=False),
+    sa.Column('title', sa.String(length=500), nullable=True),
+    sa.Column('date_of_graduation', sa.Date(), nullable=True),
+    sa.Column('description', sa.String(length=500), nullable=True),
+    sa.Column('institution', sa.String(length=500), nullable=True),
     sa.ForeignKeyConstraint(['ci_user'], ['User.ci'], ),
     sa.PrimaryKeyConstraint('id')
     )
@@ -95,8 +157,8 @@ def upgrade():
     sa.Column('address', sa.String(length=100), nullable=True),
     sa.Column('heigth', sa.String(length=15), nullable=True),
     sa.Column('weigth', sa.String(length=15), nullable=True),
-    sa.Column('blood_type', sa.String(length=3), nullable=True),
-    sa.Column('diabetic', sa.String(length=3), nullable=True),
+    sa.Column('blood_type', sa.String(length=2), nullable=True),
+    sa.Column('diabetic', sa.String(length=1), nullable=True),
     sa.Column('allergies', sa.String(length=500), nullable=True),
     sa.Column('emergency_contact', sa.String(length=100), nullable=True),
     sa.Column('emergency_number', sa.String(length=15), nullable=True),
@@ -111,9 +173,16 @@ def downgrade():
     ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('PatientProfile')
     op.drop_table('Doctor_Specialization')
+    op.drop_table('DoctorStudies')
+    op.drop_table('DoctorPublications')
     op.drop_table('DoctorProfile')
+    op.drop_table('DoctorExperiences')
+    op.drop_table('DoctorEvents')
+    op.drop_table('DoctorAwards')
+    op.drop_table('DoctorAbilities')
     op.drop_table('Appointment')
     op.drop_table('User')
+    op.drop_table('InstitutionElement')
     op.drop_table('Specialization')
     op.drop_table('Role')
     op.drop_table('Institution')

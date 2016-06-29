@@ -766,7 +766,7 @@ def add_publication():
 	user_controller = user.user()
 	u = user_controller.getUser(active_user['username'])
 	if request.method == 'POST':
-		new = DoctorPublications(u.ci,form.publication.data,form.date.data,form.description.data)
+		new = DoctorPublications(u.ci,form.title.data,form.authors.data,form.description.data,form.magazine.data,form.number.data,form.volume.data,form.date.data)
 		db.session.add(new)
 		db.session.commit()
 		return redirect(url_for('profile_doctor'))
@@ -783,15 +783,19 @@ def modify_publication(id):
 
 	if request.method == 'POST':
 		old = DoctorPublications.query.filter_by(id=id).first()
-		old.title=form.publication.data
-		old.date=form.date.data
+		old.title=form.title.data
+		old.authors=form.authors.data
 		old.description=form.description.data
+		old.magazine=form.magazine.data
+		old.number=form.number.data
+		old.volume=form.volume.data
+		old.date=form.date.data
 		db.session.commit()
 		return redirect(url_for('profile_doctor'))
 
 	title = "Modificar"
 	old = DoctorPublications.query.filter_by(id=id).first()
-	form = DoctorPublicationForm(request.form, publication=old.title,date= old.date,description=old.description)
+	form = DoctorPublicationForm(request.form, title=old.title,authors=old.authors,description=old.description,magazine=old.magazine,number=old.number,volume=old.volume,date= old.date)
 	return render_template('add_publications.html', form=form, publication=old.title,date= old.date,description=old.description, id=id, title=title)
 
 @app.route('/delete_publication/<id>', methods=['GET','POST'])

@@ -2,18 +2,26 @@
 {% block content %}
   <div id="cuerpoHeredado">
     <br>
-    <h2>{{title}} Publicaciones</h2>
+    <h2>{{title}} Publicación</h2>
     {% if title == "Modificar" %}
     <form action="{{ url_for('modify_publication', id=id) }}" method=POST>
     {% else %}
     <form action="{{ url_for('add_publication') }}" method=POST>
     {% endif %}
-      {{ form.publication.label }}
-      {{ form.publication }}
-      {{ form.date.label }}
-      {{ form.date }}
+      {{ form.title.label }}
+      {{ form.title }}
+      {{ form.authors.label }}
+      {{ form.authors }}
       {{ form.description.label }}
       {{ form.description }}
+      {{ form.magazine.label }}
+      {{ form.magazine }}
+      {{ form.number.label }}
+      {{ form.number }}
+      {{ form.volume.label }}
+      {{ form.volume }}
+      {{ form.date.label }}
+      {{ form.date }}
       {{ form.submit }}
     </form>
   </div>
