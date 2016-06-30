@@ -315,8 +315,7 @@ class DoctorEvents(db.Model):
 	def __repr__(self):
 		return '<Doctor_Events doctor: %r, title: %r>' % (self.ci_user, self.title)
 
-class PatientProfile(
-	db.Model):
+class PatientProfile(db.Model):
 	__tablename__ = 'PatientProfile'
 	id = db.Column(db.Integer,primary_key = True)
 	ci_user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
@@ -357,6 +356,93 @@ class PatientProfile(
 
 	def __repr__(self):
 		return '<PatientProfile ci_user = %r>' % (self.ci_user)
+
+class FamilyBackground(db.Model):
+	__tablename__ = 'FamilyBackground'
+	id = db.Column(db.Integer,primary_key = True)
+	ci_user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+
+	asthma = db.Column(db.Boolean)	
+	cancer = db.Column(db.Boolean)	
+	heartdisease = db.Column(db.Boolean)	
+	diabetes = db.Column(db.Boolean)	
+	liverdisease = db.Column(db.Boolean)	
+	hypertension = db.Column(db.Boolean)
+	other = db.Column(db.String(500))
+
+	def __init__(ci_user,asthma,cancer,heartdisease,diabetes,liverdisease,hypertension,other):
+		self.ci_user = ci_user
+		self.asthma = asthma
+		self.cancer = cancer
+		self.heartdisease = heartdisease
+		self.diabetes = diabetes
+		self.liverdisease = liverdisease
+		self.hypertension = hypertension
+		self.other = other
+
+	def __repr__(self):
+		return '<FamilyBackground ci_user = %r>' % (self.ci_user)
+
+class PathologicalBackground(db.Model):
+	__tablename__ = 'PathologicalBackground'
+
+	id = db.Column(db.Integer,primary_key = True)
+	ci_user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+
+	current_condition = db.Column(db.String(500))
+	surgical_history = db.Column(db.String(500))
+	transfusional_history = db.Column(db.String(500))
+	allergies = db.Column(db.String(500))
+	traumatic_history = db.Column(db.String(500))
+	hospitalizations = db.Column(db.String(500))
+	addictions = db.Column(db.String(500))
+	other = db.Column(db.String(500))
+
+	def __init__(ci_user,current_condition,surgical_history,transfusional_history,allergies,traumatic_history,hospitalizations,addictions,other):
+
+		self.ci_user = ci_user
+		self.current_condition = current_condition
+		self.surgical_history = surgical_history
+		self.transfusional_history = transfusional_history
+		self.allergies = allergies
+		self.traumatic_history = traumatic_history
+		self.hospitalizations = hospitalizations
+		self.addictions = addictions
+		self.other = other
+
+	def __repr__(self):
+		return '<PathologicalBackground ci_user = %r>' % (self.ci_user)
+
+class NonPathologicalBackground(db.Model):
+	__tablename__ = 'NonPathologicalBackground'
+
+	id = db.Column(db.Integer,primary_key = True)
+	ci_user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+
+	defecation = db.Column(db.String(100))
+	toothbrushing = db.Column(db.String(100))
+	cigarrettes = db.Column(db.Integer)
+	years = db.Column(db.Integer)
+	beverages = db.Column(db.String(100))
+	frecuency = db.Column(db.String(100))
+	physical_activity = db.Column(db.String(500))
+	frecuency2 = db.Column(db.String(100))
+	other = db.Column(db.String(500))
+
+	def __init__(ci_user,defecation,toothbrushing,cigarrettes,years,beverages,frecuency,physical_activity,frecuency2,other):
+		self.ci_user=ci_user
+		self.defecation=defecation
+		self.toothbrushing=toothbrushing
+		self.cigarrettes=cigarrettes
+		self.years=years
+		self.beverages=beverages
+		self.frecuency=frecuency
+		self.physical_activity
+		self.frecuency2=frecuency2
+		self.other=other
+
+	def __repr__(self):
+		return '<NonPathologicalBackground ci_user = %r>' % (self.ci_user)
 
 
 if __name__ == '__main__':

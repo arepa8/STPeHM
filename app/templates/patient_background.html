@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div id="cuerpoHeredado">
+
+  <ul class="nav nav-tabs">
+      <li class="active"><a data-toggle="tab" href="#home">Antecedentes Familiares</a></li>
+      <li><a data-toggle="tab" href="#menu1">Antecedentes Patológico</a></li>
+      <li><a data-toggle="tab" href="#menu2">Antecedentes No Patológicos</a></li>
+  </ul>
+
+  <div class="tab-content">
+  <div id="home" class="tab-pane fade in active">
+  <center><h2>Antecedentes Familiares</h2></center><br>
+    <div class="row">
+      <!-- edit form column -->
+      <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+        {% if mensaje %}
+        <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>{{ mensaje }}</strong></p>
+        {% endif %} 
+          <form action="{{ url_for('family_background') }}" method=POST>
+                {{form.asthma}}
+                {{form.asthma.label}}
+                {{form.cancer}}
+                {{form.cancer.label}}
+                {{form.heartdisease}}
+                {{form.heartdisease.label}}
+                {{form.diabetes}}
+                {{form.diabetes.label}}
+                {{form.liverdisease}}
+                {{form.liverdisease.label}}
+                {{form.hypertension}}
+                {{form.hypertension.label}}
+                {{form.other.label}}
+                {{form.other}}
+                {{form.submit}}
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="menu1" class="tab-pane fade">
+    <center><h2>Antecedentes Patológicos</h2></center>
+    <br>
+    <div class="row">
+      <!-- edit form column -->
+      <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+        {% if mensaje %}
+        <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>{{ mensaje }}</strong></p>
+        {% endif %} 
+          <form action="{{ url_for('pathological_background') }}" method=POST>
+                {{form1.current_condition.label}}
+                {{form1.current_condition}}
+                {{form1.surgical_history.label}}
+                {{form1.surgical_history}}
+                {{form1.transfusional_history.label}}
+                {{form1.transfusional_history}}
+                {{form1.allergies.label}}
+                {{form1.allergies}}
+                {{form1.traumatic_history.label}}
+                {{form1.traumatic_history}}
+                {{form1.hospitalizations.label}}
+                {{form1.hospitalizations}}
+                {{form1.addictions.label}}
+                {{form1.addictions}}
+                {{form1.other.label}}
+                {{form1.other}}
+                {{form1.submit}}
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div id="menu2" class="tab-pane fade">
+    <center><h2>Antecedentes No Patológicos</h2></center>
+    <br>
+    <div class="row">
+      <!-- edit form column -->
+      <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+        {% if mensaje %}
+        <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>{{ mensaje }}</strong></p>
+        {% endif %} 
+          <form action="{{ url_for('non_pathological_background') }}" method=POST>
+              <h3>Hábitos personales</h3>
+                {{form2.defecation.label}}
+                {{form2.defecation}}
+                {{form2.toothbrushing.label}}
+                {{form2.toothbrushing}}
+                <h3>Tabaquismo</h3>
+                {{form2.cigarrettes.label}}
+                {{form2.cigarrettes}}
+                {{form2.years.label}}
+                {{form2.years}}
+                <h3>Alcoholismo</h3>
+                {{form2.beverages.label}}
+                {{form2.beverages}}
+                {{form2.frecuency.label}}
+                {{form2.frecuency}}
+                <h3>Actividades físicas</h3>
+                {{form2.physical_activity.label}}
+                {{form2.physical_activity}}
+                {{form2.frecuency.label}}
+                {{form2.frecuency}}
+                <h3>Otro</h3>
+                <!--{{form2.other.label}}-->
+                {{form2.other}}
+                {{form2.submit}}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}  

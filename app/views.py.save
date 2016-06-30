@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from app import app, lm
 from app.forms import *
-from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,DoctorProfile, InstitutionElement, DoctorStudies, DoctorAbilities, DoctorAwards, DoctorPublications, DoctorExperiences, DoctorEvents, FamilyBackground,PathologicalBackground,NonPathologicalBackground
+from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,DoctorProfile, InstitutionElement, DoctorStudies, DoctorAbilities, DoctorAwards, DoctorPublications, DoctorExperiences, DoctorEvents
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
@@ -766,7 +766,7 @@ def add_publication():
 	user_controller = user.user()
 	u = user_controller.getUser(active_user['username'])
 	if request.method == 'POST':
-		new = DoctorPublications(u.ci,form.title.data,form.authors.data,form.description.data,form.magazine.data,form.number.data,form.volume.data,form.date.data)
+		new = DoctorPublications(u.ci,form.title.data,form.authors.data,form.description.data,form.magazine.data,form.volume.data,form.date.data)
 		db.session.add(new)
 		db.session.commit()
 		return redirect(url_for('profile_doctor'))
@@ -781,21 +781,20 @@ def modify_publication(id):
 	user_controller = user.user()
 	u = user_controller.getUser(active_user['username'])
 
-	if request.method == 'POST':
-		old = DoctorPublications.query.filter_by(id=id).first()
-		old.title=form.title.data
-		old.authors=form.authors.data
+	if request.method == 'POST':old = DoctorPublications.query.filter_by(id=id).first()
+		old.title=form.publication.data
+        old.authors=form.authors.data
 		old.description=form.description.data
-		old.magazine=form.magazine.data
-		old.number=form.number.data
-		old.volume=form.volume.data
-		old.date=form.date.data
+        #old.magazine=form.magazine.data
+        #old.number=form.number.data
+        #olf.volume=form.volume.data
+        #old.date=form.date.data
 		db.session.commit()
 		return redirect(url_for('profile_doctor'))
 
 	title = "Modificar"
 	old = DoctorPublications.query.filter_by(id=id).first()
-	form = DoctorPublicationForm(request.form, title=old.title,authors=old.authors,description=old.description,magazine=old.magazine,number=old.number,volume=old.volume,date= old.date)
+	form = DoctorPublicationForm(request.form, publication=old.title,description=old.description,date= old.date)
 	return render_template('add_publications.html', form=form, publication=old.title,date= old.date,description=old.description, id=id, title=title)
 
 @app.route('/delete_publication/<id>', methods=['GET','POST'])
@@ -946,78 +945,4 @@ def add_consultation():
     
         return render_template('add_consultation.html', active_user=active_user, form=form)
 
-@app.route('/patient_background', methods=['GET','POST'])
-def patient_background():
-    form = FamilyBackgroundForm(request.form)
-    form1= PathologicalBackgroundForm(request.form)
-    form2= NonPathologicalBackgroundForm(request.form)
-    return render_template('patient_background.html', form=form, form1=form1, form2= form2)
 
-@app.route('/family_background/<ci_user>', methods=['GET','POST'])
-def family_background():
-
-    form = FamilyBackgroundForm(request.form)
-    old = FamilyBackground.query.filter_by(ci_user=ci_user).first()
-
-    if old == None:
-        new = FamilyBackground(ci_user,form.asthma.data,form.cancer.data,form.heartdisease.data,form.diabetes.data,form.liverdisease.data,form.hypertension.data,form.other.data)
-        db.session.add(new)
-        db.session.commit()
-    else:
-        old.asthma=form.asthma.data
-        old.cancer=form.cancer.data
-        old.heartdisease=form.heartdisease.data
-        old.diabetes=form.diabetes.data
-        old.liverdisease=form.liverdisease.data
-        old.hypertension=form.hypertension.data
-        old.other=form.other.data
-        db.session.commit()
-
-    return redirect(url_for('patient_background'))
-
-@app.route('/pathological_background/<ci_user>', methods=['GET','POST'])
-def pathological_background():
-    
-    form= PathologicalBackgroundForm(request.form)
-    old = PathologicalBackground.query.filter_by(ci_user=ci_user).first()
-
-    if old == None:
-        new = PathologicalBackground(ci_user,form.current_condition.data,form.surgical_history.data,form.transfunsional_history.data,form.allergies.data,form.traumatic_history.data,form.hospitalizations.data,form.addictions.data,form.other.data)
-        db.session.add(new)
-        db.session.commit()
-    else:
-        old.current_condition=form.current_condition.data
-        old.surgical_history=form.surgical_history.data
-        old.transfunsional_history=form.transfunsional_history.data
-        old.allergies=form.allergies.data
-        old.traumatic_history=form.traumatic_history.data
-        old.hospitalizations=form.hospitalizations.data
-        old.addictions=form.addictions.data
-        old.other=form.other.data
-        db.session.commit()
-
-    return redirect(url_for('patient_background'))
-
-@app.route('/non_pathological_background/<ci_user>', methods=['GET','POST'])
-def non_pathological_background():
-    
-    form= NonPathologicalBackgroundForm(request.form)
-    old = NonPathologicalBackground.query.filter_by(ci_user=ci_user).first()
-
-    if old == None:
-        new = NonPathologicalBackground(ci_user,form.defecation.data,form.toothbrushing.data,form.cigarrettes.data,form.years.data,form.beverages.data,form.frecuency.data,form.physical_activity.data,form.frecuency2.data,form.other.data)
-        db.session.add(new)
-        db.session.commit()
-    else:
-        old.defecation=form.defecation.data
-        old.toothbrushing=form.toothbrushing.data
-        old.cigarrettes=form.cigarrettes.data
-        old.years=form.years.beverages
-        old.beverages=form.beverages.data
-        old.frecuency=form.frecuency.data
-        old.physical_activity=form.physical_activity.data
-        old.frecuency2=form.frecuency2.data
-        old.other=form.other.data
-        db.session.commit()
-
-    return redirect(url_for('patient_background'))

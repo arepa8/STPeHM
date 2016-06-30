@@ -107,3 +107,36 @@ class InstitutionElementForm(Form):
 class SpecializationForm(Form):
 	name = TextField("Nombre", [validators.Required(), validators.length(max=500)])
 	submit = SubmitField("Aceptar",[validators.Required()])
+
+class FamilyBackground(Form):
+	asthma = BooleanField("Asma")
+	cancer = BooleanField("Cáncer")
+	heartdisease = BooleanField("Cardiopatía")
+	diabetes = BooleanField("Diábetes")
+	liverdisease = BooleanField("Hepatopatía")
+	hypertension = BooleanField("Hipertensión")
+	other = TextField("Otro", [validators.length(max=500)])
+	submit = SubmitField("Aceptar",[validators.Required()])
+
+class PathologicalBackground(Form):
+	current_condition = TextField("Enfermedades actuales", [validators.length(max=500)])
+	surgical_history = TextField("Antecedentes quirúgicos", [validators.length(max=500)])
+	transfusional_history = TextField("Antecedentes transfusionales", [validators.length(max=500)])
+	allergies = TextField("Alergias", [validators.length(max=500)])
+	traumatic_history = TextField("Antecedentes traumáticos", [validators.length(max=500)])
+	hospitalizations = TextField("Hospitalizaciones", [validators.length(max=500)])
+	addictions = TextField("Adicciones", [validators.length(max=500)])
+	other = TextField("Otro", [validators.length(max=500)])
+	submit = SubmitField("Aceptar",[validators.Required()])
+
+class NonPathologicalBackground(Form):
+	defecation = TextField("Frecuencia de defecación", [validators.length(max=100)])
+	toothbrushing = TextField("Frecuencia de lavado de dientes", [validators.length(max=100)])
+	cigarrettes = IntegerField("Cigarrillos al día")
+	years = IntegerField("Años")
+	beverages = TextField("Bebida", [validators.length(max=100)])
+	frecuency = TextField("Frecuencia", [validators.length(max=100)])
+	physical_activity = TextField("Actividades", [validators.length(max=500)])
+	frecuency2 = TextField("Frecuencia", [validators.length(max=100)])
+	other = TextField("Otro", [validators.length(max=500)])
+	submit = SubmitField("Aceptar",[validators.Required()])
