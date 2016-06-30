@@ -17,7 +17,8 @@
         {% if mensaje %}
         <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>{{ mensaje }}</strong></p>
         {% endif %} 
-          <form action="{{ url_for('family_background') }}" method=POST>
+          <form action="{{ url_for('family_background', ci=ci) }}" method=POST>
+                {{ci}}
                 {{form.asthma}}
                 {{form.asthma.label}}
                 {{form.cancer}}
@@ -47,7 +48,7 @@
         {% if mensaje %}
         <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>{{ mensaje }}</strong></p>
         {% endif %} 
-          <form action="{{ url_for('pathological_background') }}" method=POST>
+          <form action="{{ url_for('pathological_background' , ci=ci) }}" method=POST>
                 {{form1.current_condition.label}}
                 {{form1.current_condition}}
                 {{form1.surgical_history.label}}
@@ -79,7 +80,7 @@
         {% if mensaje %}
         <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>{{ mensaje }}</strong></p>
         {% endif %} 
-          <form action="{{ url_for('non_pathological_background') }}" method=POST>
+          <form action="{{ url_for('non_pathological_background' , ci=ci) }}" method=POST>
               <h3>Hábitos personales</h3>
                 {{form2.defecation.label}}
                 {{form2.defecation}}

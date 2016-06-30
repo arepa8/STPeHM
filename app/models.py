@@ -370,7 +370,7 @@ class FamilyBackground(db.Model):
 	hypertension = db.Column(db.Boolean)
 	other = db.Column(db.String(500))
 
-	def __init__(ci_user,asthma,cancer,heartdisease,diabetes,liverdisease,hypertension,other):
+	def __init__(self,ci_user,asthma,cancer,heartdisease,diabetes,liverdisease,hypertension,other):
 		self.ci_user = ci_user
 		self.asthma = asthma
 		self.cancer = cancer
@@ -398,7 +398,7 @@ class PathologicalBackground(db.Model):
 	addictions = db.Column(db.String(500))
 	other = db.Column(db.String(500))
 
-	def __init__(ci_user,current_condition,surgical_history,transfusional_history,allergies,traumatic_history,hospitalizations,addictions,other):
+	def __init__(self,ci_user,current_condition,surgical_history,transfusional_history,allergies,traumatic_history,hospitalizations,addictions,other):
 
 		self.ci_user = ci_user
 		self.current_condition = current_condition
@@ -429,7 +429,7 @@ class NonPathologicalBackground(db.Model):
 	frecuency2 = db.Column(db.String(100))
 	other = db.Column(db.String(500))
 
-	def __init__(ci_user,defecation,toothbrushing,cigarrettes,years,beverages,frecuency,physical_activity,frecuency2,other):
+	def __init__(self,ci_user,defecation,toothbrushing,cigarrettes,years,beverages,frecuency,physical_activity,frecuency2,other):
 		self.ci_user=ci_user
 		self.defecation=defecation
 		self.toothbrushing=toothbrushing

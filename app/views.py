@@ -946,21 +946,56 @@ def add_consultation():
     
         return render_template('add_consultation.html', active_user=active_user, form=form)
 
-@app.route('/patient_background', methods=['GET','POST'])
-def patient_background():
-    form = FamilyBackgroundForm(request.form)
-    form1= PathologicalBackgroundForm(request.form)
-    form2= NonPathologicalBackgroundForm(request.form)
-    return render_template('patient_background.html', form=form, form1=form1, form2= form2)
+@app.route('/patient_history', methods=['GET','POST'])
+def patient_history():
 
-@app.route('/family_background/<ci_user>', methods=['GET','POST'])
-def family_background():
+    form = PatientHistoryForm(request.form)
+    if request.method == 'POST':
+        ci_user = form.ci.data
+        # VERIFICAR QUE SEA UN PACIENTE?
+        return  redirect(url_for('patient_background', ci=ci_user))
+    else:
+        return render_template('patient_history.html', form=form)
+
+@app.route('/patient_background/<ci>', methods=['GET','POST'])
+def patient_background(ci):
+
+    if request.method == 'GET':
+        old = FamilyBackground.query.filter_by(ci_user=ci).first()
+        old1 = PathologicalBackground.query.filter_by(ci_user=ci).first()
+        old2 = NonPathologicalBackground.query.filter_by(ci_user=ci).first()
+        
+        if old != None:
+            form = FamilyBackgroundForm(request.form, asthma=old.asthma,cancer=old.cancer,heartdisease=old.heartdisease,diabetes=old.diabetes,liverdisease=old.liverdisease,hypertension=old.hypertension,other=old.other)
+        else: 
+            form = FamilyBackgroundForm(request.form)
+        
+        if old1 != None:
+            form1= PathologicalBackgroundForm(request.form, current_condition=old1.current_condition,surgical_history=old1.surgical_history,transfusional_history=old1.transfusional_history,allergies=old1.allergies,traumatic_history=old1.traumatic_history,hospitalizations=old1.hospitalizations,addictions=old1.addictions,other=old1.other)
+        else:
+            form1= PathologicalBackgroundForm(request.form)
+        
+        if old2 != None:
+            form2= NonPathologicalBackgroundForm(request.form,defecation=old2.defecation,toothbrushing=old2.toothbrushing,cigarrettes=old2.cigarrettes,years=old2.years,beverages=old2.beverages,frecuency=old2.frecuency,physical_activity=old2.physical_activity,frecuency2=old2.frecuency2,other=old2.other)
+        else:
+            form2= NonPathologicalBackgroundForm(request.form)
+
+    return render_template('patient_background.html', form=form, form1=form1, form2= form2, ci=ci)
+
+@app.route('/family_background/<ci>', methods=['GET','POST'])
+def family_background(ci):
 
     form = FamilyBackgroundForm(request.form)
-    old = FamilyBackground.query.filter_by(ci_user=ci_user).first()
+    old = FamilyBackground.query.filter_by(ci_user=ci).first()
 
     if old == None:
-        new = FamilyBackground(ci_user,form.asthma.data,form.cancer.data,form.heartdisease.data,form.diabetes.data,form.liverdisease.data,form.hypertension.data,form.other.data)
+        new = FamilyBackground(ci,form.asthma.data,
+                            form.cancer.data,
+                            form.heartdisease.data,
+                            form.diabetes.data,
+                            form.liverdisease.data,
+                            form.hypertension.data,
+                            form.other.data)
         db.session.add(new)
         db.session.commit()
     else:
@@ -973,22 +1008,22 @@ def family_background():
         old.other=form.other.data
         db.session.commit()
 
-    return redirect(url_for('patient_background'))
+    return redirect(url_for('patient_background', ci=ci))
 
-@app.route('/pathological_background/<ci_user>', methods=['GET','POST'])
-def pathological_background():
+@app.route('/pathological_background/<ci>', methods=['GET','POST'])
+def pathological_background(ci):
     
     form= PathologicalBackgroundForm(request.form)
-    old = PathologicalBackground.query.filter_by(ci_user=ci_user).first()
+    old = PathologicalBackground.query.filter_by(ci_user=ci).first()
 
     if old == None:
-        new = PathologicalBackground(ci_user,form.current_condition.data,form.surgical_history.data,form.transfunsional_history.data,form.allergies.data,form.traumatic_history.data,form.hospitalizations.data,form.addictions.data,form.other.data)
+        new = PathologicalBackground(ci,form.current_condition.data,form.surgical_history.data,form.transfusional_history.data,form.allergies.data,form.traumatic_history.data,form.hospitalizations.data,form.addictions.data,form.other.data)
         db.session.add(new)
         db.session.commit()
     else:
         old.current_condition=form.current_condition.data
         old.surgical_history=form.surgical_history.data
-        old.transfunsional_history=form.transfunsional_history.data
+        old.transfusional_history=form.transfusional_history.data
         old.allergies=form.allergies.data
         old.traumatic_history=form.traumatic_history.data
         old.hospitalizations=form.hospitalizations.data
@@ -996,16 +1031,16 @@ def pathological_background():
         old.other=form.other.data
         db.session.commit()
 
-    return redirect(url_for('patient_background'))
+    return redirect(url_for('patient_background', ci=ci))
 
-@app.route('/non_pathological_background/<ci_user>', methods=['GET','POST'])
-def non_pathological_background():
+@app.route('/non_pathological_background/<ci>', methods=['GET','POST'])
+def non_pathological_background(ci):
     
     form= NonPathologicalBackgroundForm(request.form)
-    old = NonPathologicalBackground.query.filter_by(ci_user=ci_user).first()
+    old = NonPathologicalBackground.query.filter_by(ci_user=ci).first()
 
     if old == None:
-        new = NonPathologicalBackground(ci_user,form.defecation.data,form.toothbrushing.data,form.cigarrettes.data,form.years.data,form.beverages.data,form.frecuency.data,form.physical_activity.data,form.frecuency2.data,form.other.data)
+        new = NonPathologicalBackground(ci,form.defecation.data,form.toothbrushing.data,form.cigarrettes.data,form.years.data,form.beverages.data,form.frecuency.data,form.physical_activity.data,form.frecuency2.data,form.other.data)
         db.session.add(new)
         db.session.commit()
     else:
@@ -1020,4 +1055,4 @@ def non_pathological_background():
         old.other=form.other.data
         db.session.commit()
 
-    return redirect(url_for('patient_background'))
+    return redirect(url_for('patient_background', ci=ci))

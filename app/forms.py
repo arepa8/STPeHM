@@ -108,7 +108,11 @@ class SpecializationForm(Form):
 	name = TextField("Nombre", [validators.Required(), validators.length(max=500)])
 	submit = SubmitField("Aceptar",[validators.Required()])
 
-class FamilyBackground(Form):
+class PatientHistoryForm(Form):
+	ci = IntegerField("Cédula de identidad", [validators.Required()]) 
+	submit = SubmitField("Aceptar",[validators.Required()])	
+
+class FamilyBackgroundForm(Form):
 	asthma = BooleanField("Asma")
 	cancer = BooleanField("Cáncer")
 	heartdisease = BooleanField("Cardiopatía")
@@ -118,7 +122,7 @@ class FamilyBackground(Form):
 	other = TextField("Otro", [validators.length(max=500)])
 	submit = SubmitField("Aceptar",[validators.Required()])
 
-class PathologicalBackground(Form):
+class PathologicalBackgroundForm(Form):
 	current_condition = TextField("Enfermedades actuales", [validators.length(max=500)])
 	surgical_history = TextField("Antecedentes quirúgicos", [validators.length(max=500)])
 	transfusional_history = TextField("Antecedentes transfusionales", [validators.length(max=500)])
@@ -129,7 +133,7 @@ class PathologicalBackground(Form):
 	other = TextField("Otro", [validators.length(max=500)])
 	submit = SubmitField("Aceptar",[validators.Required()])
 
-class NonPathologicalBackground(Form):
+class NonPathologicalBackgroundForm(Form):
 	defecation = TextField("Frecuencia de defecación", [validators.length(max=100)])
 	toothbrushing = TextField("Frecuencia de lavado de dientes", [validators.length(max=100)])
 	cigarrettes = IntegerField("Cigarrillos al día")

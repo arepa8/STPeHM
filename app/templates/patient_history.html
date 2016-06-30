@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div id="cuerpoHeredado">
+    <center><h2>Historia Clínica</h2></center><br>
+      <form action="{{ url_for('patient_history') }}" method=POST>
+      {{form.ci.label}}
+      {{form.ci}}
+      {{form.submit}}
+    </form>
+
+  
+
+
+  </div>
+{% endblock %}  
