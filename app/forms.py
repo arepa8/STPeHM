@@ -147,7 +147,7 @@ class NonPathologicalBackgroundForm(Form):
 
 class InboxForm(Form):
 	doctor = IntegerField("Cédula de identidad del médico a quien se refiere el paciente", [validators.Required()])
-	subject = TextField("Asunto", [validators.length(max=500)])
+	subject = TextField("Cuerpo del mensaje (razón de referencia y paciente a referir)", [validators.length(max=500)])
 	submit = SubmitField("Enviar",[validators.Required()])
 
 class PatientConsultationForm(Form):
