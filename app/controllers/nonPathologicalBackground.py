@@ -13,13 +13,29 @@ class nonPathologicalBackground():
 	""" Constrolador de Antecedentes Familiares """
 
 	def insertNonPathologicalBackground(self,ci_user,defecation,toothbrushing,cigarrettes,years,beverages,frecuency,physical_activity,frecuency2,other):
-		check_ci 	= (ci_user !=None) and (type(ci_user) == int)
-		check_other = type(other) == str
+		check_ci 			= (ci_user !=None) and (type(ci_user) == int)
+		# check_defecation 	= type(defecation) == str
+		# check_toothbrushing = type(toothbrushing) == str
+		# check_cigarrettes 	= type(cigarrettes) == str
+		# check_years 		= type(years) == str
+		# check_beverages 	= type(beverages) == str
+		# check_frecuency 	= type(frecuency) == str
+		# check_physical_activity = type(physical_activity) == str
+		# check_frecuency2 	= type(frecuency2) == str
+		check_other 		= type(other) == str
 
 		if (check_ci and check_other):
 
-			check_long_ci = 1 <= ci_user <= CONST_MAX_CI
-			check_long_other = CONST_MIN <= len(other) <= CONST_MAX_500
+			check_long_ci 			= 1 <= ci_user <= CONST_MAX_CI
+			# check_long_defecation 	= CONST_MIN <= len(defecation) <= CONST_MAX_100
+			# check_long_toothbrushing= CONST_MIN <= len(toothbrushing) <= CONST_MAX_100
+			# check_long_cigarrettes	= CONST_MIN <= len(cigarrettes) <= CONST_MAX_100
+			# check_long_years		= CONST_MIN <= len(years) <= CONST_MAX_100
+			# check_long_beverages	= CONST_MIN <= len(beverages) <= CONST_MAX_100
+			# check_long_frecuency 	= CONST_MIN <= len(frecuency) <= CONST_MAX_100
+			# check_long_physical_activity = CONST_MIN <= len(physical_activity) <= CONST_MAX_500
+			# check_long_frecuency2	= CONST_MIN <= len(frecuency2) <= CONST_MAX_100
+			check_long_other 		= CONST_MIN <= len(other) <= CONST_MAX_500
 			
 			if check_long_ci and check_long_other:
 
@@ -45,11 +61,28 @@ class nonPathologicalBackground():
 	def updateNonPathologicalBackground(self,ci_user,defecation,toothbrushing,cigarrettes,years,beverages,frecuency,physical_activity,frecuency2,other):
 
 		check_ci 	= (ci_user !=None) and (type(ci_user) == int)
+		# check_defecation = type(defecation) == str
+		# check_toothbrushing = type(toothbrushing) == str
+		# check_cigarrettes = type(cigarrettes) == str
+		# check_years = type(years) == str
+		# check_beverages = type(beverages) == str
+		# check_frecuency = type(frecuency) == str
+		# check_physical_activity = type(physical_activity) == str
+		# check_frecuency2 = type(frecuency2) == str
 		check_other = type(other) == str
+
 
 		if (check_ci and check_other):
 
 			check_long_ci = 1 <= ci_user <= CONST_MAX_CI
+			# check_long_defecation 	= CONST_MIN <= len(defecation) <= CONST_MAX_100
+			# check_long_toothbrushing= CONST_MIN <= len(toothbrushing) <= CONST_MAX_100
+			# check_long_cigarrettes	= CONST_MIN <= len(cigarrettes) <= CONST_MAX_100
+			# check_long_years		= CONST_MIN <= len(years) <= CONST_MAX_100
+			# check_long_beverages	= CONST_MIN <= len(beverages) <= CONST_MAX_100
+			# check_long_frecuency 	= CONST_MIN <= len(frecuency) <= CONST_MAX_100
+			# check_long_physical_activity = CONST_MIN <= len(physical_activity) <= CONST_MAX_500
+			# check_long_frecuency2	= CONST_MIN <= len(frecuency2) <= CONST_MAX_100
 			check_long_other = CONST_MIN <= len(other) <= CONST_MAX_500
 
 			if check_long_ci and check_long_other:
@@ -69,13 +102,19 @@ class nonPathologicalBackground():
 					return True
 		return False
 
-	def deleteNonPathologicalBackground(ci_user):
+	def deleteNonPathologicalBackground(self, ci_user):
 		
-		old = NonPathologicalBackground.query.filter_by(ci_user=ci_user).first()
+		check_ci 	= (ci_user !=None) and (type(ci_user) == int)
 		
-		if old != None:
-			db.session.delete(old)
-			db.session.commit()
-			return True
+		if check_ci:
+			check_length = CONST_MIN < ci_user <= CONST_MAX_CI
+			
+			if check_length:
+				old = NonPathologicalBackground.query.filter_by(ci_user=ci_user).first()
+				
+				if old != None:
+					db.session.delete(old)
+					db.session.commit()
+					return True
 
 		return False 	
