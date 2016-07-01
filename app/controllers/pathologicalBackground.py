@@ -36,8 +36,8 @@ class pathologicalBackground():
 												other)
 					db.session.add(new)
 					db.session.commit()
-
 					return True
+
 		return False
 
 	def updatePathologicalBackground(self,ci_user,current_condition,surgical_history,transfusional_history,allergies,traumatic_history,hospitalizations,addictions,other):
@@ -67,13 +67,17 @@ class pathologicalBackground():
 					return True
 		return False
 
-	def deletePathologicalBackground(ci_user):
-		
-		old = PathologicalBackground.query.filter_by(ci_user=ci_user).first()
-		
-		if old != None:
-			db.session.delete(old)
-			db.session.commit()
-			return True
+	def deletePathologicalBackground(self, ci_user):
+		check_ci 	= (ci_user !=None) and (type(ci_user) == int)
+		if check_ci:
+			check_long_ci = 1 <= ci_user <= CONST_MAX_CI
+			if check_long_ci:
+				
+				old = PathologicalBackground.query.filter_by(ci_user=ci_user).first()
+				
+				if old != None:
+					db.session.delete(old)
+					db.session.commit()
+					return True
 
 		return False 	

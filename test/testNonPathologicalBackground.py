@@ -8,8 +8,8 @@
 import sys
 import unittest
 
-sys.path.append('app/controllers')
-sys.path.append('app/')
+sys.path.append('../app/controllers')
+sys.path.append('../app/')
 
 from user import *
 from nonPathologicalBackground import *
