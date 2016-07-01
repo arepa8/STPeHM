@@ -3,13 +3,61 @@
   <div id="cuerpoHeredado">
 
   <ul class="nav nav-tabs">
-      <li class="active"><a data-toggle="tab" href="#home">Antecedentes Familiares</a></li>
+      <li class="active"><a data-toggle="tab" href="#home">Información Personal</a></li>
+      <li><a data-toggle="tab" href="#menu0">Antecedentes Familiares</a></li>
       <li><a data-toggle="tab" href="#menu1">Antecedentes Patológicos</a></li>
       <li><a data-toggle="tab" href="#menu2">Antecedentes No Patológicos</a></li>
   </ul>
 
   <div class="tab-content">
+
   <div id="home" class="tab-pane fade in active">
+  <center><h2>Información Personal</h2></center><br>
+    <div class="row">
+      <!-- edit form column -->
+      <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+        {% if mensaje %}
+        <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>{{ mensaje }}</strong></p>
+        {% endif %} 
+        <form>
+          {{patient_form.ci.label}}
+          {{ci}}
+          {{patient_form.name.label}}
+          {{name}}
+          {{patient_form.last_name.label}}
+          {{last_name}}
+          {{patient_form.email.label}}
+          {{email}}
+          {{patient_form.sex.label}}
+          {% if sex %}
+          {{sex}}
+          {% else %}
+          <br>
+          {% endif %}
+          {{patient_form.date_of_birth.label}}
+          {% if date_of_birth %}
+          {{date_of_birth}}
+          {% else %}
+          <br>
+          {% endif %}
+          {{patient_form.telephone.label}}
+          {% if telephone %}
+          {{telephone}}
+          {% else %}
+          <br>
+          {% endif %}
+          {{patient_form.address.label}}
+          {% if address %}
+          {{address}}
+          {% else %}
+          <br>
+          {% endif %}
+        </form>
+      </div>
+    </div>
+  </div>
+    
+  <div id="menu0" class="tab-pane fade">
   <center><h2>Antecedentes Familiares</h2></center><br>
     <div class="row">
       <!-- edit form column -->

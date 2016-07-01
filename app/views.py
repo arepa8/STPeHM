@@ -948,19 +948,53 @@ def add_consultation():
 
 @app.route('/patient_history', methods=['GET','POST'])
 def patient_history():
-
+    mensaje = None
     form = PatientHistoryForm(request.form)
     if request.method == 'POST':
         ci_user = form.ci.data
-        # VERIFICAR QUE SEA UN PACIENTE?
-        return  redirect(url_for('patient_background', ci=ci_user))
-    else:
-        return render_template('patient_history.html', form=form)
+        user_controller = user.user()
+
+        u = user_controller.getUserByCi(ci_user)
+        if u != []:
+            r = role.role()
+            user_role = r.getRole(int(u.role))
+
+            if user_role.role_name == 'Paciente':
+
+                return  redirect(url_for('patient_background', ci=ci_user))
+            else:
+                mensaje = "La cédula debe pertenecer a un paciente"
+        else:
+            mensaje = "Paciente no registrado"
+    return render_template('patient_history.html', form=form, mensaje=mensaje)
 
 @app.route('/patient_background/<ci>', methods=['GET','POST'])
 def patient_background(ci):
 
     if request.method == 'GET':
+
+        user_controller = user.user()
+        u = user_controller.getUserByCi(int(ci))
+        name = u.name
+        last_name = u.last_name
+        email = u.email
+
+        patient_controller = patientProfile.patientProfile()
+        p = patient_controller.getPatientProfileByCi(ci)
+        
+        if p != None: 
+            sex = p.sex
+            date_of_birth= p.date_of_birth
+            telephone = p.telephone
+            address = p.address
+        else:
+            sex = None
+            date_of_birth=None
+            telephone=None
+            address = None
+
+        patient_form = ProfileForm(request.form)
+
         old = FamilyBackground.query.filter_by(ci_user=ci).first()
         old1 = PathologicalBackground.query.filter_by(ci_user=ci).first()
         old2 = NonPathologicalBackground.query.filter_by(ci_user=ci).first()
@@ -1001,7 +1035,9 @@ def patient_background(ci):
         else:
             form2= NonPathologicalBackgroundForm(request.form)
 
-    return render_template('patient_background.html', form=form, form1=form1, form2= form2, ci=ci)
+    return render_template('patient_background.html',patient_form=patient_form, form=form, form1=form1, form2= form2, ci=ci,
+                            name=name,last_name=last_name,email=email,sex=sex,date_of_birth=date_of_birth,
+                            telephone=telephone,address=address)
 
 @app.route('/family_background/<ci>', methods=['GET','POST'])
 def family_background(ci):
