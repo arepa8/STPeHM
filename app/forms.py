@@ -136,8 +136,8 @@ class PathologicalBackgroundForm(Form):
 class NonPathologicalBackgroundForm(Form):
 	defecation = TextField("Frecuencia de defecación", [validators.length(max=100)])
 	toothbrushing = TextField("Frecuencia de lavado de dientes", [validators.length(max=100)])
-	cigarrettes = IntegerField("Cigarrillos al día")
-	years = IntegerField("Años")
+	cigarrettes = TextField("Cigarrillos al día", [validators.length(max=100)])
+	years = TextField("Años", [validators.length(max=100)])
 	beverages = TextField("Bebida", [validators.length(max=100)])
 	frecuency = TextField("Frecuencia", [validators.length(max=100)])
 	physical_activity = TextField("Actividades", [validators.length(max=500)])

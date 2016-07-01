@@ -4,7 +4,7 @@
 
   <ul class="nav nav-tabs">
       <li class="active"><a data-toggle="tab" href="#home">Antecedentes Familiares</a></li>
-      <li><a data-toggle="tab" href="#menu1">Antecedentes Patológico</a></li>
+      <li><a data-toggle="tab" href="#menu1">Antecedentes Patológicos</a></li>
       <li><a data-toggle="tab" href="#menu2">Antecedentes No Patológicos</a></li>
   </ul>
 
@@ -18,7 +18,6 @@
         <p class="error"> <i class="fa fa-exclamation-triangle"></i>  <strong>{{ mensaje }}</strong></p>
         {% endif %} 
           <form action="{{ url_for('family_background', ci=ci) }}" method=POST>
-                {{ci}}
                 {{form.asthma}}
                 {{form.asthma.label}}
                 {{form.cancer}}
@@ -99,8 +98,8 @@
                 <h3>Actividades físicas</h3>
                 {{form2.physical_activity.label}}
                 {{form2.physical_activity}}
-                {{form2.frecuency.label}}
-                {{form2.frecuency}}
+                {{form2.frecuency2.label}}
+                {{form2.frecuency2}}
                 <h3>Otro</h3>
                 <!--{{form2.other.label}}-->
                 {{form2.other}}

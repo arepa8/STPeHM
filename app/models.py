@@ -421,8 +421,8 @@ class NonPathologicalBackground(db.Model):
 
 	defecation = db.Column(db.String(100))
 	toothbrushing = db.Column(db.String(100))
-	cigarrettes = db.Column(db.Integer)
-	years = db.Column(db.Integer)
+	cigarrettes = db.Column(db.String(100))
+	years = db.Column(db.String(100))
 	beverages = db.Column(db.String(100))
 	frecuency = db.Column(db.String(100))
 	physical_activity = db.Column(db.String(500))
@@ -437,7 +437,7 @@ class NonPathologicalBackground(db.Model):
 		self.years=years
 		self.beverages=beverages
 		self.frecuency=frecuency
-		self.physical_activity
+		self.physical_activity = physical_activity
 		self.frecuency2=frecuency2
 		self.other=other
 

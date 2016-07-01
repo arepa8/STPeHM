@@ -8,7 +8,7 @@ from app.models import User,Role,db,Appointment, Institution, Specialization,Pat
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
-from app.controllers import appointment, user, role, institution, specialization, patientProfile, doctorProfile
+from app.controllers import appointment, user, role, institution, specialization, patientProfile, doctorProfile, familyBackground, pathologicalBackground, nonPathologicalBackground
 import datetime
 import json
 
@@ -966,17 +966,38 @@ def patient_background(ci):
         old2 = NonPathologicalBackground.query.filter_by(ci_user=ci).first()
         
         if old != None:
-            form = FamilyBackgroundForm(request.form, asthma=old.asthma,cancer=old.cancer,heartdisease=old.heartdisease,diabetes=old.diabetes,liverdisease=old.liverdisease,hypertension=old.hypertension,other=old.other)
+            form = FamilyBackgroundForm(request.form, asthma=old.asthma,
+                                                    cancer=old.cancer,
+                                                    heartdisease=old.heartdisease,
+                                                    diabetes=old.diabetes,
+                                                    liverdisease=old.liverdisease,
+                                                    hypertension=old.hypertension,
+                                                    other=old.other)
         else: 
             form = FamilyBackgroundForm(request.form)
         
         if old1 != None:
-            form1= PathologicalBackgroundForm(request.form, current_condition=old1.current_condition,surgical_history=old1.surgical_history,transfusional_history=old1.transfusional_history,allergies=old1.allergies,traumatic_history=old1.traumatic_history,hospitalizations=old1.hospitalizations,addictions=old1.addictions,other=old1.other)
+            form1= PathologicalBackgroundForm(request.form, current_condition=old1.current_condition,
+                                                            surgical_history=old1.surgical_history,
+                                                            transfusional_history=old1.transfusional_history,
+                                                            allergies=old1.allergies,
+                                                            traumatic_history=old1.traumatic_history,
+                                                            hospitalizations=old1.hospitalizations,
+                                                            addictions=old1.addictions,
+                                                            other=old1.other)
         else:
             form1= PathologicalBackgroundForm(request.form)
         
         if old2 != None:
-            form2= NonPathologicalBackgroundForm(request.form,defecation=old2.defecation,toothbrushing=old2.toothbrushing,cigarrettes=old2.cigarrettes,years=old2.years,beverages=old2.beverages,frecuency=old2.frecuency,physical_activity=old2.physical_activity,frecuency2=old2.frecuency2,other=old2.other)
+            form2= NonPathologicalBackgroundForm(request.form,defecation=old2.defecation,
+                                                            toothbrushing=old2.toothbrushing,
+                                                            cigarrettes=old2.cigarrettes,
+                                                            years=old2.years,
+                                                            beverages=old2.beverages,
+                                                            frecuency=old2.frecuency,
+                                                            physical_activity=old2.physical_activity,
+                                                            frecuency2=old2.frecuency2,
+                                                            other=old2.other)
         else:
             form2= NonPathologicalBackgroundForm(request.form)
 
@@ -988,25 +1009,24 @@ def family_background(ci):
     form = FamilyBackgroundForm(request.form)
     old = FamilyBackground.query.filter_by(ci_user=ci).first()
 
+    fb_contoller = familyBackground.familyBackground()
+
     if old == None:
-        new = FamilyBackground(ci,form.asthma.data,
-                            form.cancer.data,
-                            form.heartdisease.data,
-                            form.diabetes.data,
-                            form.liverdisease.data,
-                            form.hypertension.data,
-                            form.other.data)
-        db.session.add(new)
-        db.session.commit()
+        result = fb_contoller.insertFamilyBackground(int(ci),form.asthma.data,
+                                        form.cancer.data,
+                                        form.heartdisease.data,
+                                        form.diabetes.data,
+                                        form.liverdisease.data,
+                                        form.hypertension.data,
+                                        form.other.data)
     else:
-        old.asthma=form.asthma.data
-        old.cancer=form.cancer.data
-        old.heartdisease=form.heartdisease.data
-        old.diabetes=form.diabetes.data
-        old.liverdisease=form.liverdisease.data
-        old.hypertension=form.hypertension.data
-        old.other=form.other.data
-        db.session.commit()
+        result = fb_contoller.updateFamilyBackground(int(ci),form.asthma.data,
+                                        form.cancer.data,
+                                        form.heartdisease.data,
+                                        form.diabetes.data,
+                                        form.liverdisease.data,
+                                        form.hypertension.data,
+                                        form.other.data)
 
     return redirect(url_for('patient_background', ci=ci))
 
@@ -1016,20 +1036,27 @@ def pathological_background(ci):
     form= PathologicalBackgroundForm(request.form)
     old = PathologicalBackground.query.filter_by(ci_user=ci).first()
 
+    pb_controller = pathologicalBackground.pathologicalBackground()
+
     if old == None:
-        new = PathologicalBackground(ci,form.current_condition.data,form.surgical_history.data,form.transfusional_history.data,form.allergies.data,form.traumatic_history.data,form.hospitalizations.data,form.addictions.data,form.other.data)
-        db.session.add(new)
-        db.session.commit()
+        result = pb_controller.insertPathologicalBackground(int(ci),form.current_condition.data,
+                                    form.surgical_history.data,
+                                    form.transfusional_history.data,
+                                    form.allergies.data,
+                                    form.traumatic_history.data,
+                                    form.hospitalizations.data,
+                                    form.addictions.data,
+                                    form.other.data)
     else:
-        old.current_condition=form.current_condition.data
-        old.surgical_history=form.surgical_history.data
-        old.transfusional_history=form.transfusional_history.data
-        old.allergies=form.allergies.data
-        old.traumatic_history=form.traumatic_history.data
-        old.hospitalizations=form.hospitalizations.data
-        old.addictions=form.addictions.data
-        old.other=form.other.data
-        db.session.commit()
+
+        result = pb_controller.updatePathologicalBackground(int(ci),form.current_condition.data,
+                                    form.surgical_history.data,
+                                    form.transfusional_history.data,
+                                    form.allergies.data,
+                                    form.traumatic_history.data,
+                                    form.hospitalizations.data,
+                                    form.addictions.data,
+                                    form.other.data)
 
     return redirect(url_for('patient_background', ci=ci))
 
@@ -1039,20 +1066,27 @@ def non_pathological_background(ci):
     form= NonPathologicalBackgroundForm(request.form)
     old = NonPathologicalBackground.query.filter_by(ci_user=ci).first()
 
+    npb_controller = nonPathologicalBackground.nonPathologicalBackground()
+    
     if old == None:
-        new = NonPathologicalBackground(ci,form.defecation.data,form.toothbrushing.data,form.cigarrettes.data,form.years.data,form.beverages.data,form.frecuency.data,form.physical_activity.data,form.frecuency2.data,form.other.data)
-        db.session.add(new)
-        db.session.commit()
+        result = npb_controller.insertNonPathologicalBackground(int(ci),form.defecation.data,
+                                        form.toothbrushing.data,
+                                        form.cigarrettes.data,
+                                        form.years.data,
+                                        form.beverages.data,
+                                        form.frecuency.data,
+                                        form.physical_activity.data,
+                                        form.frecuency2.data,
+                                        form.other.data)
     else:
-        old.defecation=form.defecation.data
-        old.toothbrushing=form.toothbrushing.data
-        old.cigarrettes=form.cigarrettes.data
-        old.years=form.years.beverages
-        old.beverages=form.beverages.data
-        old.frecuency=form.frecuency.data
-        old.physical_activity=form.physical_activity.data
-        old.frecuency2=form.frecuency2.data
-        old.other=form.other.data
-        db.session.commit()
+        result = npb_controller.updateNonPathologicalBackground(int(ci),form.defecation.data,
+                                        form.toothbrushing.data,
+                                        form.cigarrettes.data,
+                                        form.years.data,
+                                        form.beverages.data,
+                                        form.frecuency.data,
+                                        form.physical_activity.data,
+                                        form.frecuency2.data,
+                                        form.other.data)
 
     return redirect(url_for('patient_background', ci=ci))
