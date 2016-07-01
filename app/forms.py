@@ -148,4 +148,10 @@ class NonPathologicalBackgroundForm(Form):
 class InboxForm(Form):
 	doctor = IntegerField("Cédula de identidad del médico a quien se refiere el paciente", [validators.Required()])
 	subject = TextField("Asunto", [validators.length(max=500)])
+	submit = SubmitField("Enviar",[validators.Required()])
+
+class PatientConsultationForm(Form):
+	date = DateField("Fecha", [validators.Required()])
+	motive = TextField("Motivo", [validators.length(max=500)])
+	symptoms = TextField("Síntomas", [validators.length(max=500)])
 	submit = SubmitField("Aceptar",[validators.Required()])

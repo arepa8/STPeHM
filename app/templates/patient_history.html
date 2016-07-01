@@ -7,7 +7,7 @@
         {% endif %} 
       
       <form action="{{ url_for('patient_history') }}" method=POST>
-      {{form.ci.label}}
+      <h4>Cédula de identidad del paciente</h4>
       {{form.ci}}
       {{form.submit}}
     </form>

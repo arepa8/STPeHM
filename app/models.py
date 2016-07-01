@@ -461,6 +461,28 @@ class Inbox(db.Model):
 		return '<Inbox: %r>' % (self.ci_user)
 
 
+class PatientConsultation(db.Model):
+	__tablename__ = 'PatientConsultation'
+	id = db.Column(db.Integer,primary_key = True)
+	ci_patient = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+	ci_doctor = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+	name_doctor = db.Column(db.String(500)) 
+	date = db.Column(db.Date,nullable=False)
+	motive = db.Column(db.String(500))
+	symptoms = db.Column(db.String(500))
+
+	def __init__(self,ci_patient,ci_doctor,name_doctor,date,motive,symptoms):
+		self.ci_patient=ci_patient
+		self.ci_doctor=ci_doctor
+		self.name_doctor=name_doctor
+		self.date=date
+		self.motive=motive
+		self.symptoms=symptoms
+
+	def __repr__(self):
+		return '<PatientConsultation ci_patient = %r ci_doctor = %r>' % (self.ci_patient,self.ci_doctor)
+
+
 if __name__ == '__main__':
 	manager.run()
 db.create_all()  # Creamos la base de datos
