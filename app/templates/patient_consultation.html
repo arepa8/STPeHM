@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+  <div id="cuerpoHeredado">
+  <br>
+  <h2>{{title}} Consulta</h2>
+  {% if title == "Modificar" %}
+      <form action="{{ url_for('modify_patient_consultation', id=id) }}" method=POST>
+    {% else %}
+      <form action="{{ url_for('add_patient_consultation', ci=ci) }}" method=POST>
+    {% endif %}
+    {{ form.date.label}}
+    {{ form.date}}
+    {{ form.motive.label}}
+    {{ form.motive}}
+    {{ form.symptoms.label}}
+    {{ form.symptoms}}
+    {{ form.submit}}
+   </form>
+  </div>
+{% endblock %}  

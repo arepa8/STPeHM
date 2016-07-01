@@ -144,3 +144,9 @@ class NonPathologicalBackgroundForm(Form):
 	frecuency2 = TextField("Frecuencia", [validators.length(max=100)])
 	other = TextField("Otro", [validators.length(max=500)])
 	submit = SubmitField("Aceptar",[validators.Required()])
+
+class PatientConsultationForm(Form):
+	date = DateField("Fecha", [validators.Required()])
+	motive = TextField("Motivo", [validators.length(max=500)])
+	symptoms = TextField("Síntomas", [validators.length(max=500)])
+	submit = SubmitField("Aceptar",[validators.Required()])

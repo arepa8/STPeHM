@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from app import app, lm
 from app.forms import *
-from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,DoctorProfile, InstitutionElement, DoctorStudies, DoctorAbilities, DoctorAwards, DoctorPublications, DoctorExperiences, DoctorEvents, FamilyBackground,PathologicalBackground,NonPathologicalBackground
+from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,DoctorProfile, InstitutionElement, DoctorStudies, DoctorAbilities, DoctorAwards, DoctorPublications, DoctorExperiences, DoctorEvents, FamilyBackground,PathologicalBackground,NonPathologicalBackground,PatientConsultation
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
@@ -1035,9 +1035,14 @@ def patient_background(ci):
         else:
             form2= NonPathologicalBackgroundForm(request.form)
 
+        
+        consultations = PatientConsultation.query.filter_by(ci_patient=ci)
+        active_user = session['user']
+        ci_doctor = active_user['ci']
+
     return render_template('patient_background.html',patient_form=patient_form, form=form, form1=form1, form2= form2, ci=ci,
                             name=name,last_name=last_name,email=email,sex=sex,date_of_birth=date_of_birth,
-                            telephone=telephone,address=address)
+                            telephone=telephone,address=address, consultations=consultations, ci_doctor=ci_doctor)
 
 @app.route('/family_background/<ci>', methods=['GET','POST'])
 def family_background(ci):
@@ -1126,3 +1131,36 @@ def non_pathological_background(ci):
                                         form.other.data)
 
     return redirect(url_for('patient_background', ci=ci))
+
+@app.route('/add_patient_consultation/<ci>', methods=['GET','POST'])
+def add_patient_consultation(ci):
+    form = PatientConsultationForm(request.form)
+    title = "Agregar"
+    if request.method == 'POST':
+        ci_patient = ci
+        active_user = session['user']
+        ci_doctor = active_user['ci']
+        name_doctor = active_user['name']
+        new_p_consultation = PatientConsultation(ci_patient,ci_doctor,name_doctor,form.date.data,form.motive.data,form.symptoms.data)
+        db.session.add(new_p_consultation)
+        db.session.commit()
+        return redirect(url_for('patient_background', ci=ci))
+    return  render_template('patient_consultation.html', form=form,ci=ci, title=title)
+
+@app.route('/modify_patient_consultation/<id>', methods=['GET','POST'])
+def modify_patient_consultation(id):
+
+    old = PatientConsultation.query.filter_by(id=id).first()
+    ci = old.ci_patient
+    if request.method == 'POST':
+
+        form = PatientConsultationForm(request.form)
+        old.date = form.date.data
+        old.motive = form.motive.data
+        old.symptoms = form.symptoms.data
+        db.session.commit()
+        return redirect(url_for('patient_background', ci=ci))
+
+    title = "Modificar"
+    form = PatientConsultationForm(request.form, date=old.date,motive=old.motive,symptoms=old.symptoms)
+    return render_template('patient_consultation.html', form=form,ci=ci,id=id,title=title)
