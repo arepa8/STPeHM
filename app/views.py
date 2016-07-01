@@ -4,11 +4,11 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import *
 from app import app, lm
 from app.forms import *
-from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,DoctorProfile, InstitutionElement, DoctorStudies, DoctorAbilities, DoctorAwards, DoctorPublications, DoctorExperiences, DoctorEvents, FamilyBackground,PathologicalBackground,NonPathologicalBackground
+from app.models import User,Role,db,Appointment, Institution, Specialization,PatientProfile,DoctorProfile, InstitutionElement, DoctorStudies, DoctorAbilities, DoctorAwards, DoctorPublications, DoctorExperiences, DoctorEvents, FamilyBackground,PathologicalBackground,NonPathologicalBackground,Inbox
 from flask.ext.login import login_user, logout_user, current_user, login_required
 from flask.ext import admin, login
 from flask.ext.admin import helpers, expose
-from app.controllers import appointment, user, role, institution, specialization, patientProfile, doctorProfile, familyBackground, pathologicalBackground, nonPathologicalBackground
+from app.controllers import appointment, user, role, institution, specialization, patientProfile, doctorProfile, familyBackground, pathologicalBackground, nonPathologicalBackground, inbox
 import datetime
 import json
 
@@ -1136,3 +1136,27 @@ def non_pathological_background(ci):
                                         form.other.data)
 
     return redirect(url_for('patient_background', ci=ci))
+
+@app.route('/show_inbox', methods=['GET','POST'])
+def show_inbox():
+    if request.method == 'GET':
+        active_user = session['user']
+        user = User.query.filter_by(username=active_user['username']).first()
+        inboxx = [i for i in Inbox.query.filter_by(ci_user=user.ci)]
+        return render_template('inbox.html', result=inboxx, active_user=active_user)
+
+@app.route('/send_patient', methods=['GET','POST'])
+def send_patient():
+    form = InboxForm(request.form)
+    inbox_controller = inbox.inbox()
+    if request.method == 'POST':
+        active_user = session['user']
+        userr = User.query.filter_by(username=active_user['username']).first()
+        #inbox = inbox_controller.createInbox(form.doctor.data,form.subject.data,user.ci)
+        user = User.query.filter_by(ci=form.doctor.data).first()
+        new_inbox = Inbox(user.ci,form.subject.data,userr.username)
+        db.session.add(new_inbox)
+        db.session.commit()
+        return render_template('patient_sent.html')
+    elif request.method == 'GET':
+        return render_template('send_patient.html', form=form)

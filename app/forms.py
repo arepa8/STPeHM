@@ -144,3 +144,8 @@ class NonPathologicalBackgroundForm(Form):
 	frecuency2 = TextField("Frecuencia", [validators.length(max=100)])
 	other = TextField("Otro", [validators.length(max=500)])
 	submit = SubmitField("Aceptar",[validators.Required()])
+
+class InboxForm(Form):
+	doctor = IntegerField("Cédula de identidad del médico a quien se refiere el paciente", [validators.Required()])
+	subject = TextField("Asunto", [validators.length(max=500)])
+	submit = SubmitField("Aceptar",[validators.Required()])

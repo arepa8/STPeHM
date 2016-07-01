@@ -447,17 +447,18 @@ class NonPathologicalBackground(db.Model):
 class Inbox(db.Model):
 	__tablename__= 'Inbox'
 
-	id = db.Column(db.Integer,primary_key)
+	id = db.Column(db.Integer,primary_key=True)
 	ci_user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
 	subject = db.Column(db.String(100))
 	sent_by = db.Column(db.String(100))
 
-	def __init__(self,subject,sent_by):
+	def __init__(self,ci_user,subject,sent_by):
+		self.ci_user = ci_user
 		self.subject = subject
 		self.sent_by = sent_by
 
 	def __repr__(self):
-		return '<Inbox coding_user = %r>' % (self.ci_user)
+		return '<Inbox: %r>' % (self.ci_user)
 
 
 if __name__ == '__main__':
