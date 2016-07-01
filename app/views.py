@@ -374,14 +374,51 @@ def add_institutionElement(id):
     active_user = session['user']
     form = InstitutionElementForm(request.form)
     if request.method == 'POST':
-        new_ie = InstitutionElement('other', form.description.data)
+        new_ie = InstitutionElement(form.name.data, form.description.data)
         i = Institution.query.filter_by(id=id).first()
         i.elements.append(new_ie)
         db.session.add(new_ie)
         db.session.commit()
         return redirect(url_for('edit_institution',id=id))
     title = "Agregar"
-    return render_template('add_institutionElement.html', active_user=active_user, form=form, title=title, id=id,type='other')
+    return render_template('add_institutionElement.html', active_user=active_user, form=form, title=title, id=id, institutionId=0,type='other')
+
+
+@app.route('/edit_institutionElement/<id>/<institutionId>', methods=['GET','POST'])
+def edit_institutionElement(id, institutionId):
+    '''Edita un elemento de una institución'''
+    active_user = session['user']
+    form = InstitutionElementForm(request.form)
+    if request.method == 'POST':
+        i = InstitutionElement.query.filter_by(id=id,institution_id=institutionId).first()
+        if i:
+            if i.name != 'history' and i.name != 'value' and i.name != 'mision' and i.name != 'objetive' and i.name != 'vision':
+                i.name = form.name.data
+            i.description = form.description.data
+            db.session.commit()
+
+        else:
+            print('error')
+        return redirect(url_for('show_institutions'))
+    old = InstitutionElement.query.filter_by(id=id,institution_id=institutionId).first()
+    title = 'Editar'
+    form = InstitutionElementForm(request.form, name=old.name, description=old.description)
+    return render_template('add_institutionElement.html', active_user=active_user, form=form, title=title, id=id, institutionId=institutionId, type=form.name.data)
+
+
+@app.route('/delete_institutionElement', methods=['POST'])
+def delete_institutionElement():
+    ''' Elimina un elemento de institución por su id '''
+    
+    id =  int(request.json[0])
+    int_id =  int(request.json[1])
+    i = InstitutionElement.query.filter_by(id=id,institution_id=int_id).first()
+    if i:
+        db.session.delete(i)
+        db.session.commit()
+        return json.dumps({'status':'OK','id':id})
+    else: 
+        return json.dumps({'status':'ERROR','id':id})
 
 
 @app.route('/delete_institution', methods=['POST'])
@@ -965,7 +1002,7 @@ def patient_history():
         user_controller = user.user()
 
         u = user_controller.getUserByCi(ci_user)
-        if u != []:
+        if u:
             r = role.role()
             user_role = r.getRole(int(u.role))
 

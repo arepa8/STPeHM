@@ -2,6 +2,20 @@
 {% block content %}
   <div id="cuerpoHeredado">
 
+	 	<div id="myModal_institutionElement" class="modal-content">
+		    <div class="modal-header">
+		      <span class="close">×</span>
+		      <h2></h2>
+		    </div>
+		    <div class="modal-body">
+		      <p>¿Está seguro de que desea eliminar el elemento?</p>
+		      <button id="deleteButton_institutionElement">Eliminar</button>
+		      <button id="cancel_institutionElement">Cancelar</button>
+		    </div>
+		    <div class="modal-footer">
+		      <h3></h3>
+		    </div>
+	  </div>
 	  <ul class="nav nav-tabs">
 	    <li class="active"><a data-toggle="tab" href="#home">Informacion Basica</a></li>
 	    <li><a data-toggle="tab" href="#menu1">Misión</a></li>
@@ -49,7 +63,7 @@
 						<p><LI>{{element.description}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
+						<a href="{{ url_for('edit_institutionElement',id=element.id, institutionId=institution.id)}}"> Modificar </a>
 						<a> Eliminar </a>
 					</div>
 				</div>
@@ -68,7 +82,7 @@
 						<p><LI>{{element.description}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
+						<a href="{{ url_for('edit_institutionElement',id=element.id, institutionId=institution.id)}}"> Modificar </a>
 						<a> Eliminar </a>
 					</div>
 				</div>
@@ -87,7 +101,7 @@
 						<p><LI>{{element.description}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
+						<a href="{{ url_for('edit_institutionElement',id=element.id, institutionId=institution.id)}}"> Modificar </a>
 						<a> Eliminar </a>
 					</div>
 				</div>
@@ -106,7 +120,7 @@
 						<p><LI>{{element.description}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
+						<a href="{{ url_for('edit_institutionElement',id=element.id, institutionId=institution.id)}}"> Modificar </a>
 						<a> Eliminar </a>
 					</div>
 				</div>
@@ -125,7 +139,7 @@
 						<p><LI>{{element.description}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
+						<a href="{{ url_for('edit_institutionElement',id=element.id, institutionId=institution.id)}}"> Modificar </a>
 						<a> Eliminar </a>
 					</div>
 				</div>
@@ -141,12 +155,13 @@
 		    {% for element in institution.elements %}
 		    	{% if element.name != 'mision' and element.name != 'vision' and element.name != 'objetive' and element.name != 'history' and element.name != 'value'%}
 			    <div class="row">
-			    	<div class="col-md-8 ">					
-						<p><LI>{{element.description}}</p>
+			    	<div class="col-md-8 ">
+			    		<h2><LI>{{element.name}}</h2>					
+						<p>{{element.description}}</p>
 					</div>	
 					<div class="col-md-4" style="text-align: right;">
-						<a> Modificar </a>
-						<a> Eliminar </a>
+						<a href="{{ url_for('edit_institutionElement',id=element.id, institutionId=institution.id)}}"> Modificar </a>
+						<button id="delete_institution" value= "{{institution.id}}" onclick="openModal_institutionElement({{element.id}},{{institution.id}})" name="id"> Eliminar </button>
 					</div>
 				</div>
 				<hr>
