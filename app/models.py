@@ -470,14 +470,29 @@ class PatientConsultation(db.Model):
 	date = db.Column(db.Date,nullable=False)
 	motive = db.Column(db.String(500))
 	symptoms = db.Column(db.String(500))
+	
+	blood_pressure = db.Column(db.String(500))
+	breathing_frequency = db.Column(db.String(500))
+	heart_frequency = db.Column(db.String(500))
+	temperature = db.Column(db.String(500))
+	other = db.Column(db.String(500))
+	diagnosis =  db.Column(db.String(500))
+	recommendations = db.Column(db.String(500))
 
-	def __init__(self,ci_patient,ci_doctor,name_doctor,date,motive,symptoms):
+	def __init__(self,ci_patient,ci_doctor,name_doctor,date,motive,symptoms,blood_pressure,breathing_frequency,heart_frequency,temperature,other,diagnosis,recommendations):
 		self.ci_patient=ci_patient
 		self.ci_doctor=ci_doctor
 		self.name_doctor=name_doctor
 		self.date=date
 		self.motive=motive
 		self.symptoms=symptoms
+		self.blood_pressure = blood_pressure
+		self.breathing_frequency = breathing_frequency
+		self.heart_frequency = heart_frequency
+		self.temperature = temperature
+		self.other = other
+		self.diagnosis =  diagnosis
+		self.recommendations = recommendations
 
 	def __repr__(self):
 		return '<PatientConsultation ci_patient = %r ci_doctor = %r>' % (self.ci_patient,self.ci_doctor)

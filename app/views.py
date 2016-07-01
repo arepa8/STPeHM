@@ -1179,7 +1179,7 @@ def add_patient_consultation(ci):
         active_user = session['user']
         ci_doctor = active_user['ci']
         name_doctor = active_user['name']
-        new_p_consultation = PatientConsultation(ci_patient,ci_doctor,name_doctor,form.date.data,form.motive.data,form.symptoms.data)
+        new_p_consultation = PatientConsultation(ci_patient,ci_doctor,name_doctor,form.date.data,form.motive.data,form.symptoms.data,form.blood_pressure.data,form.breathing_frequency.data,form.heart_frequency.data,form.temperature.data, form.other.data, form.diagnosis.data, form.recommendations.data)
         db.session.add(new_p_consultation)
         db.session.commit()
         return redirect(url_for('patient_background', ci=ci))
@@ -1196,9 +1196,16 @@ def modify_patient_consultation(id):
         old.date = form.date.data
         old.motive = form.motive.data
         old.symptoms = form.symptoms.data
+        old.blood_pressure = form.blood_pressure.data
+        old.breathing_frequency = form.breathing_frequency.data
+        old.heart_frequency = form.heart_frequency.data
+        old.temperature = form.temperature.data
+        old.other = form.other.data
+        old.diagnosis = form.diagnosis.data
+        old.recommendations = form.recommendations.data
         db.session.commit()
         return redirect(url_for('patient_background', ci=ci))
 
     title = "Modificar"
-    form = PatientConsultationForm(request.form, date=old.date,motive=old.motive,symptoms=old.symptoms)
+    form = PatientConsultationForm(request.form, date=old.date,motive=old.motive,symptoms=old.symptoms,blood_pressure=old.blood_pressure,breathing_frequency=old.breathing_frequency,heart_frequency=old.heart_frequency,temperature=old.temperature,other=old.temperature,diagnosis=old.diagnosis,recommendations=old.recommendations)
     return render_template('patient_consultation.html', form=form,ci=ci,id=id,title=title)
