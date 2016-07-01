@@ -444,6 +444,21 @@ class NonPathologicalBackground(db.Model):
 	def __repr__(self):
 		return '<NonPathologicalBackground ci_user = %r>' % (self.ci_user)
 
+class Inbox(db.Model):
+	__tablename__= 'Inbox'
+
+	id = db.Column(db.Integer,primary_key)
+	ci_user = db.Column(db.Integer, db.ForeignKey('User.ci'), nullable=False)
+	subject = db.Column(db.String(100))
+	sent_by = db.Column(db.String(100))
+
+	def __init__(self,subject,sent_by):
+		self.subject = subject
+		self.sent_by = sent_by
+
+	def __repr__(self):
+		return '<Inbox coding_user = %r>' % (self.ci_user)
+
 
 if __name__ == '__main__':
 	manager.run()
