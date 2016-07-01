@@ -1161,12 +1161,19 @@ def send_patient():
     if request.method == 'POST':
         active_user = session['user']
         userr = User.query.filter_by(username=active_user['username']).first()
-        #inbox = inbox_controller.createInbox(form.doctor.data,form.subject.data,user.ci)
         user = User.query.filter_by(ci=form.doctor.data).first()
-        new_inbox = Inbox(user.ci,form.subject.data,userr.username)
-        db.session.add(new_inbox)
-        db.session.commit()
-        return render_template('patient_sent.html')
+        if (type(form.doctor.data) == int) and (form.subject.data!=""):
+            if (user == None):
+                mensaje = "La cédula insertada no está registrada en el sistema"
+                return render_template('patient_sent_failed.html', mensaje=mensaje)
+            else:   
+                new_inbox = Inbox(user.ci,form.subject.data,userr.username)
+                db.session.add(new_inbox)
+                db.session.commit()
+                return render_template('patient_sent.html')
+        else:
+            mensaje="Error en la inserción de los datos. La cédula debe ser un número y los campos no deben ser vacíos."
+            return render_template('patient_sent_failed.html', mensaje=mensaje)
     elif request.method == 'GET':
         return render_template('send_patient.html', form=form)
 
