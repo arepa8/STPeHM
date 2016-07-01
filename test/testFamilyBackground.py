@@ -29,12 +29,13 @@ class TestFamilyBackground(unittest.TestCase):
 		user_controller.deleteUser('doctortest')
 		family_background_controller.deleteFamilyBackground(12345678)
 
-	def testInsertFBNotExists(self):
+	def testInsertFBExists(self):
 		user_controller = user()
 		family_background_controller = familyBackground()
 		
 		user_controller.insertUser(12345678,'doctortest','pass','name','last','doctorest@gmail.com',1)
-		result = family_background_controller.insertFamilyBackground(724, True, False, True, False, True, False, 'test')
+		family_background_controller.insertFamilyBackground(12345678, True, False, True, False, True, False, 'test')
+		result = family_background_controller.insertFamilyBackground(12345678, True, False, True, False, True, False, 'test')
 		
 		self.assertFalse(result)
 		user_controller.deleteUser('doctortest')
