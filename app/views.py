@@ -692,21 +692,31 @@ def delete_ability(id):
 
     return redirect(url_for('profile_doctor'))
 
-# BUSCADOR
-@app.route('/search',methods=['GET', 'POST'])
-def search():
+# BUSCADOR MEDICOS
+@app.route('/search_medicos',methods=['GET', 'POST'])
+def search_medicos():
     if request.method == 'GET':
         active_user = session['user']
-        print(active_user)
         usuarios = User.query.all()
-        medicos = []
-        otros = []
+        result = []
         for user in usuarios:
             if user.role == "1":
-                medicos.append(user)
-            else:
-                otros.append(user)
-        return render_template('search.html',medicos = medicos, otros=otros, active=active_user)
+                result.append(user)
+
+        return render_template('search.html',result=result, active=active_user)
+
+# BUSCADOR PACIENTES
+@app.route('/search_pacientes',methods=['GET', 'POST'])
+def search_pacientes():
+    if request.method == 'GET':
+        active_user = session['user']
+        usuarios = User.query.all()
+        result = []
+        for user in usuarios:
+            if user.role != "1":
+                result.append(user)
+
+        return render_template('search.html',result=result, active=active_user)
 
 @app.route('/add_award',methods=['GET', 'POST'])
 def add_award():
