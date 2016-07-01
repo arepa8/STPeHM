@@ -1148,7 +1148,10 @@ def show_inbox():
     if request.method == 'GET':
         active_user = session['user']
         user = User.query.filter_by(username=active_user['username']).first()
-        inboxx = [i for i in Inbox.query.filter_by(ci_user=user.ci)]
+        try:
+            inboxx = [i for i in Inbox.query.filter_by(ci_user=user.ci)]
+        except:
+            inboxx = []
         return render_template('inbox.html', result=inboxx, active_user=active_user)
 
 @app.route('/send_patient', methods=['GET','POST'])
