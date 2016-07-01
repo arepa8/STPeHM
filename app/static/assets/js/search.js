@@ -1,8 +1,5 @@
 $(document).ready(function() {
-    $('#usuarios').DataTable( {
-        "pagingType": "full_numbers"
-    } );
-    $('#medicos').DataTable( {
+    $('#search_result').DataTable( {
         "pagingType": "full_numbers"
     } );
 

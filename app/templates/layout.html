@@ -83,7 +83,8 @@
                   <li><a href="{{ url_for('patient_history') }}"><i class="fa fa-folder-open"></i>  Historias Clínicas</a></li>
                 {% endif %}  
                 <li><a href="{{ url_for('show_appointments') }}"><i class="fa fa-pencil-square-o "></i>  Ver Citas</a></li>
-                <li><a href="{{ url_for('search') }}"><i class="fa fa-search "></i>  Buscar</a></li>
+                <li><a href="{{ url_for('search_medicos') }}"><i class="fa fa-search "></i>  Buscar médico</a></li>
+                <li><a href="{{ url_for('search_pacientes') }}"><i class="fa fa-search "></i>  Buscar paciente</a></li>
               {% else %} 
                 <li><a href="{{ url_for('show_users') }}"><i class="fa fa-user"></i>  Gestionar Usuarios</a></li>
                 <li><a href="{{ url_for('show_roles') }}"><i class="fa fa-users"></i>  Gestionar Roles</a></li>

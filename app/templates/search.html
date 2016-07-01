@@ -24,9 +24,9 @@
 <br>
 <br>
 {% if active.role == "Medico" %}
-<h3> Usuarios </h3>
+<h3> Resultados de búsqueda </h3>
 <div>
-	<table id="usuarios" class="display" cellspacing="0" width="100%">
+	<table id="search_result" class="display" cellspacing="0" width="100%">
 	        <thead>
 	            <tr>
 	            	<th>Cédula</th>
@@ -36,17 +36,8 @@
 	                <th>Rol</th>
 	            </tr>
 	        </thead>
-	        <tfoot>
-	            <tr>
-	                <th>Cédula</th>
-	                <th>Nombre</th>
-	                <th>Apellido</th>
-	                <th>Correo</th>
-	                <th>Rol</th>
-	            </tr>
-	        </tfoot>
 	        <tbody>
-	        {% for user in otros %}
+	        {% for user in result %}
 	        	<tr>
                     <td>{{user.ci}}</td>
                     <td>{{user.name}}</td>
@@ -59,42 +50,6 @@
 	    </table>
 	</div>
 	{% endif %}
-	<h3> Médicos </h3>
-	<br>
-	<br>
-	<div>
-	<table id="medicos" class="display" cellspacing="0" width="100%">
-	        <thead>
-	            <tr>
-	            	<th>Cédula</th>
-	                <th>Nombre</th>
-	                <th>Apellido</th>
-	                <th>Correo</th>
-	                <th>Rol</th>
-	            </tr>
-	        </thead>
-	        <tfoot>
-	            <tr>
-	                <th>Cédula</th>
-	                <th>Nombre</th>
-	                <th>Apellido</th>
-	                <th>Correo</th>
-	                <th>Rol</th>
-	            </tr>
-	        </tfoot>
-	        <tbody>
-	        {% for user in medicos %}
-	        	<tr>
-                    <td>{{user.ci}}</td>
-                    <td>{{user.name}}</td>
-                    <td>{{user.last_name}}</td>
-                    <td>{{user.email}}</td>
-                    <td>{{user.role}}</td>
-                </tr>
-            {% endfor %}
-	        </tbody>
-	    </table>
-	</div>
 	<br>
 	<br>
 {% endblock %}
